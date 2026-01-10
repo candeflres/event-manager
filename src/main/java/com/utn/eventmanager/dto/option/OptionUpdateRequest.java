@@ -22,4 +22,20 @@ public class OptionUpdateRequest {
 
     @NotNull
     private Boolean available;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
 }

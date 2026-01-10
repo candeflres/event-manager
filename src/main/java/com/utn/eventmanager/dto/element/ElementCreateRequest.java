@@ -13,4 +13,12 @@ public class ElementCreateRequest {
 
     @Size(max = 255)
     private String description;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

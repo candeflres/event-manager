@@ -27,4 +27,24 @@ public class UserCreateRequest {
     @NotBlank
     @Size(min = 8)
     private String password;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

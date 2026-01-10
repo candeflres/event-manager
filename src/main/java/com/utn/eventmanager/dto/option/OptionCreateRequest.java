@@ -24,4 +24,20 @@ public class OptionCreateRequest {
 
     @NotNull
     private Long elementId;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Long getElementId() {
+        return elementId;
+    }
 }

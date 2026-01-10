@@ -18,4 +18,16 @@ public class ElementUpdateRequest {
 
     @NotNull
     private Boolean available;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
 }
