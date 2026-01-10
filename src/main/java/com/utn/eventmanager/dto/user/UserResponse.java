@@ -1,4 +1,4 @@
-package com.utn.eventmanager.dto;
+package com.utn.eventmanager.dto.user;
 
 import com.utn.eventmanager.model.enums.UserRole;
 

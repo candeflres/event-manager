@@ -1,4 +1,4 @@
-package com.utn.eventmanager.dto;
+package com.utn.eventmanager.dto.event;
 
 import com.utn.eventmanager.model.enums.EventStatus;
 
