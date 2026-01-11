@@ -14,7 +14,7 @@ public class UserResponse {
     private String phone;
     private UserRole role;
     private Boolean active;
-    private LocalDate createdAt;
+    private LocalDate created;
 
     public Long getId() {
         return id;
@@ -72,11 +72,11 @@ public class UserResponse {
         this.active = active;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
+    public LocalDate getCreated() {
+        return created;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated(LocalDate created) {
+        this.created = created;
     }
 }

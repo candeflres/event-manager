@@ -24,33 +24,33 @@ public class EventController {
     // CLIENTE
     // ======================
 
-    // RF05 - Crear evento
+    // Crear evento
     @PostMapping("/user/{userId}")
     public EventResponse createEvent(@PathVariable Long userId,
                                      @RequestBody @Valid EventCreateRequest request) {
         return eventService.createEvent(userId, request);
     }
 
-    // RF04 / RF09 - Editar evento (solo si estado lo permite)
+    //  Editar evento (solo si estado lo permite)
     @PutMapping("/{eventId}")
     public EventResponse updateEvent(@PathVariable Long eventId,
                                      @RequestBody @Valid EventUpdateRequest request) {
         return eventService.updateEvent(eventId, request);
     }
 
-    // RF08 - Enviar evento a revisión
+    //Enviar evento a revisión
     @PutMapping("/{eventId}/send-review")
     public EventResponse sendToReview(@PathVariable Long eventId) {
         return eventService.sendToReview(eventId);
     }
 
-    // RF09 - Listar eventos del cliente
+    // Listar eventos del cliente
     @GetMapping("/user/{userId}")
     public List<EventResponse> getEventsByUser(@PathVariable Long userId) {
         return eventService.getEventsByUser(userId);
     }
 
-    // RF10 - Ver detalle del evento
+    //Ver detalle del evento
     @GetMapping("/{eventId}")
     public EventResponse getEventDetail(@PathVariable Long eventId) {
         return eventService.getEventDetail(eventId);
@@ -60,13 +60,13 @@ public class EventController {
     // EMPLEADO
     // ======================
 
-    // RF18 / RF19 - Ver todos los eventos
+    //  Ver todos los eventos
     @GetMapping
     public List<EventResponse> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    // RF25 / RF26 / RF27 - Cambiar estado del evento
+    // Cambiar estado del evento
     @PutMapping("/{eventId}/status")
     public EventResponse updateEventStatus(@PathVariable Long eventId,
                                            @RequestBody @Valid EventUpdateStatusRequest request) {
