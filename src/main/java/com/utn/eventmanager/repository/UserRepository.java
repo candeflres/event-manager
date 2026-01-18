@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Buscar usuario activo por email (login futuro)
     Optional<User> findByEmailAndActiveTrue(String email);
+
+    /// Validar duplicados retornando user
+    Optional<User> findByEmailIgnoreCase(String email);
 }

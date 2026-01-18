@@ -6,6 +6,7 @@ import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,9 +16,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
         user.setCreated(LocalDateTime.now());
 
         // password temporal PARA PRUEBAS EN POSTMAN UNICAMENTE !
-        user.setPassword("TEMP");
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return mapToResponse(userRepository.save(user));
     }
@@ -100,7 +103,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(UserRole.EMPLOYEE);
         user.setActive(true);
         user.setCreated(LocalDateTime.now());
-        user.setPassword("TEMP");
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         return mapToResponse(userRepository.save(user));
     }

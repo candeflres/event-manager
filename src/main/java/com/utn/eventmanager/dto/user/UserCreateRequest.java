@@ -24,11 +24,10 @@ public class UserCreateRequest {
     @Size(max = 20)
     private String phone;
 
-    /*
     @NotBlank
     @Size(min = 8)
     private String password;
-    */
+
 
     public String getFirstName() {
         return firstName;
@@ -62,10 +61,8 @@ public class UserCreateRequest {
         this.phone = phone;
     }
 
-    /*
     public String getPassword() {
         return password;
     }
 
-     */
 }

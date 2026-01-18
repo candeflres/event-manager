@@ -4,6 +4,7 @@ import com.utn.eventmanager.model.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class EmployeeCreateRequest {
 
@@ -19,6 +20,11 @@ public class EmployeeCreateRequest {
 
     @NotBlank
     private String phone;
+
+    @NotBlank
+    @Size(min = 8)
+    private String password;
+
 
     public String getFirstName() {
         return firstName;
@@ -51,4 +57,9 @@ public class EmployeeCreateRequest {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
 }
