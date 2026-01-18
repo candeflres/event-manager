@@ -1,7 +1,10 @@
-*{
-  font-size: 2rem;
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10%;
 }
-
 
 header div img{
   height: 45px;
@@ -10,13 +13,16 @@ header div img{
 
 header div h2{
   font-weight: 900;
+  font-size: 2rem;
 }
 
 header div{
   display: flex;
-  justify-content: space-between;
-  margin: 1.5rem 2rem 1.5rem 2rem;
-
+  justify-content: space-around;
+  align-items: center;
+  gap: 8rem;
+  height: 100%;
+  width: 100%;
 }
 
 header nav ul{

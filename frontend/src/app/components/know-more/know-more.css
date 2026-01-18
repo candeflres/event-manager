@@ -1,0 +1,17 @@
+section {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+section div {
+  text-align: center;
+}
+
+section div h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}

@@ -1,0 +1,26 @@
+section {
+  height: 40%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+
+  margin-top: 6rem;
+}
+
+section h2{
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+section .textos{
+  text-align: center;
+}
+
+section .sub{
+  font-size: 1.5rem;
+  margin: 0 5rem;
+}
+
