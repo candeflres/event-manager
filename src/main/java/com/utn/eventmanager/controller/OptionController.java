@@ -19,14 +19,18 @@ public class OptionController {
         this.optionService = optionService;
     }
 
-    // create (EMPLOYEE)
+    //--------------------------------------------//
+    //----------- CREATE (employee) -------------//
+    //------------------------------------------//
     @PostMapping
     public OptionResponse create(
             @Valid @RequestBody OptionCreateRequest request) {
         return optionService.create(request);
     }
 
-    // update (EMPLOYEE)
+    //--------------------------------------------//
+    //----------- UPDATE (employee) -------------//
+    //------------------------------------------//
     @PutMapping("/{id}")
     public OptionResponse update(
             @PathVariable Long id,
@@ -34,19 +38,25 @@ public class OptionController {
         return optionService.update(id, request);
     }
 
-    // list all (employee)
+    //--------------------------------------------//
+    //----------- LIST ALL (employee) -----------//
+    //------------------------------------------//
     @GetMapping
     public List<OptionResponse> findAll() {
         return optionService.findAll();
     }
 
-    // LIST AVAILABLE (client)
+    //-------------------------------------------------//
+    //----------- LIST AVAILABLE (client) -----------//
+    //-----------------------------------------------//
     @GetMapping("/available")
     public List<OptionResponse> findAvailable() {
         return optionService.findAvailable();
     }
 
-    // list options by element
+    //------------------------------------------------//
+    //----------- LIST OPTIONS BY ELEMENT -----------//
+    //----------------------------------------------//
     @GetMapping("/element/{elementId}")
     public List<OptionResponse> findByElement(
             @PathVariable Long elementId) {

@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface EventService {
 
-    // Cliente
+    // ======================
+    // CLIENT
+    // ======================
     EventResponse createEvent(Long userId, EventCreateRequest request);
 
     EventResponse updateEvent(Long eventId, EventUpdateRequest request);
@@ -20,7 +22,9 @@ public interface EventService {
 
     EventResponse getEventDetail(Long eventId);
 
-    // Empleado
+    // ======================
+    // EMPLOYEE
+    // ======================
     List<EventResponse> getAllEvents();
 
     EventResponse updateEventStatus(Long eventId, EventUpdateStatusRequest request);

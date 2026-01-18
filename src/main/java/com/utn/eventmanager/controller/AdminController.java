@@ -19,7 +19,9 @@ public class AdminController {
         this.userService = userService;
     }
 
-    // crear empleado
+    //----------------------------------------//
+    //----------- CREATE EMPLOYEE -----------//
+    //--------------------------------------//
     @PostMapping
     public UserResponse createEmployee(
             @RequestBody @Valid EmployeeCreateRequest request) {

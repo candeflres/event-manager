@@ -19,14 +19,18 @@ public class ElementController {
         this.elementService = elementService;
     }
 
-    // create (only employee)
+    //-----------------------------------------------//
+    //----------- CREATE (only employee) -----------//
+    //---------------------------------------------//
     @PostMapping
     public ElementResponse create(
             @Valid @RequestBody ElementCreateRequest request) {
         return elementService.create(request);
     }
 
-    // update (only employee)
+    //-----------------------------------------------//
+    //----------- UPDATE (only employee) -----------//
+    //---------------------------------------------//
     @PutMapping("/{id}")
     public ElementResponse update(
             @PathVariable Long id,
@@ -34,13 +38,17 @@ public class ElementController {
         return elementService.update(id, request);
     }
 
-    // list all (employee and admin)
+    //------------------------------------------------------//
+    //----------- LIST ALL (employee and admin) -----------//
+    //----------------------------------------------------//
     @GetMapping
     public List<ElementResponse> findAll() {
         return elementService.findAll();
     }
 
-    // list available (client only)
+    //------------------------------------------------------//
+    //----------- LIST AVAILABLE (client only) ------------//
+    //----------------------------------------------------//
     @GetMapping("/available")
     public List<ElementResponse> findAvailable() {
         return elementService.findAvailable();

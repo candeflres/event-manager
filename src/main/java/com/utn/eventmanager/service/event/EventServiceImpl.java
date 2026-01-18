@@ -27,7 +27,7 @@ public class EventServiceImpl implements EventService {
     }
 
     // ======================
-    // CLIENTE
+    // CLIENT
     // ======================
 
     @Override
@@ -90,7 +90,7 @@ public class EventServiceImpl implements EventService {
     }
 
     // ======================
-    // EMPLEADO
+    // EMPLOYEE
     // ======================
 
     @Override
@@ -115,7 +115,7 @@ public class EventServiceImpl implements EventService {
     }
 
     // ======================
-    // MÉTODOS PRIVADOS
+    // PRIVATE METHODS
     // ======================
 
     private Event findEvent(Long eventId) {

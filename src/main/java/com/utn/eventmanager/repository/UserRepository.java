@@ -9,21 +9,34 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Buscar usuario por email (login, recuperación, validaciones)
+    //-------------------------------------------------//
+    //----------- SEARCH FOR USER BY EMAIL -----------//
+    //-----------------------------------------------//
     Optional<User> findByEmail(String email);
 
-    // Validar duplicados de email
+    //--------------------------------------------------//
+    //----------- VALIDATE DUPLICATE EMAILS -----------//
+    //------------------------------------------------//
     boolean existsByEmailIgnoreCase(String email);
 
-    // Listar usuarios por rol (empleados, admins, clientes)
+    //-----------------------------------------------//
+    //----------- LIST USERS BY ROLE ---------------//
+    //---------------------------------------------//
     List<User> findByRole(UserRole role);
 
-    // Listar solo usuarios activos
+    //-------------------------------------------------//
+    //----------- LIST ONLY ACTIVATE USERS -----------//
+    //-----------------------------------------------//
     List<User> findByActiveTrue();
 
-    // Buscar usuario activo por email (login futuro)
+    //--------------------------------------------------------//
+    //----------- SEARCH FOR ACTIVE USER BY EMAIL -----------//
+    //------------------------------------------------------//
     Optional<User> findByEmailAndActiveTrue(String email);
 
-    /// Validar duplicados retornando user
+    //--------------------------------------------------------------//
+    //----------- VALIDATE DUPLICATES BY RETURNING USER -----------//
+    //------------------------------------------------------------//
+    /// Validate duplicates by returning user
     Optional<User> findByEmailIgnoreCase(String email);
 }

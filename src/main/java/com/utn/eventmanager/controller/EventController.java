@@ -21,52 +21,68 @@ public class EventController {
     }
 
     // ======================
-    // CLIENTE
+    //CLIENTE
     // ======================
 
-    // Crear evento
+    //-------------------------------------//
+    //----------- CREATE EVENT -----------//
+    //------------------------------------//
     @PostMapping("/user/{userId}")
     public EventResponse createEvent(@PathVariable Long userId,
                                      @RequestBody @Valid EventCreateRequest request) {
         return eventService.createEvent(userId, request);
     }
 
-    //  Editar evento (solo si estado lo permite)
+    //-------------------------------------------------------------------//
+    //----------- UPDATE EVENT (solo si el estado lo permite -----------//
+    //-----------------------------------------------------------------//
     @PutMapping("/{eventId}")
     public EventResponse updateEvent(@PathVariable Long eventId,
                                      @RequestBody @Valid EventUpdateRequest request) {
         return eventService.updateEvent(eventId, request);
     }
 
-    //Enviar evento a revisión
+    //------------------------------------------------//
+    //----------- SUBMIT EVENT FOR REVIEW -----------//
+    //----------------------------------------------//
     @PutMapping("/{eventId}/send-review")
     public EventResponse sendToReview(@PathVariable Long eventId) {
         return eventService.sendToReview(eventId);
     }
 
-    // Listar eventos del cliente
+    //---------------------------------------------//
+    //----------- LIST CUSTOMER EVENTS -----------//
+    //-------------------------------------------//
     @GetMapping("/user/{userId}")
     public List<EventResponse> getEventsByUser(@PathVariable Long userId) {
         return eventService.getEventsByUser(userId);
     }
 
-    //Ver detalle del evento
+    //------------------------------------------//
+    //----------- SEE EVENT DETAILS -----------//
+    //----------------------------------------//
     @GetMapping("/{eventId}")
     public EventResponse getEventDetail(@PathVariable Long eventId) {
         return eventService.getEventDetail(eventId);
     }
 
+    //----------------------------------------------------------------------------------------------------------------//
     // ======================
     // EMPLEADO
     // ======================
 
-    //  Ver todos los eventos
+    //------------------------------------------//
+    //----------- SEE ALL EVENTS -----------//
+    //----------------------------------------//
     @GetMapping
     public List<EventResponse> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    // Cambiar estado del evento
+    //--------------------------------------------//
+    //----------- CHANGE EVENT STATUS -----------//
+    //------------------------------------------//
+    //Change event status
     @PutMapping("/{eventId}/status")
     public EventResponse updateEventStatus(@PathVariable Long eventId,
                                            @RequestBody @Valid EventUpdateStatusRequest request) {

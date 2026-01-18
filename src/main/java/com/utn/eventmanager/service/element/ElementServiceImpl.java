@@ -18,7 +18,9 @@ public class ElementServiceImpl implements ElementService {
         this.elementRepository = elementRepository;
     }
 
-    // create method
+    //--------------------------------------//
+    //----------- CREATE METHOD -----------//
+    //------------------------------------//
     @Override
     public ElementResponse create(ElementCreateRequest request) {
 
@@ -37,7 +39,9 @@ public class ElementServiceImpl implements ElementService {
         return toResponse(saved);
     }
 
-    // update method
+    //--------------------------------------//
+    //----------- UPDATE METHOD -----------//
+    //------------------------------------//
     @Override
     public ElementResponse update(Long id, ElementUpdateRequest request) {
 
@@ -54,7 +58,9 @@ public class ElementServiceImpl implements ElementService {
         return toResponse(updated);
     }
 
-    // list all elements method (only for admin / employees)
+    //------------------------------------------------------------------------------//
+    //----------- LIST ALL ELEMENTS METHOD (only for admin / employees) -----------//
+    //----------------------------------------------------------------------------//
     @Override
     public List<ElementResponse> findAll() {
         return elementRepository.findAll()
@@ -63,7 +69,9 @@ public class ElementServiceImpl implements ElementService {
                 .toList();
     }
 
-    // list all available elements method (only for clients)
+    //------------------------------------------------------------------------------//
+    //----------- LIST ALL AVAILABLE ELEMENTS METHOD (only for clients) -----------//
+    //----------------------------------------------------------------------------//
     @Override
     public List<ElementResponse> findAvailable() {
         return elementRepository.findByAvailableTrue()
@@ -72,7 +80,9 @@ public class ElementServiceImpl implements ElementService {
                 .toList();
     }
 
-    // mapper from element to dto
+    //---------------------------------------------------//
+    //----------- MAPPER FROM ELEMENT TO DTO -----------//
+    //-------------------------------------------------//
     private ElementResponse toResponse(Element element) {
         ElementResponse dto = new ElementResponse();
         dto.setId(element.getId());

@@ -23,7 +23,9 @@ public class OptionServiceImpl implements OptionService {
         this.elementRepository = elementRepository;
     }
 
-    // create method
+    //--------------------------------------//
+    //----------- CREATE METHOD -----------//
+    //------------------------------------//
     @Override
     public OptionResponse create(OptionCreateRequest request) {
 
@@ -47,7 +49,9 @@ public class OptionServiceImpl implements OptionService {
         return toResponse(saved);
     }
 
-    // update method
+    //--------------------------------------//
+    //----------- UPDATE METHOD -----------//
+    //------------------------------------//
     @Override
     public OptionResponse update(Long id, OptionUpdateRequest request) {
 
@@ -64,7 +68,9 @@ public class OptionServiceImpl implements OptionService {
         return toResponse(updated);
     }
 
-    // find all method (admins and employees only)
+    //---------------------------------------------------------------------//
+    //----------- FIND ALL METHOD ( admins and employees only) -----------//
+    //-------------------------------------------------------------------//
     @Override
     public List<OptionResponse> findAll() {
         return optionRepository.findAll()
@@ -73,7 +79,9 @@ public class OptionServiceImpl implements OptionService {
                 .toList();
     }
 
-    //find all available method (clients)
+    //------------------------------------------------------------//
+    //----------- FIND ALL AVAILABLE METHOD (clients) -----------//
+    //----------------------------------------------------------//
     @Override
     public List<OptionResponse> findAvailable() {
         return optionRepository.findByAvailableTrue()
@@ -81,7 +89,10 @@ public class OptionServiceImpl implements OptionService {
                 .map(this::toResponse)
                 .toList();
     }
-    // find by id
+
+    //-----------------------------------//
+    //----------- FIND BY ID -----------//
+    //---------------------------------//
     @Override
     public List<OptionResponse> findByElement(Long elementId) {
         return optionRepository.findByElementId(elementId)
@@ -90,7 +101,9 @@ public class OptionServiceImpl implements OptionService {
                 .toList();
     }
 
-    // mapper from model to dto
+    //-------------------------------------------------//
+    //----------- MAPPER FROM MODEL TO DTO -----------//
+    //-----------------------------------------------//
     private OptionResponse toResponse(Option option) {
         OptionResponse dto = new OptionResponse();
         dto.setId(option.getId());
