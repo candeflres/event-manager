@@ -2,10 +2,11 @@ section {
   height: 40%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   gap: 3rem;
   margin-top: 6rem;
+  padding-left: 11rem;
 }
 section h2 {
   font-size: 3rem;
@@ -14,14 +15,16 @@ section h2 {
 section .textos {
   text-align: center;
   color: #f1e4e9;
+  text-align: left;
 }
 section .sub {
   font-size: 1.5rem;
-  margin: 0 5rem;
+  margin: 0;
 }
 section .min {
   color: #cda2b1;
 }
+
 .botones {
   display: flex;
   gap: 12px;
@@ -36,11 +39,40 @@ section .min {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: bold;
 }
 .botones .register {
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
   border: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
+}
+.botones .register:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
+.botones .login:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
+.botones .register:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.botones .login:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 .botones .login {
   background-color: transparent;
