@@ -1,0 +1,15 @@
+<section class="past-events">
+  <h2>Nuestros eventos pasados</h2>
+
+  <div class="carousel">
+    <div class="track" #track>
+      <div class="group" #group>
+        <img *ngFor="let img of eventos" [src]="img" />
+      </div>
+
+      <div class="group">
+        <img *ngFor="let img of eventos" [src]="img" />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+section {
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 6rem;
+}
+section h2 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+section .textos {
+  text-align: center;
+  color: #f1e4e9;
+}
+section .sub {
+  font-size: 1.5rem;
+  margin: 0 5rem;
+}
+section .min {
+  color: #cda2b1;
+}
+.botones {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+.botones button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.botones .register {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #f1e4e9;
+  border: none;
+}
+.botones .login {
+  background-color: transparent;
+  color: #f1e4e9;
+  border: 1px solid #f1e4e9;
+}

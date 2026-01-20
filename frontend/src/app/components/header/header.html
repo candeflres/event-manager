@@ -1,18 +1,25 @@
-<header>
-  <div>
-    <h2>Youre</h2>
-    <img src="/menu.png" />
+<header class="header">
+  <div class="header-content">
+    <div routerLink="/" class="logo">Youre</div>
+
+    <img src="/menu.png" class="menu-btn" alt="menu" (click)="toggleMenu()" />
+  </div>
+</header>
+
+<div class="overlay" *ngIf="menuOpen" (click)="closeMenu()"></div>
+
+<nav class="side-menu" [class.open]="menuOpen">
+  <div class="menu-header">
+    <span>Menu</span>
+    <button (click)="closeMenu()">✕</button>
   </div>
 
+  <ul class="menu-items">
+    <li>Crear evento</li>
+    <li>Mis eventos</li>
+    <li>Contacto</li>
+    <li class="profile">Mi perfil</li>
+  </ul>
 
-  <!--
-  <nav>
-    <ul>
-      <li>Crear evento</li>
-      <li>Mis eventos</li>
-      <li>Contacto</li>
-    </ul>
-  </nav>
-  -->
-
-</header>
+  <div class="menu-footer">Youre</div>
+</nav>

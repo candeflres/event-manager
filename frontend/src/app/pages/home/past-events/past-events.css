@@ -1,0 +1,38 @@
+.past-events {
+  padding: 40px 0;
+  overflow: hidden;
+}
+
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 16px; /* CLAVE */
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+.group {
+  display: flex;
+  gap: 16px;
+}
+
+.group img {
+  width: 260px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
