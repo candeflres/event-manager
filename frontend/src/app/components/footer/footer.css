@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(180deg, #2b1620, #1a0d14);
+  background: #28151c;
   padding: 32px 48px;
   position: relative;
   z-index: 10;
@@ -39,15 +39,5 @@
 }
 
 .footer-right a:hover {
-  color: #ffffff;
-}
-.footer-left .brand {
   color: #f1e4e9;
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.footer-left .brand:hover {
-  opacity: 0.85;
 }
