@@ -1,0 +1,108 @@
+.login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  background: linear-gradient(to bottom, transparent 33%, #351923 33%);
+}
+
+.login-card {
+  margin: 0 auto;
+  margin-top: 10vh;
+  padding: 24px;
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  background: #351923;
+  border: 1px solid rgba(87, 62, 71, 0.3);
+  border-radius: 5px;
+}
+
+.login-card h2 {
+  color: #f1e4e9;
+  text-align: center;
+  padding-left: 0;
+  margin-bottom: 8px;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-card input {
+  width: 360px;
+  padding: 10px 12px;
+
+  background: rgba(53, 25, 35, 0.5);
+  border: 1px solid rgba(241, 228, 233, 0.3);
+  border-radius: 5px;
+
+  color: rgba(241, 228, 233, 0.8);
+  outline: none;
+}
+
+.login-card input::placeholder {
+  color: rgba(241, 228, 233, 0.5);
+}
+
+.register {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.register-link {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: rgba(241, 228, 233, 0.5);
+}
+
+.submit {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #f1e4e9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
+}
+
+.submit:hover {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
+
+.register-link:hover {
+  color: rgba(255, 174, 209, 0.5);
+}
+
+.forgot {
+  margin-top: 400px;
+  text-align: center;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: rgba(241, 228, 233, 0.5);
+}
+
+.forgot-link:hover {
+  color: rgba(255, 174, 209, 0.5);
+}
