@@ -1,16 +1,32 @@
-.past-events {
-  padding: 40px 0;
+section.past-events {
+  height: 400px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 250px;
+  padding: 10px 32px 32px;
+  gap: 0;
+  padding-left: 32px;
+  width: 100%;
+  background: #28151c;
   overflow: hidden;
+}
+
+h2 {
+  color: #f1e4e9;
+  margin-top: 80px;
+  margin-left: 50px;
+  font-size: 30px;
 }
 
 .carousel {
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  margin-top: 30px;
 }
 
 .track {
   display: flex;
-  gap: 16px; /* CLAVE */
+  gap: 16px;
   width: max-content;
   animation: scroll 40s linear infinite;
 }

@@ -1,9 +1,9 @@
 section {
-  height: 30%;
+  height: 400px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
 
@@ -11,7 +11,40 @@ section div {
   text-align: center;
 }
 
-section div h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
+h3 {
+  color: #f1e4e9;
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+p {
+  color: #cda2b1;
+  margin-top: 10px;
+}
+
+.know {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #f1e4e9;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
+}
+
+.know:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
 }
