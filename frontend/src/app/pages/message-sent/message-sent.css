@@ -1,0 +1,65 @@
+.message-sent {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to bottom, transparent 33%, #351923 33%);
+  align-items: flex-start;
+  padding-top: 2vh;
+}
+
+.message-sent-card {
+  margin: 0;
+  margin-top: 15vh;
+  padding: 24px;
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  background: #351923;
+  border: 1px solid rgba(87, 62, 71, 0.3);
+  border-radius: 5px;
+}
+
+.message-sent-card h2 {
+  color: #f1e4e9;
+  text-align: center;
+  padding-left: 0;
+  margin-bottom: 8px;
+}
+.message-sent-card p {
+  color: rgba(241, 228, 233, 0.6);
+  text-align: center;
+  margin: 0 0 8px 0;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+}
+.submit {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #f1e4e9;
+  border: none;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
+}
+
+.submit:hover {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
