@@ -6,7 +6,7 @@ import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterModule, CommonModule, Header, Footer],
+  imports: [RouterModule, CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
