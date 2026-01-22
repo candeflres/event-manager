@@ -45,8 +45,7 @@
 }
 
 .nav a.active {
-  border: 1px solid #000;
-  background-color: #eaeaea;
+  color: #bf7d94;
 }
 
 .profile-icon {
