@@ -6,6 +6,7 @@ import { ForgotPassword } from './pages/forgot-password/forgot-password';
 import { VerifyCode } from './pages/verify-code/verify-code';
 import { Contact } from './pages/contact/contact';
 import { MessageSent } from './pages/message-sent/message-sent';
+import { HomeLogged } from './pages/home-logged/home-logged';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'message-sent',
     component: MessageSent,
+  },
+  {
+    path: 'home-logged',
+    component: HomeLogged,
   },
 ];

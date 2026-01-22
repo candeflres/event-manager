@@ -65,11 +65,15 @@
 .submit {
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
+  text-decoration: none;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-size: px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;

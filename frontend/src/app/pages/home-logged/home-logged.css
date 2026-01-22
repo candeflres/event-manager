@@ -1,0 +1,67 @@
+.home-logged {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: 120px;
+  margin-right: auto;
+  margin-top: 10vh;
+  padding: 24px;
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.login-card h2 {
+  color: #f1e4e9;
+  text-align: center;
+  padding-left: 0;
+  margin-bottom: 8px;
+}
+.create-event {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #f1e4e9;
+  text-decoration: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  justify-content: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.create-event:hover {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
+
+.event-list {
+  background: none;
+  color: #f1e4e9;
+  text-decoration: none;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #f1e4e9;
+  justify-content: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.event-list:hover {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
