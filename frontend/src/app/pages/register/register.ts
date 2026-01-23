@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { Header } from '../../components/header/header';
 import { Footer } from '../../components/footer/footer';
 import { UserService } from '../../services/user-service';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   imports: [RouterModule, CommonModule, ReactiveFormsModule],
@@ -14,33 +14,34 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class Register {
   private service = inject(UserService);
-  private fb = inject(FormBuilder)
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   form = this.fb.nonNullable.group({
-    firstName: [""],
-    lastName: [""],
-    phone: [""],
-    email: [""],
-    password: [""],
-  })
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    phone: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+  });
 
-
-  register(){
-    if(this.form.invalid){
+  register() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
     const newUser = this.form.getRawValue();
 
-    if(newUser){
-      this.service.register(newUser).subscribe(()=>{
-        console.log("Usuario registrado");
-      });
-    }
-
-
-
-
+    this.service.register(newUser).subscribe({
+      next: () => {
+        alert('Usuario registrado con éxito');
+        this.router.navigate(['/login']); // 👈 REDIRECCIÓN
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Error al registrar usuario');
+      },
+    });
   }
-
 }
