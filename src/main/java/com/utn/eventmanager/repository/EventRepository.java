@@ -2,6 +2,8 @@ package com.utn.eventmanager.repository;
 
 import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.enums.EventStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -15,7 +17,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     //-----------------------------------------------//
     //----------- LIST A CLIENT'S EVENTS -----------//
     //---------------------------------------------//
-    List<Event> findByUserId(Long userId);
+    Page<Event> findByUserId(Long userId, Pageable pageable);
 
     //------------------------------------------------------//
     //----------- FILTER CLIENT EVENTS BY STATE -----------//

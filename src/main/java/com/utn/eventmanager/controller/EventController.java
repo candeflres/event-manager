@@ -6,6 +6,8 @@ import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
 import com.utn.eventmanager.service.event.EventService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,9 +55,10 @@ public class EventController {
     //---------------------------------------------//
     //----------- LIST CUSTOMER EVENTS -----------//
     //-------------------------------------------//
-    @GetMapping("/user/{userId}")
-    public List<EventResponse> getEventsByUser(@PathVariable Long userId) {
-        return eventService.getEventsByUser(userId);
+    @GetMapping("/event-list")
+    public Page<EventResponse> getEventsByUser(Authentication authentication, @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "9") int size) {
+        return eventService.getEventsByUser(authentication, page, size);
     }
 
     //------------------------------------------//
@@ -70,14 +73,6 @@ public class EventController {
     // ======================
     // EMPLEADO
     // ======================
-
-    //------------------------------------------//
-    //----------- SEE ALL EVENTS -----------//
-    //----------------------------------------//
-    @GetMapping
-    public List<EventResponse> getAllEvents() {
-        return eventService.getAllEvents();
-    }
 
     //--------------------------------------------//
     //----------- CHANGE EVENT STATUS -----------//

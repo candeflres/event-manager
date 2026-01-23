@@ -1,0 +1,92 @@
+.event-list {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+  color: #f1e4e9;
+}
+
+.event-list h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.filter {
+  background: #cda2b1;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: #351923;
+  font-weight: 500;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.event-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.event-card {
+  background: rgba(53, 25, 35, 0.9);
+  border: 1px solid rgba(241, 228, 233, 0.35);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.event-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.event-card p {
+  margin: 2px 0;
+  font-size: 0.85rem;
+  color: rgba(241, 228, 233, 0.85);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.actions button {
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.share {
+  background: transparent;
+  color: #f1e4e9;
+  border: 1px solid rgba(241, 228, 233, 0.5);
+}
+
+.see-more {
+  background: #cda2b1;
+  color: #351923;
+  border: none;
+}
+
+.pagination {
+  margin: 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+}
+
+.pagination button {
+  background: transparent;
+  border: 1px solid rgba(241, 228, 233, 0.5);
+  color: #f1e4e9;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}

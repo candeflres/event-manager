@@ -6,6 +6,7 @@ import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -86,6 +87,11 @@ public class UserServiceImpl implements UserService {
         res.setRole(user.getRole());
         res.setActive(user.getActive());
         return res;
+    }
+    public User getUserFromAuth(Authentication authentication) {
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
     // crear empleado como admin !
     @Override

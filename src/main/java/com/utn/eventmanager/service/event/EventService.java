@@ -4,6 +4,8 @@ import com.utn.eventmanager.dto.event.EventCreateRequest;
 import com.utn.eventmanager.dto.event.EventResponse;
 import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -18,14 +20,13 @@ public interface EventService {
 
     EventResponse sendToReview(Long eventId);
 
-    List<EventResponse> getEventsByUser(Long userId);
+    Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size);
 
     EventResponse getEventDetail(Long eventId);
 
     // ======================
     // EMPLOYEE
     // ======================
-    List<EventResponse> getAllEvents();
 
     EventResponse updateEventStatus(Long eventId, EventUpdateStatusRequest request);
 }

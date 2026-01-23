@@ -1,0 +1,20 @@
+<section class="event-list">
+  <h2>Mis eventos</h2>
+  <button class="filter">Filtrar</button>
+
+  <div class="event-grid">
+    <div class="event-card" *ngFor="let evento of eventos">
+      <h3>{{ evento.name }}</h3>
+
+      <p><strong>Descripción:</strong> {{ evento.description }}</p>
+      <p><strong>Fecha:</strong> {{ evento.date | date }}</p>
+      <p><strong>Estado:</strong> {{ evento.status }}</p>
+      <p><strong>Descripción:</strong> {{ evento.estimatedBudget }}</p>
+
+      <div class="actions">
+        <button class="share">Compartir</button>
+        <button class="see-more">Ver mas</button>
+      </div>
+    </div>
+  </div>
+</section>

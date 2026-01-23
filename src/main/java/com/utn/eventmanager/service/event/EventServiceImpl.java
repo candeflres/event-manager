@@ -4,11 +4,18 @@ import com.utn.eventmanager.dto.event.EventCreateRequest;
 import com.utn.eventmanager.dto.event.EventResponse;
 import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
+import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.EventStatus;
+import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.EventRepository;
 import com.utn.eventmanager.repository.UserRepository;
+import com.utn.eventmanager.service.user.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,11 +26,13 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public EventServiceImpl(EventRepository eventRepository,
-                            UserRepository userRepository) {
+                            UserRepository userRepository, UserService userService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     // ======================
@@ -77,11 +86,18 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventResponse> getEventsByUser(Long userId) {
-        return eventRepository.findByUserId(userId)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+    public Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size) {
+        User user = userService.getUserFromAuth(authentication);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Event> eventos;
+
+        if (user.getRole() == UserRole.ADMIN) {
+            eventos = eventRepository.findAll(pageable);
+        } else {
+            eventos = eventRepository.findByUserId(user.getId(), pageable);
+        }
+
+        return eventos.map(this::mapToResponse);
     }
 
     @Override
@@ -89,18 +105,10 @@ public class EventServiceImpl implements EventService {
         return mapToResponse(findEvent(eventId));
     }
 
+
     // ======================
     // EMPLOYEE
     // ======================
-
-    @Override
-    public List<EventResponse> getAllEvents() {
-        return eventRepository.findAll()
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
-    }
-
     @Override
     public EventResponse updateEventStatus(Long eventId,
                                            EventUpdateStatusRequest request) {
