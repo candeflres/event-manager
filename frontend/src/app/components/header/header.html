@@ -1,13 +1,18 @@
 <header class="header">
   <div class="header-content">
-    <div routerLink="/" class="logo">Youre</div>
+    <div class="logo" (click)="goHome()">Youre</div>
 
     <nav class="nav">
-      <a routerLink="/crear-evento" routerLinkActive="active"><span>Crear evento</span></a>
-      <a routerLink="/event-list" routerLinkActive="active">Mis eventos</a>
-      <a routerLink="/contact" routerLinkActive="active">Contacto</a>
+      <a (click)="goOrLogin('/crear-evento')">Crear evento</a>
+      <a (click)="goOrLogin('/event-list')">Mis eventos</a>
+      <a (click)="goOrLogin('/contact')">Contacto</a>
 
-      <img src="assets/images/profile.png" alt="Perfil" class="profile-icon" routerLink="/perfil" />
+      <img
+        src="assets/images/profile.png"
+        alt="Perfil"
+        class="profile-icon"
+        (click)="goOrLogin('/perfil')"
+      />
     </nav>
   </div>
 </header>

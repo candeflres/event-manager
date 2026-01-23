@@ -11,7 +11,7 @@ import { EventList } from './pages/event-list/event-list';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: Home,
   },
   {

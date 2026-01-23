@@ -1,24 +1,24 @@
 .header {
   width: 100%;
-  height: 90px;
+  height: 80px;
   background-color: #28151c;
+  display: flex;
+  justify-content: center;
 }
 
 .header-content {
-  max-width: 1750px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 16px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .logo {
-  text-decoration: none;
   color: #f1e4e9;
+  font-size: 22px;
   font-weight: 700;
-  font-size: 20px;
   cursor: pointer;
 }
 
@@ -29,22 +29,14 @@
 }
 
 .nav a {
-  text-decoration: none;
   color: #f1e4e9;
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  font-weight: bold;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .nav a:hover {
-  color: #bf7d94;
-  background-color: 0;
-}
-
-.nav a.active {
   color: #bf7d94;
 }
 
@@ -53,5 +45,4 @@
   height: 36px;
   border-radius: 50%;
   cursor: pointer;
-  object-fit: cover;
 }

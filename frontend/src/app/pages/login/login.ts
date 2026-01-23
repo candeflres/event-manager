@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class Login {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   login() {
@@ -27,6 +29,7 @@ export class Login {
 
     this.http.get('http://localhost:8080/api/users', { headers }).subscribe({
       next: () => {
+        this.authService.login();
         this.router.navigate(['/home-logged']);
       },
       error: (err) => {
