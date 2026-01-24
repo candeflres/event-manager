@@ -29,10 +29,12 @@ public class EventController {
     //-------------------------------------//
     //----------- CREATE EVENT -----------//
     //------------------------------------//
-    @PostMapping("/user/{userId}")
-    public EventResponse createEvent(@PathVariable Long userId,
-                                     @RequestBody @Valid EventCreateRequest request) {
-        return eventService.createEvent(userId, request);
+    @PostMapping
+    public EventResponse createEvent(
+            Authentication authentication,
+            @RequestBody @Valid EventCreateRequest request
+    ) {
+        return eventService.createEvent(authentication, request);
     }
 
     //-------------------------------------------------------------------//

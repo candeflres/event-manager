@@ -1,9 +1,11 @@
 package com.utn.eventmanager.dto.event;
 
+import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.model.enums.EventStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 // este DTO se utiliza para respuestas
 
@@ -14,6 +16,8 @@ public class EventResponse {
     private LocalDate eventDate;
     private EventStatus status;
     private BigDecimal estimatedBudget;
+    private List<OptionResponse> options;
+
 
     public Long getId() {
         return id;
@@ -41,6 +45,14 @@ public class EventResponse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<OptionResponse> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<OptionResponse> options) {
+        this.options = options;
     }
 
     public void setName(String name) {

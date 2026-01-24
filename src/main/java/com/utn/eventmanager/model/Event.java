@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -44,6 +46,9 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EventOption> options = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -99,5 +104,13 @@ public class Event {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<EventOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<EventOption> options) {
+        this.options = options;
     }
 }

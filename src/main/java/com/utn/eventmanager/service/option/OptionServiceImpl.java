@@ -7,6 +7,7 @@ import com.utn.eventmanager.model.Element;
 import com.utn.eventmanager.model.Option;
 import com.utn.eventmanager.repository.ElementRepository;
 import com.utn.eventmanager.repository.OptionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,15 +28,18 @@ public class OptionServiceImpl implements OptionService {
     //----------- CREATE METHOD -----------//
     //------------------------------------//
     @Override
+    @Transactional
     public OptionResponse create(OptionCreateRequest request) {
 
-        if (optionRepository.existsByNameIgnoreCaseAndElementId(
-                request.getName(), request.getElementId())) {
-            throw new RuntimeException("Option already exists for this element");
-        }
-
         Element element = elementRepository.findById(request.getElementId())
-                .orElseThrow(() -> new RuntimeException("Element not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Element not found"));
+
+        if (optionRepository.existsByNameIgnoreCaseAndElementId(
+                request.getName(), element.getId())) {
+            throw new IllegalStateException(
+                    "Ya existe una opción con ese nombre para este elemento"
+            );
+        }
 
         Option option = new Option();
         option.setName(request.getName());

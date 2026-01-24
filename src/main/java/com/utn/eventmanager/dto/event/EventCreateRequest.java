@@ -1,12 +1,10 @@
 package com.utn.eventmanager.dto.event;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 // este DTO se utiliza para REGISTRAR EVENTOS
 // no contiene status porque arranca en PENDING (PENDIENTE)
@@ -20,6 +18,9 @@ public class EventCreateRequest {
 
     @NotNull
     private LocalDate eventDate;
+
+    @NotEmpty
+    private List<Long> optionIds;
 
     public String getName() {
         return name;
@@ -43,5 +44,13 @@ public class EventCreateRequest {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public List<Long> getOptionIds() {
+        return optionIds;
+    }
+
+    public void setOptionIds(List<Long> optionIds) {
+        this.optionIds = optionIds;
     }
 }

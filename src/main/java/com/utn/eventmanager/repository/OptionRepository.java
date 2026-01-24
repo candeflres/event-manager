@@ -8,6 +8,8 @@ import java.util.List;
 public interface OptionRepository extends JpaRepository<Option, Long> {
 
     List<Option> findByAvailableTrue();
+    List<Option> findAllById(Iterable<Long> ids);
+    boolean existsById(Long id);
 
     List<Option> findByElementId(Long elementId);
 

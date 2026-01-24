@@ -1,10 +1,13 @@
 package com.utn.eventmanager.dto.event;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
+
 // este DTO es para actualizar DESDE EL CLIENTE ()
 public class EventUpdateRequest {
 
@@ -17,6 +20,9 @@ public class EventUpdateRequest {
 
     @NotNull
     private LocalDate eventDate;
+
+    @NotEmpty
+    private List<Long> optionIds;
 
     public String getName() {
         return name;

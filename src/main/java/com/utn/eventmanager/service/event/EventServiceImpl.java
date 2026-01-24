@@ -4,14 +4,20 @@ import com.utn.eventmanager.dto.event.EventCreateRequest;
 import com.utn.eventmanager.dto.event.EventResponse;
 import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
+import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.model.Event;
+import com.utn.eventmanager.model.EventOption;
+import com.utn.eventmanager.model.Option;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.model.enums.UserRole;
+import com.utn.eventmanager.repository.EventOptionRepository;
 import com.utn.eventmanager.repository.EventRepository;
+import com.utn.eventmanager.repository.OptionRepository;
 import com.utn.eventmanager.repository.UserRepository;
 import com.utn.eventmanager.service.user.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,15 +30,24 @@ import java.util.List;
 @Service
 public class EventServiceImpl implements EventService {
 
+    private final OptionRepository optionRepository;
+    private final EventOptionRepository eventOptionRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserService userService;
 
-    public EventServiceImpl(EventRepository eventRepository,
-                            UserRepository userRepository, UserService userService) {
+    public EventServiceImpl(
+            EventRepository eventRepository,
+            UserRepository userRepository,
+            UserService userService,
+            OptionRepository optionRepository,
+            EventOptionRepository eventOptionRepository
+    ) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.optionRepository = optionRepository;
+        this.eventOptionRepository = eventOptionRepository;
     }
 
     // ======================
@@ -40,9 +55,12 @@ public class EventServiceImpl implements EventService {
     // ======================
 
     @Override
-    public EventResponse createEvent(Long userId, EventCreateRequest request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    @Transactional
+    public EventResponse createEvent(Authentication authentication,
+                                     EventCreateRequest request) {
+
+        User user = userService.getUserFromAuth(authentication);
+
         Event event = new Event();
         event.setName(request.getName());
         event.setDescription(request.getDescription());
@@ -51,7 +69,23 @@ public class EventServiceImpl implements EventService {
         event.setEstimatedBudget(BigDecimal.ZERO);
         event.setUser(user);
 
-        return mapToResponse(eventRepository.save(event));
+        eventRepository.save(event);
+
+        // Asociar opciones seleccionadas
+        List<Option> options = optionRepository.findAllById(request.getOptionIds());
+
+        if (options.size() != request.getOptionIds().size()) {
+            throw new IllegalArgumentException("Una o más opciones no existen");
+        }
+
+        for (Option option : options) {
+            EventOption eo = new EventOption();
+            eo.setEvent(event);
+            eo.setOption(option);
+            eventOptionRepository.save(eo);
+        }
+
+        return mapToResponse(event);
     }
 
     @Override
@@ -153,6 +187,20 @@ public class EventServiceImpl implements EventService {
         response.setEventDate(event.getEventDate());
         response.setStatus(event.getStatus());
         response.setEstimatedBudget(event.getEstimatedBudget());
+
+        List<OptionResponse> optionResponses =
+                event.getOptions().stream()
+                        .map(eo -> {
+                            Option o = eo.getOption();
+                            OptionResponse r = new OptionResponse();
+                            r.setId(o.getId());
+                            r.setName(o.getName());
+                            r.setPrice(o.getPrice());
+                            return r;
+                        })
+                        .toList();
+
+        response.setOptions(optionResponses);
         return response;
     }
 }

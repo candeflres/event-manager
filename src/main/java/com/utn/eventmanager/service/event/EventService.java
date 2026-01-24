@@ -14,7 +14,7 @@ public interface EventService {
     // ======================
     // CLIENT
     // ======================
-    EventResponse createEvent(Long userId, EventCreateRequest request);
+    EventResponse createEvent(Authentication authentication, EventCreateRequest request);
 
     EventResponse updateEvent(Long eventId, EventUpdateRequest request);
 
