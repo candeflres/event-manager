@@ -1,7 +1,7 @@
 .event-list {
-  max-width: 420px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 24px;
   color: #f1e4e9;
 }
 
@@ -22,16 +22,20 @@
 }
 
 .event-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .event-card {
   background: rgba(53, 25, 35, 0.9);
   border: 1px solid rgba(241, 228, 233, 0.35);
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
 }
 
 .event-card h3 {

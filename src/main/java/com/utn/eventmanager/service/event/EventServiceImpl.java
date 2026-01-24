@@ -125,7 +125,7 @@ public class EventServiceImpl implements EventService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Event> eventos;
 
-        if (user.getRole() == UserRole.ADMIN) {
+        if (user.getRole() == UserRole.EMPLOYEE) {
             eventos = eventRepository.findAll(pageable);
         } else {
             eventos = eventRepository.findByUserId(user.getId(), pageable);
