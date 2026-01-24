@@ -11,18 +11,23 @@ import java.util.List;
 // este DTO es para actualizar DESDE EL CLIENTE ()
 public class EventUpdateRequest {
 
-    @NotBlank
     @Size(max = 50)
     private String name;
 
     @Size(max = 255)
     private String description;
 
-    @NotNull
     private LocalDate eventDate;
 
-    @NotEmpty
     private List<Long> optionIds;
+
+    public List<Long> getOptionIds() {
+        return optionIds;
+    }
+
+    public void setOptionIds(List<Long> optionIds) {
+        this.optionIds = optionIds;
+    }
 
     public String getName() {
         return name;

@@ -102,6 +102,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventResponse updateEvent(Long eventId, EventUpdateRequest request) {
         Event event = findEvent(eventId);
 
@@ -110,10 +111,40 @@ public class EventServiceImpl implements EventService {
                     "El evento no puede modificarse en el estado actual"
             );
         }
+        if (request.getName() != null) {
+            event.setName(request.getName());
+        }
 
-        event.setName(request.getName());
-        event.setDescription(request.getDescription());
-        event.setEventDate(request.getEventDate());
+        if (request.getDescription() != null) {
+            event.setDescription(request.getDescription());
+        }
+
+        if (request.getEventDate() != null) {
+            event.setEventDate(request.getEventDate());
+        }
+
+        if (request.getOptionIds() != null) {
+
+            event.getOptions().clear();
+
+            List<Option> options =
+                    optionRepository.findAllById(request.getOptionIds());
+
+            if (options.size() != request.getOptionIds().size()) {
+                throw new IllegalArgumentException("Una o más opciones no existen");
+            }
+
+            for (Option option : options) {
+                EventOption eo = new EventOption();
+                eo.setEvent(event);
+                eo.setOption(option);
+                event.getOptions().add(eo);
+            }
+
+            event.setEstimatedBudget(
+                    calculateEstimatedBudget(event.getOptions())
+            );
+        }
 
         return mapToResponse(eventRepository.save(event));
     }
