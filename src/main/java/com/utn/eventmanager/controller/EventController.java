@@ -57,7 +57,7 @@ public class EventController {
     //---------------------------------------------//
     //----------- LIST CUSTOMER EVENTS -----------//
     //-------------------------------------------//
-    @GetMapping("/{userId}")
+    @GetMapping
     public Page<EventResponse> getEventsByUser(Authentication authentication, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "9") int size) {
         return eventService.getEventsByUser(authentication, page, size);

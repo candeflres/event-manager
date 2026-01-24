@@ -29,18 +29,16 @@ export class Login {
       Authorization: 'Basic ' + auth,
     });
 
-    this.http
-      .get('http://localhost:8080/api/events/event-list?page=0&size=1', { headers })
-      .subscribe({
-        next: () => {
-          localStorage.setItem('auth', auth);
-          this.authService.login();
-          this.router.navigate(['/home-logged']);
-        },
-        error: (err) => {
-          console.error(err.status, err.error);
-          alert('Credenciales incorrectas');
-        },
-      });
+    this.http.get('http://localhost:8080/api/events?page=0&size=1', { headers }).subscribe({
+      next: () => {
+        localStorage.setItem('auth', auth);
+        this.authService.login();
+        this.router.navigate(['/home-logged']);
+      },
+      error: (err) => {
+        console.error(err.status, err.error);
+        alert('Credenciales incorrectas');
+      },
+    });
   }
 }

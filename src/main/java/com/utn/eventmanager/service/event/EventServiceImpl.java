@@ -83,6 +83,10 @@ public class EventServiceImpl implements EventService {
             event.getOptions().add(eo);
         }
 
+        event.setEstimatedBudget(
+                calculateEstimatedBudget(event.getOptions())
+        );
+
         Event savedEvent = eventRepository.save(event);
 
         return mapToResponse(savedEvent);
@@ -176,6 +180,12 @@ public class EventServiceImpl implements EventService {
                     "No se puede modificar un evento finalizado"
             );
         }
+    }
+
+    private BigDecimal calculateEstimatedBudget(List<EventOption> eventOptions) {
+        return eventOptions.stream()
+                .map(eo -> eo.getOption().getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private EventResponse mapToResponse(Event event) {

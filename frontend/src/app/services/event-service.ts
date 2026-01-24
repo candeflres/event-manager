@@ -21,6 +21,6 @@ export class EventService {
 
     const params = new HttpParams().set('page', page).set('size', size);
 
-    return this.http.get<any>(`${this.apiUrl}/event-list`, { headers, params });
+    return this.http.get<any>(`${this.apiUrl}`, { headers, params });
   }
 }
