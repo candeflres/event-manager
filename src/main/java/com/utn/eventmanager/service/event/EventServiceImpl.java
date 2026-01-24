@@ -21,8 +21,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -60,6 +62,13 @@ public class EventServiceImpl implements EventService {
                                      EventCreateRequest request) {
 
         User user = userService.getUserFromAuth(authentication);
+
+        if (user.getRole() == UserRole.ADMIN || user.getRole() == UserRole.EMPLOYEE) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Los empleados y administradores no pueden crear eventos"
+            );
+        }
 
         Event event = new Event();
         event.setName(request.getName());
