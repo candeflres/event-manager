@@ -57,7 +57,7 @@ public class EventController {
     //---------------------------------------------//
     //----------- LIST CUSTOMER EVENTS -----------//
     //-------------------------------------------//
-    @GetMapping("/event-list")
+    @GetMapping("/{userId}")
     public Page<EventResponse> getEventsByUser(Authentication authentication, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "9") int size) {
         return eventService.getEventsByUser(authentication, page, size);
@@ -66,7 +66,7 @@ public class EventController {
     //------------------------------------------//
     //----------- SEE EVENT DETAILS -----------//
     //----------------------------------------//
-    @GetMapping("/{eventId}")
+    @GetMapping("/detail/{eventId}")
     public EventResponse getEventDetail(@PathVariable Long eventId) {
         return eventService.getEventDetail(eventId);
     }

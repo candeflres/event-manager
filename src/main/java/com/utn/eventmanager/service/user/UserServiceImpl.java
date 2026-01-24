@@ -88,10 +88,18 @@ public class UserServiceImpl implements UserService {
         res.setActive(user.getActive());
         return res;
     }
+    @Override
     public User getUserFromAuth(Authentication authentication) {
+        if (authentication == null) {
+            throw new RuntimeException("Authentication is null");
+        }
+
         String email = authentication.getName();
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() ->
+                        new RuntimeException("Usuario no encontrado para email: " + email)
+                );
     }
     // crear empleado como admin !
     @Override

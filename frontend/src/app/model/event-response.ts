@@ -2,7 +2,7 @@ export interface EventResponse {
   id: number;
   name: string;
   description: string;
-  date: string;
+  eventDate: string;
   status: string;
   estimatedBudget: number;
 }

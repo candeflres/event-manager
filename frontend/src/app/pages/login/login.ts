@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from '../../services/auth-service';
 
 @Component({
@@ -23,19 +23,24 @@ export class Login {
   ) {}
 
   login() {
+    const auth = btoa(`${this.email}:${this.password}`);
+
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + btoa(`${this.email}:${this.password}`),
+      Authorization: 'Basic ' + auth,
     });
 
-    this.http.get('http://localhost:8080/api/users', { headers }).subscribe({
-      next: () => {
-        this.authService.login();
-        this.router.navigate(['/home-logged']);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Error de login');
-      },
-    });
+    this.http
+      .get('http://localhost:8080/api/events/event-list?page=0&size=1', { headers })
+      .subscribe({
+        next: () => {
+          localStorage.setItem('auth', auth);
+          this.authService.login();
+          this.router.navigate(['/home-logged']);
+        },
+        error: (err) => {
+          console.error(err.status, err.error);
+          alert('Credenciales incorrectas');
+        },
+      });
   }
 }

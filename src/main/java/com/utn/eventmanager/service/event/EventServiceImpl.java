@@ -69,9 +69,6 @@ public class EventServiceImpl implements EventService {
         event.setEstimatedBudget(BigDecimal.ZERO);
         event.setUser(user);
 
-        eventRepository.save(event);
-
-        // Asociar opciones seleccionadas
         List<Option> options = optionRepository.findAllById(request.getOptionIds());
 
         if (options.size() != request.getOptionIds().size()) {
@@ -82,10 +79,13 @@ public class EventServiceImpl implements EventService {
             EventOption eo = new EventOption();
             eo.setEvent(event);
             eo.setOption(option);
-            eventOptionRepository.save(eo);
+
+            event.getOptions().add(eo);
         }
 
-        return mapToResponse(event);
+        Event savedEvent = eventRepository.save(event);
+
+        return mapToResponse(savedEvent);
     }
 
     @Override
@@ -152,7 +152,6 @@ public class EventServiceImpl implements EventService {
 
         event.setStatus(request.getStatus());
 
-        // 🔜 Acá después enchufás AuditLog
         return mapToResponse(eventRepository.save(event));
     }
 
