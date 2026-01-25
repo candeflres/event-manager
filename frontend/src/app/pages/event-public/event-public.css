@@ -1,59 +1,77 @@
-/* CONTENEDOR GENERAL */
 section {
-  max-width: 720px;
+  max-width: 760px;
   margin: 4rem auto;
-  padding: 2.5rem 2rem;
-  background: linear-gradient(180deg, #2a1d23, #22161b);
-  border-radius: 18px;
+  padding: 3rem 2.5rem;
+  background: radial-gradient(circle at top, #3a2430, #1f1419);
+  border-radius: 24px;
   text-align: center;
   color: #f1e4e9;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
-/* TÍTULO PRINCIPAL */
 h1 {
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   color: #ffffff;
 }
 
-/* TEXTO */
+.countdown {
+  margin: 2.5rem 0;
+  padding: 2rem 1.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  border: 1px solid rgba(205, 162, 177, 0.35);
+}
+
+.countdown p {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #cbb5be;
+}
+
+.countdown span {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #cda2b1;
+}
+
 p {
   font-size: 1.05rem;
   margin: 0.8rem 0;
-  color: #d8c6ce;
+  color: #e3d2da;
 }
 
 p strong {
   color: #ffffff;
 }
 
-/* SEPARADOR VISUAL */
-section::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: #cda2b1;
-  margin: 2rem auto;
-  border-radius: 2px;
+p:first-of-type {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 1.5rem;
 }
 
-/* MENSAJE FINAL */
 h2 {
-  font-size: 1.4rem;
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: #cda2b1;
 }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  section {
-    margin: 2rem 1rem;
-    padding: 2rem 1.5rem;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
+section::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, transparent, #cda2b1, transparent);
+  margin: 3rem auto 0;
+  border-radius: 4px;
 }

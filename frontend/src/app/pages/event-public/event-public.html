@@ -1,8 +1,13 @@
 <section *ngIf="event">
   <h1>Vení a mi evento 😎</h1>
 
+  <div class="countdown">
+    <p>Cuenta regresiva</p>
+    <span>{{ countdown }}</span>
+  </div>
+
   <p>{{ event.name }}</p>
-  <p><strong>Dónde:</strong> {{ event.description }}</p>
+  <p><strong>Dónde:</strong> NUESTRA DIRECCIÓN!</p>
   <p><strong>Día:</strong> {{ event.eventDate }}</p>
 
   <h2>No faltes!</h2>
