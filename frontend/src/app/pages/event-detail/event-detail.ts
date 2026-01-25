@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { EventService } from '../../services/event-service';
 import { EventResponse } from '../../model/event-response';
@@ -10,7 +10,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule],
+  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterLink],
   templateUrl: './event-detail.html',
   styleUrls: ['./event-detail.css'],
 })
@@ -91,6 +91,8 @@ export class EventDetail implements OnInit {
   }
 
   share(): void {
-    alert('Compartir (pendiente)');
+    const link = `${window.location.origin}/event/${this.event.id}`;
+    console.log('LINK PUBLICO:', link);
+    window.open(link, '_blank');
   }
 }

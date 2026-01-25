@@ -59,4 +59,8 @@ export const routes: Routes = [
     component: EventDetail,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'event/:id',
+    loadComponent: () => import('./pages/event-public/event-public').then((m) => m.EventPublic),
+  },
 ];

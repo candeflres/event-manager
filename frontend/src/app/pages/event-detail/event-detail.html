@@ -36,7 +36,7 @@
     <button *ngIf="isEmployee" class="reject" (click)="reject()">Rechazar</button>
 
     <!-- COMUNES -->
-    <button (click)="share()">Compartir</button>
+    <button class="share" [routerLink]="['/event', event.id]">Compartir</button>
     <button class="secondary" (click)="goBack()">Volver</button>
   </div>
 </section>

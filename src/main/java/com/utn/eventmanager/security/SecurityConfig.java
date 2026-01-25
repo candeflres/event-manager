@@ -40,6 +40,8 @@ public class SecurityConfig {
                         /// esto hace q todos puedan crearse un user
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 
+                        ///  este deja q se pueda compartir invitacion a evento
+                        .requestMatchers("/api/public/**").permitAll()
                         /// esto hace q ninguno pueda entrar a cualquier ruta sin estar logeado
                         .anyRequest().authenticated()
                 )

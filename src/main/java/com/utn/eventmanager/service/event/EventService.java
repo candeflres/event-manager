@@ -25,6 +25,9 @@ public interface EventService {
     Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size);
 
     EventResponse getEventDetail(Long eventId);
+
+    EventResponse getPublicEvent(Long eventId);
+
     // ======================
     // EMPLOYEE
     // ======================

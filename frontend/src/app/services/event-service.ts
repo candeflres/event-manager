@@ -73,4 +73,8 @@ export class EventService {
   updateEventStatus(eventId: number, status: 'APPROVED' | 'REJECTED') {
     return this.http.put(`${this.apiUrl}/${eventId}/status`, { status });
   }
+
+  getPublicEvent(id: number) {
+    return this.http.get<EventResponse>(`http://localhost:8080/api/public/events/${id}`);
+  }
 }

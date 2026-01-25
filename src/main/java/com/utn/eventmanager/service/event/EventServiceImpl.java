@@ -204,6 +204,15 @@ public class EventServiceImpl implements EventService {
         return mapToResponse(findEvent(eventId));
     }
 
+    @Override
+    public EventResponse getPublicEvent(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Evento no encontrado"));
+
+        return mapToResponse(event);
+    }
+
+
 
     // ======================
     // EMPLOYEE

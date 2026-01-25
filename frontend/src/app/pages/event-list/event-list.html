@@ -11,8 +11,7 @@
       <p><strong>Budget:</strong> {{ evento.estimatedBudget }}</p>
 
       <div class="actions">
-        <button class="share">Compartir</button>
-
+        <button class="share" [routerLink]="['/event', evento.id]">Compartir</button>
         <button class="see-more" [routerLink]="['/event-detail', evento.id]">Ver más</button>
       </div>
     </div>
