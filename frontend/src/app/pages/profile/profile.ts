@@ -65,4 +65,8 @@ export class ProfilePage implements OnInit {
       error: () => alert('No se pudo dar de baja la cuenta'),
     });
   }
+
+  goHome(): void {
+    this.router.navigate(['/home-logged']);
+  }
 }

@@ -50,25 +50,46 @@
   font-size: 0.9rem;
 }
 
-.delete-btn {
-  margin-top: 16px;
-  align-self: flex-end;
-  padding: 6px 12px;
+.profile-actions button {
+  padding: 6px 14px;
   font-size: 0.8rem;
   font-weight: 500;
   background: transparent;
-  color: #cda2b1;
-  border: 1px solid rgba(205, 162, 177, 0.4);
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  letter-spacing: 0.2px;
+}
+
+.back-btn {
+  color: #f1e4e9;
+  border: 1px solid rgba(241, 228, 233, 0.35);
+}
+
+.back-btn:hover {
+  background: rgba(241, 228, 233, 0.12);
+  border-color: rgba(241, 228, 233, 0.6);
+}
+
+.back-btn:active {
+  transform: scale(0.96);
+}
+.delete-btn {
+  color: #cda2b1;
+  border: 1px solid rgba(205, 162, 177, 0.45);
 }
 
 .delete-btn:hover {
-  background: rgba(205, 162, 177, 0.1);
+  background: rgba(205, 162, 177, 0.12);
   border-color: #cda2b1;
 }
 
 .delete-btn:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
+}
+.profile-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 }

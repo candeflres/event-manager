@@ -35,7 +35,11 @@
 
   <div class="inactive-warning" *ngIf="!user.active">Esta cuenta se encuentra dada de baja</div>
 
-  <button class="delete-btn" *ngIf="isClientUser && user.active" (click)="deleteMyAccount()">
-    Quiero borrar mi cuenta
-  </button>
+  <div class="profile-actions">
+    <button class="back-btn" (click)="goHome()">Volver</button>
+
+    <button class="delete-btn" *ngIf="isClientUser && user.active" (click)="deleteMyAccount()">
+      Quiero borrar mi cuenta
+    </button>
+  </div>
 </div>
