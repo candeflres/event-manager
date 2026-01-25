@@ -102,9 +102,27 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
-    public EventResponse updateEvent(Long eventId, EventUpdateRequest request) {
+    public EventResponse updateEvent(
+            Long eventId,
+            EventUpdateRequest request,
+            Authentication authentication
+    ) {
+        User user = userService.getUserFromAuth(authentication);
         Event event = findEvent(eventId);
+
+        if (user.getRole() != UserRole.CLIENT) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Solo los clientes pueden editar eventos"
+            );
+        }
+
+        if (!event.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "No sos dueño de este evento"
+            );
+        }
 
         if (!isEditable(event)) {
             throw new ResponseStatusException(
@@ -112,6 +130,7 @@ public class EventServiceImpl implements EventService {
                     "El evento solo puede editarse mientras esté en estado PENDIENTE"
             );
         }
+
         if (request.getName() != null) {
             event.setName(request.getName());
         }
@@ -190,9 +209,20 @@ public class EventServiceImpl implements EventService {
     // EMPLOYEE
     // ======================
     @Override
-    public EventResponse updateEventStatus(Long eventId,
-                                           EventUpdateStatusRequest request) {
+    public EventResponse updateEventStatus(
+            Long eventId,
+            EventUpdateStatusRequest request,
+            Authentication authentication
+    ) {
+        User user = userService.getUserFromAuth(authentication);
         Event event = findEvent(eventId);
+
+        if (user.getRole() != UserRole.EMPLOYEE) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Solo empleados pueden aprobar o rechazar eventos"
+            );
+        }
 
         validateStatusTransition(event.getStatus(), request.getStatus());
 

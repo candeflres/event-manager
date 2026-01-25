@@ -42,8 +42,8 @@ public class EventController {
     //-----------------------------------------------------------------//
     @PutMapping("/{eventId}")
     public EventResponse updateEvent(@PathVariable Long eventId,
-                                     @RequestBody @Valid EventUpdateRequest request) {
-        return eventService.updateEvent(eventId, request);
+                                     @RequestBody @Valid EventUpdateRequest request, Authentication authentication) {
+        return eventService.updateEvent(eventId, request, authentication);
     }
 
     //------------------------------------------------//
@@ -82,7 +82,7 @@ public class EventController {
     //Change event status
     @PutMapping("/{eventId}/status")
     public EventResponse updateEventStatus(@PathVariable Long eventId,
-                                           @RequestBody @Valid EventUpdateStatusRequest request) {
-        return eventService.updateEventStatus(eventId, request);
+                                           @RequestBody @Valid EventUpdateStatusRequest request, Authentication authentication) {
+        return eventService.updateEventStatus(eventId, request, authentication);
     }
 }

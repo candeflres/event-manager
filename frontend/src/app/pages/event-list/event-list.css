@@ -1,146 +1,120 @@
-/* ======================
-   CONTENEDOR GENERAL
-   ====================== */
 .event-list {
-  max-width: 1200px;
-  min-height: 100%;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 24px;
-  color: #f1e4e9;
+  padding: 2.5rem 1.5rem 3rem;
+  color: #f3e9ee;
 }
 
 .event-list h2 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
 }
 
-/* ======================
-   BOTÓN FILTRO
-   ====================== */
 .filter {
-  background: #cda2b1;
+  background: var(--accent);
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 6px 14px;
-  color: #351923;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
   font-weight: 500;
-  margin-bottom: 16px;
   cursor: pointer;
+  margin-bottom: 2rem;
 }
 
-/* ======================
-   GRID DE EVENTOS
-   ====================== */
+.filter:hover {
+  background: var(--accent-soft);
+}
 .event-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+t-card {
+  background: linear-gradient(180deg, #2f1f26, #23161b);
+  border-radius: 14px;
+  padding: 1.6rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ======================
-   TARJETA EVENTO
-   ====================== */
 .event-card {
-  background: rgba(53, 25, 35, 0.9);
-  border: 1px solid rgba(241, 228, 233, 0.35);
+  background: #2a1d23;
   border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 200px;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    border 0.2s ease,
+    transform 0.2s ease;
 }
 
+.event-card:hover {
+  transform: translateY(-2px);
+  border-color: #c68aa0;
+}
 .event-card h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .event-card p {
-  margin: 2px 0;
-  font-size: 0.85rem;
-  color: rgba(241, 228, 233, 0.85);
+  font-size: 0.9rem;
+  color: #cbb5be;
+  margin: 0.2rem 0;
 }
 
-/* ======================
-   ACCIONES
-   ====================== */
+.event-card p strong {
+  color: #f3e9ee;
+}
 .actions {
   display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
 }
 
 .actions button {
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 0.8rem;
+  flex: 1;
+  padding: 0.45rem 0;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  border: 1px solid #c68aa0;
+  background: transparent;
+  color: #f3e9ee;
   cursor: pointer;
 }
 
-.share {
-  background: transparent;
-  color: #f1e4e9;
-  border: 1px solid rgba(241, 228, 233, 0.5);
+.actions button + button {
+  margin-left: 0.8rem;
+  background: var(--accent);
+  color: #fff;
 }
 
-.see-more {
-  background: #cda2b1;
-  color: #351923;
-  border: none;
+.actions button:hover {
+  opacity: 0.9;
 }
-
-/* ======================
-   PAGINACIÓN
-   ====================== */
 .pagination {
-  margin: 32px 0 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 14px;
-}
-
-.pagination span {
-  font-size: 0.9rem;
-  color: rgba(241, 228, 233, 0.85);
+  gap: 1.2rem;
+  margin-top: 2.2rem;
 }
 
 .pagination button {
+  padding: 0.4rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #c68aa0;
   background: transparent;
-  border: 1px solid rgba(241, 228, 233, 0.5);
-  color: #f1e4e9;
-  padding: 6px 14px;
-  border-radius: 6px;
+  color: #f3e9ee;
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pagination button:hover:not(:disabled) {
-  background: rgba(241, 228, 233, 0.15);
+  font-size: 0.85rem;
 }
 
 .pagination button:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
 }
 
-/* ======================
-   RESPONSIVE
-   ====================== */
-@media (max-width: 1024px) {
-  .event-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .event-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .actions {
-    flex-direction: column;
-    gap: 8px;
-  }
+.pagination span {
+  font-size: 0.85rem;
+  color: #cbb5be;
 }

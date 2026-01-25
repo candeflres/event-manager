@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { EventResponse } from '../model/event-response';
 import { Page } from '../model/page';
 
@@ -15,10 +15,11 @@ export class EventService {
 
   getEventList(page: number, size: number) {
     const auth = localStorage.getItem('auth');
-    console.log('AUTH HEADER 👉', auth);
+    console.log('AUTH HEADER', auth);
 
     if (!auth) {
-      throw new Error('No auth header');
+      console.warn('No auth header');
+      return EMPTY;
     }
 
     const headers = new HttpHeaders({
@@ -47,5 +48,23 @@ export class EventService {
     });
 
     return this.http.post(this.apiUrl, payload, { headers });
+  }
+  getEventDetail(id: number) {
+    return this.http.get<EventResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  updateEvent(
+    eventId: number,
+    payload: {
+      name?: string;
+      description?: string;
+      eventDate?: string;
+    },
+  ) {
+    return this.http.put(`${this.apiUrl}/${eventId}`, payload);
+  }
+
+  updateEventStatus(eventId: number, status: 'APPROVED' | 'REJECTED') {
+    return this.http.put(`${this.apiUrl}/${eventId}/status`, { status });
   }
 }

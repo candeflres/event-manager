@@ -18,7 +18,7 @@ public interface EventService {
     // ======================
     EventResponse createEvent(Authentication authentication, EventCreateRequest request);
 
-    EventResponse updateEvent(Long eventId, EventUpdateRequest request);
+    EventResponse updateEvent(Long eventId, EventUpdateRequest request, Authentication authentication);
 
     EventResponse sendToReview(Long eventId);
 
@@ -29,5 +29,5 @@ public interface EventService {
     // EMPLOYEE
     // ======================
 
-    EventResponse updateEventStatus(Long eventId, EventUpdateStatusRequest request);
+    EventResponse updateEventStatus(Long eventId, EventUpdateStatusRequest request, Authentication authentication);
 }

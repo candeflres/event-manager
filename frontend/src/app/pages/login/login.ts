@@ -32,7 +32,7 @@ export class Login {
     this.http.get('http://localhost:8080/api/events?page=0&size=1', { headers }).subscribe({
       next: () => {
         localStorage.setItem('auth', auth);
-        this.authService.login();
+        this.authService.login(auth);
         this.router.navigate(['/home-logged']);
       },
       error: (err) => {

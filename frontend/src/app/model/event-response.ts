@@ -1,3 +1,4 @@
+import { OptionResponse } from './option-response';
 export interface EventResponse {
   id: number;
   name: string;
@@ -5,4 +6,5 @@ export interface EventResponse {
   eventDate: string;
   status: string;
   estimatedBudget: number;
+  options: OptionResponse[];
 }

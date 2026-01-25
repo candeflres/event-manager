@@ -1,0 +1,42 @@
+<section *ngIf="!loading" class="event-detail">
+  <h2>{{ event.name }}</h2>
+
+  <!-- CLIENT: EDICIÓN -->
+  <div *ngIf="editMode && isClient" class="edit-form">
+    <input [(ngModel)]="editForm.name" placeholder="Nombre" />
+    <textarea [(ngModel)]="editForm.description" placeholder="Descripción"></textarea>
+    <input type="date" [(ngModel)]="editForm.eventDate" />
+
+    <button class="primary" (click)="saveChanges()">Guardar cambios</button>
+  </div>
+
+  <!-- VISUALIZACIÓN -->
+  <div *ngIf="!editMode">
+    <p>{{ event.description }}</p>
+
+    <div class="info">
+      <span>Fecha: {{ event.eventDate }}</span>
+      <span>Estado: {{ event.status }}</span>
+      <span>Presupuesto: ${{ event.estimatedBudget }}</span>
+    </div>
+
+    <h3>Opciones</h3>
+    <ul>
+      <li *ngFor="let o of event.options">{{ o.name }} — ${{ o.price }}</li>
+    </ul>
+  </div>
+
+  <!-- BOTONES -->
+  <div class="actions">
+    <!-- CLIENT -->
+    <button *ngIf="isClient && !editMode" (click)="enableEdit()">Editar</button>
+
+    <!-- EMPLOYEE -->
+    <button *ngIf="isEmployee" class="approve" (click)="approve()">Aprobar</button>
+    <button *ngIf="isEmployee" class="reject" (click)="reject()">Rechazar</button>
+
+    <!-- COMUNES -->
+    <button (click)="share()">Compartir</button>
+    <button class="secondary" (click)="goBack()">Volver</button>
+  </div>
+</section>

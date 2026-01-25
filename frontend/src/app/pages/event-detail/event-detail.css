@@ -1,0 +1,54 @@
+.event-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #f1e4e9;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+}
+
+.info {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.primary {
+  background: #cda2b1;
+  color: #351923;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid #cda2b1;
+  color: #cda2b1;
+}
+
+.approve {
+  background: #4caf50;
+}
+
+.reject {
+  background: #e53935;
+}

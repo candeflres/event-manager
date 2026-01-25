@@ -10,6 +10,7 @@ import { HomeLogged } from './pages/home-logged/home-logged';
 import { EventList } from './pages/event-list/event-list';
 import { EventCreate } from './pages/event-create/event-create';
 import { AuthGuard } from './guards/auth.guard';
+import { EventDetail } from './pages/event-detail/event-detail';
 export const routes: Routes = [
   {
     path: 'home',
@@ -51,6 +52,11 @@ export const routes: Routes = [
   {
     path: 'event-create',
     component: EventCreate,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'event-detail/:id',
+    component: EventDetail,
     canActivate: [AuthGuard],
   },
 ];
