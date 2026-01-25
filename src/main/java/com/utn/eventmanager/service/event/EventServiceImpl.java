@@ -372,4 +372,7 @@ public class EventServiceImpl implements EventService {
 
         return events.map(this::mapToResponse);
     }
+
+
+
 }

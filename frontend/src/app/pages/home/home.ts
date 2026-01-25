@@ -6,7 +6,7 @@ import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-home',
-  imports: [KnowMore, Hero, PastEvents, Footer],
+  imports: [KnowMore, Hero, PastEvents],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

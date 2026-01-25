@@ -1,0 +1,74 @@
+.profile-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px;
+  color: #f1e4e9;
+}
+
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.profile-card {
+  background: rgba(53, 25, 35, 0.85);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  gap: 12px;
+}
+
+.row span {
+  color: #cda2b1;
+  font-weight: 500;
+}
+
+.row strong {
+  font-weight: 600;
+  text-align: right;
+}
+
+.inactive-warning {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  margin-top: 16px;
+  align-self: flex-end;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: transparent;
+  color: #cda2b1;
+  border: 1px solid rgba(205, 162, 177, 0.4);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(205, 162, 177, 0.1);
+  border-color: #cda2b1;
+}
+
+.delete-btn:active {
+  transform: scale(0.97);
+}

@@ -1,0 +1,41 @@
+<div class="profile-container" *ngIf="!loading && user">
+  <h2>Mi perfil</h2>
+
+  <div class="profile-card">
+    <div class="row">
+      <span>Nombre</span>
+      <strong>{{ user.firstName }}</strong>
+    </div>
+
+    <div class="row">
+      <span>Apellido</span>
+      <strong>{{ user.lastName }}</strong>
+    </div>
+
+    <div class="row">
+      <span>Email</span>
+      <strong>{{ user.email }}</strong>
+    </div>
+
+    <div class="row">
+      <span>Teléfono</span>
+      <strong>{{ user.phone || '-' }}</strong>
+    </div>
+
+    <div class="row" *ngIf="canSeeUserRole">
+      <span>Rol</span>
+      <strong>{{ user.role }}</strong>
+    </div>
+
+    <div class="row">
+      <span>Cuenta creada</span>
+      <strong>{{ user.created | date: 'dd/MM/yyyy' }}</strong>
+    </div>
+  </div>
+
+  <div class="inactive-warning" *ngIf="!user.active">Esta cuenta se encuentra dada de baja</div>
+
+  <button class="delete-btn" *ngIf="isClientUser && user.active" (click)="deleteMyAccount()">
+    Quiero borrar mi cuenta
+  </button>
+</div>

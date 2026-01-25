@@ -6,9 +6,11 @@ import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,18 +65,32 @@ public class UserServiceImpl implements UserService {
         return mapToResponse(findUser(userId));
     }
 
-    @Override
-    public void deactivateUser(Long userId) {
-        User user = findUser(userId);
-        user.setActive(false);
-        userRepository.save(user);
-    }
-
     // privados
 
     private User findUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Override
+    public UserResponse getMyProfile(Authentication authentication) {
+        User user = getUserFromAuth(authentication);
+        return mapToResponse(user);
+    }
+
+    @Override
+    public void deactivateMyAccount(Authentication authentication) {
+        User user = getUserFromAuth(authentication);
+
+        if (user.getRole() != UserRole.CLIENT) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Solo los clientes pueden darse de baja"
+            );
+        }
+
+        user.setActive(false);
+        userRepository.save(user);
     }
 
     private UserResponse mapToResponse(User user) {
@@ -86,6 +102,11 @@ public class UserServiceImpl implements UserService {
         res.setPhone(user.getPhone());
         res.setRole(user.getRole());
         res.setActive(user.getActive());
+
+        if (user.getCreated() != null) {
+            res.setCreated(user.getCreated().toLocalDate());
+        }
+
         return res;
     }
     @Override

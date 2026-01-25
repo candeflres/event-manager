@@ -4,6 +4,7 @@ import com.utn.eventmanager.dto.user.UserCreateRequest;
 import com.utn.eventmanager.dto.user.UserResponse;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,9 +46,14 @@ public class UserController {
     //---------------------------------------//
     //----------- LOW USER LOGIC -----------//
     //-------------------------------------//
-    @DeleteMapping("/{id}")
-    public void deactivateUser(@PathVariable Long id) {
-        userService.deactivateUser(id);
+    @GetMapping("/me")
+    public UserResponse getMyProfile(Authentication authentication) {
+        return userService.getMyProfile(authentication);
+    }
+
+    @PutMapping("/me/deactivate")
+    public void deactivateMyAccount(Authentication authentication) {
+        userService.deactivateMyAccount(authentication);
     }
 
     //-----------------------------------------------------------//
@@ -58,4 +64,9 @@ public class UserController {
     public List<UserResponse> getAllUsersIncludingInactive() {
         return userService.getAllUsersIncludingInactive();
     }
+
+
+
+
+
 }

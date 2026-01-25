@@ -13,6 +13,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { EventDetail } from './pages/event-detail/event-detail';
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
     path: 'home',
     component: Home,
   },
@@ -62,5 +67,15 @@ export const routes: Routes = [
   {
     path: 'event/:id',
     loadComponent: () => import('./pages/event-public/event-public').then((m) => m.EventPublic),
+  },
+  {
+    path: 'profile',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfilePage),
+  },
+
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];
