@@ -5,11 +5,12 @@ import { EventResponse } from '../../model/event-response';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, RouterLink],
+  imports: [CommonModule, NgFor, NgIf, RouterLink, FormsModule],
   templateUrl: './event-list.html',
   styleUrls: ['./event-list.css'],
 })
@@ -22,6 +23,9 @@ export class EventList implements OnInit {
   isFirst = true;
   isLast = false;
 
+  statusSelected: '' | 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED' = '';
+  orderSelected: 'asc' | 'desc' = 'asc';
+
   constructor(
     private eventService: EventService,
     private cdr: ChangeDetectorRef,
@@ -33,23 +37,25 @@ export class EventList implements OnInit {
   }
 
   loadEvents(): void {
-    this.eventService.getEventList(this.page, this.size).subscribe({
-      next: (res) => {
-        this.eventos = res.content;
+    this.eventService
+      .getFilteredEvents(this.page, this.size, this.statusSelected || undefined, this.orderSelected)
+      .subscribe({
+        next: (res) => {
+          this.eventos = res.content;
 
-        this.totalPages = res.totalPages;
-        this.isFirst = this.page === 0;
-        this.isLast = this.page >= this.totalPages - 1;
+          this.totalPages = res.totalPages;
+          this.isFirst = this.page === 0;
+          this.isLast = this.page >= this.totalPages - 1;
 
-        console.log('PAGE:', this.page);
-        console.log('TOTAL PAGES:', this.totalPages);
-        console.log('isFirst:', this.isFirst);
-        console.log('isLast:', this.isLast);
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error(err),
+      });
+  }
 
-        this.cdr.detectChanges();
-      },
-      error: (err) => console.error(err),
-    });
+  onFilterChange(): void {
+    this.page = 0;
+    this.loadEvents();
   }
 
   nextPage(): void {
@@ -66,7 +72,7 @@ export class EventList implements OnInit {
     }
   }
 
-  trackById(index: number, evento: any) {
+  trackById(index: number, evento: EventResponse) {
     return evento.id;
   }
 }

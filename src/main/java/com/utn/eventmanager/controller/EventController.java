@@ -4,6 +4,7 @@ import com.utn.eventmanager.dto.event.EventCreateRequest;
 import com.utn.eventmanager.dto.event.EventResponse;
 import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
+import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.service.event.EventService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -84,5 +85,22 @@ public class EventController {
     public EventResponse updateEventStatus(@PathVariable Long eventId,
                                            @RequestBody @Valid EventUpdateStatusRequest request, Authentication authentication) {
         return eventService.updateEventStatus(eventId, request, authentication);
+    }
+
+    @GetMapping("/filter")
+    public Page<EventResponse> filterEvents(
+            Authentication authentication,
+            @RequestParam(required = false) EventStatus status,
+            @RequestParam(defaultValue = "asc") String order,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return eventService.getFilteredEvents(
+                authentication,
+                status,
+                order,
+                page,
+                size
+        );
     }
 }

@@ -5,6 +5,7 @@ import com.utn.eventmanager.dto.event.EventResponse;
 import com.utn.eventmanager.dto.event.EventUpdateRequest;
 import com.utn.eventmanager.dto.event.EventUpdateStatusRequest;
 import com.utn.eventmanager.model.EventOption;
+import com.utn.eventmanager.model.enums.EventStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 
@@ -28,6 +29,13 @@ public interface EventService {
 
     EventResponse getPublicEvent(Long eventId);
 
+    Page<EventResponse> getFilteredEvents(
+            Authentication authentication,
+            EventStatus status,
+            String order,
+            int page,
+            int size
+    );
     // ======================
     // EMPLOYEE
     // ======================

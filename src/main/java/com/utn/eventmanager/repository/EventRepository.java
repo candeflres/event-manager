@@ -4,59 +4,58 @@ import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.enums.EventStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-    //=================
-    // CLIENT
-    //=================
 
-    //-----------------------------------------------//
-    //----------- LIST A CLIENT'S EVENTS -----------//
-    //---------------------------------------------//
+    // =================
+    // CLIENT
+    // =================
+
     Page<Event> findByUserId(Long userId, Pageable pageable);
 
-    //------------------------------------------------------//
-    //----------- FILTER CLIENT EVENTS BY STATE -----------//
-    //----------------------------------------------------//
-    List<Event> findByUserIdAndStatus(Long userId, EventStatus status);
+    Page<Event> findByUserIdAndStatusNot(
+            Long userId,
+            EventStatus status,
+            Pageable pageable
+    );
 
-    //-------------------------------------//
-    //----------- SORT BY DATE -----------//
-    //-----------------------------------//
-    // Sort by date
-    List<Event> findByUserIdOrderByEventDateAsc(Long userId);
-    List<Event> findByUserIdOrderByEventDateDesc(Long userId);
+    Page<Event> findByUserIdAndStatusNotAndStatus(
+            Long userId,
+            EventStatus excluded,
+            EventStatus status,
+            Pageable pageable
+    );
 
-//====================================================================================================================//
-
-    //=================
+    // =================
     // EMPLOYEE
-    //=================
+    // =================
+    Page<Event> findByStatusNot(
+            EventStatus status,
+            Pageable pageable
+    );
 
-    //--------------------------------------//
-    //----------- SEE ALL EVENTS-----------//
-    //------------------------------------//
-    List<Event> findAll();
+    Page<Event> findByStatusNotAndStatus(
+            EventStatus excluded,
+            EventStatus status,
+            Pageable pageable
+    );
+    Page<Event> findByStatus(EventStatus status, Pageable pageable);
 
-    //-----------------------------------------//
-    //----------- FILTER BY STATUS -----------//
-    //---------------------------------------//
-    List<Event> findByStatus(EventStatus status);
+    Page<Event> findByEventDateBetween(
+            LocalDateTime start,
+            LocalDateTime end,
+            Pageable pageable
+    );
 
-    //---------------------------------------------//
-    //----------- FILTER BY DATE RANGE -----------//
-    //-------------------------------------------//
-    List<Event> findByEventDateBetween(LocalDate start, LocalDate end);
+    // =================
+    // VERIFICATIONS
+    // =================
 
-    //--------------------------------------//
-    //----------- VERIFICATIONS -----------//
-    //------------------------------------//
-    // verificacion de si está en estado X (x ej para ver si está en PENDING
-    // el cliente puede editarlo todavia, una vez q está aprobado no)
     boolean existsByIdAndStatusIn(Long id, List<EventStatus> statuses);
-
 }

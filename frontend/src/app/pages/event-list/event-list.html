@@ -1,6 +1,21 @@
 <section class="event-list">
   <h2>Mis eventos</h2>
 
+  <div class="filters">
+    <select [(ngModel)]="statusSelected" (change)="onFilterChange()">
+      <option value="">Todos</option>
+      <option value="PENDING">Pendientes</option>
+      <option value="APPROVED">Aprobados</option>
+      <option value="REJECTED">Rechazados</option>
+      <option value="COMPLETED">Completados</option>
+    </select>
+
+    <select [(ngModel)]="orderSelected" (change)="onFilterChange()">
+      <option value="asc">Fecha ↑</option>
+      <option value="desc">Fecha ↓</option>
+    </select>
+  </div>
+
   <div class="event-grid">
     <div class="event-card" *ngFor="let evento of eventos">
       <h3>{{ evento.name }}</h3>

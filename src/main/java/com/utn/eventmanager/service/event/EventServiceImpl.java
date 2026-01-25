@@ -18,9 +18,11 @@ import com.utn.eventmanager.repository.OptionRepository;
 import com.utn.eventmanager.repository.UserRepository;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,7 @@ public class EventServiceImpl implements EventService {
 
     private final OptionRepository optionRepository;
     private final EventOptionRepository eventOptionRepository;
+    @Autowired
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserService userService;
@@ -187,13 +190,18 @@ public class EventServiceImpl implements EventService {
     public Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size) {
         User user = userService.getUserFromAuth(authentication);
 
-        Pageable pageable = PageRequest.of(page, size);
         Page<Event> eventos;
 
+        Pageable pageable = PageRequest.of(page, size);
+
         if (user.getRole() == UserRole.EMPLOYEE) {
-            eventos = eventRepository.findAll(pageable);
+            eventos = eventRepository.findByStatusNot(EventStatus.CANCELLED, pageable);
         } else {
-            eventos = eventRepository.findByUserId(user.getId(), pageable);
+            eventos = eventRepository.findByUserIdAndStatusNot(
+                    user.getId(),
+                    EventStatus.CANCELLED,
+                    pageable
+            );
         }
 
         return eventos.map(this::mapToResponse);
@@ -292,5 +300,59 @@ public class EventServiceImpl implements EventService {
 
         response.setOptions(optionResponses);
         return response;
+    }
+
+    @Override
+    public Page<EventResponse> getFilteredEvents(
+            Authentication authentication,
+            EventStatus status,
+            String order,
+            int page,
+            int size
+    ) {
+        User user = userService.getUserFromAuth(authentication);
+
+        Sort sort = order.equalsIgnoreCase("desc")
+                ? Sort.by("eventDate").descending()
+                : Sort.by("eventDate").ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Event> events;
+
+        if (user.getRole() == UserRole.EMPLOYEE) {
+
+            if (status != null) {
+                events = eventRepository.findByStatusNotAndStatus(
+                        EventStatus.CANCELLED,
+                        status,
+                        pageable
+                );
+            } else {
+                events = eventRepository.findByStatusNot(
+                        EventStatus.CANCELLED,
+                        pageable
+                );
+            }
+
+        } else { // CLIENT
+
+            if (status != null) {
+                events = eventRepository.findByUserIdAndStatusNotAndStatus(
+                        user.getId(),
+                        EventStatus.CANCELLED,
+                        status,
+                        pageable
+                );
+            } else {
+                events = eventRepository.findByUserIdAndStatusNot(
+                        user.getId(),
+                        EventStatus.CANCELLED,
+                        pageable
+                );
+            }
+        }
+
+        return events.map(this::mapToResponse);
     }
 }

@@ -77,4 +77,35 @@ export class EventService {
   getPublicEvent(id: number) {
     return this.http.get<EventResponse>(`http://localhost:8080/api/public/events/${id}`);
   }
+  getFilteredEvents(
+    page: number,
+    size: number,
+    status?: 'PENDING' | 'APPROVED' | 'REJECTED' | 'COMPLETED',
+    order: 'asc' | 'desc' = 'asc',
+  ) {
+    const auth = localStorage.getItem('auth');
+
+    if (!auth) {
+      console.warn('No auth header');
+      return EMPTY;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + auth,
+    });
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('order', order);
+
+    if (status) {
+      params = params.set('status', status);
+    }
+
+    return this.http.get<any>(`${this.apiUrl}/filter`, {
+      headers,
+      params,
+    });
+  }
 }
