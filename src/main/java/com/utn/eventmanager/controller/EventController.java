@@ -66,7 +66,7 @@ public class EventController {
     //------------------------------------------//
     //----------- SEE EVENT DETAILS -----------//
     //----------------------------------------//
-    @GetMapping("/detail/{eventId}")
+    @GetMapping("/{eventId}")
     public EventResponse getEventDetail(@PathVariable Long eventId) {
         return eventService.getEventDetail(eventId);
     }

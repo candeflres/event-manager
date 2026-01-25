@@ -5,13 +5,14 @@ import { EventService } from '../../services/event-service';
 import { EventResponse } from '../../model/event-response';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
   imports: [CommonModule, NgIf, NgFor, FormsModule],
   templateUrl: './event-detail.html',
-  styleUrl: './event-detail.css',
+  styleUrls: ['./event-detail.css'],
 })
 export class EventDetail implements OnInit {
   event!: EventResponse;
@@ -30,10 +31,11 @@ export class EventDetail implements OnInit {
     private route: ActivatedRoute,
     private eventService: EventService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    const role = localStorage.getItem('role'); // EMPLOYEE / CLIENT
+    const role = localStorage.getItem('role');
     this.isEmployee = role === 'EMPLOYEE';
     this.isClient = role === 'CLIENT';
 
@@ -41,12 +43,15 @@ export class EventDetail implements OnInit {
 
     this.eventService.getEventDetail(id).subscribe((res) => {
       this.event = res;
+
       this.editForm = {
         name: res.name,
         description: res.description,
         eventDate: res.eventDate,
       };
+
       this.loading = false;
+      this.cdr.detectChanges();
     });
   }
 

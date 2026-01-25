@@ -50,7 +50,13 @@ export class EventService {
     return this.http.post(this.apiUrl, payload, { headers });
   }
   getEventDetail(id: number) {
-    return this.http.get<EventResponse>(`${this.apiUrl}/${id}`);
+    const auth = localStorage.getItem('auth');
+
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + auth,
+    });
+
+    return this.http.get<EventResponse>(`${this.apiUrl}/${id}`, { headers });
   }
 
   updateEvent(

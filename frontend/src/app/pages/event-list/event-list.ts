@@ -9,7 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf],
+  imports: [CommonModule, NgFor, NgIf, RouterLink],
   templateUrl: './event-list.html',
   styleUrls: ['./event-list.css'],
 })
