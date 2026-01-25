@@ -107,8 +107,9 @@ public class EventServiceImpl implements EventService {
         Event event = findEvent(eventId);
 
         if (!isEditable(event)) {
-            throw new IllegalStateException(
-                    "El evento no puede modificarse en el estado actual"
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "El evento solo puede editarse mientras esté en estado PENDIENTE"
             );
         }
         if (request.getName() != null) {
@@ -166,6 +167,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size) {
         User user = userService.getUserFromAuth(authentication);
+
         Pageable pageable = PageRequest.of(page, size);
         Page<Event> eventos;
 

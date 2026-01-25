@@ -74,4 +74,7 @@ public class EventResponse {
     public void setEstimatedBudget(BigDecimal estimatedBudget) {
         this.estimatedBudget = estimatedBudget;
     }
+
+
 }
+

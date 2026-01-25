@@ -1,0 +1,44 @@
+<section class="event-create">
+  <h2>Empecemos a crear hoy.</h2>
+  <p>Completá los datos de tu evento</p>
+
+  <div class="form-group">
+    <label>Nombre</label>
+    <input type="text" [(ngModel)]="form.name" />
+  </div>
+
+  <div class="form-group">
+    <label>Descripción</label>
+    <input type="text" [(ngModel)]="form.description" />
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Fecha</label>
+      <input type="date" [(ngModel)]="form.eventDate" />
+    </div>
+  </div>
+
+  <div class="elements">
+    <div class="element-card" *ngFor="let element of elements">
+      <h4>{{ element.name }}</h4>
+
+      <div class="options">
+        <button
+          *ngFor="let option of element.options"
+          [class.selected]="isSelected(option.id)"
+          (click)="selectOption(element.id, option)"
+        >
+          {{ option.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <p class="budget">
+    Presupuesto estimado:
+    <strong>\${{ estimatedBudget }}</strong>
+  </p>
+
+  <button class="submit" (click)="createEvent()">Crear un evento</button>
+</section>

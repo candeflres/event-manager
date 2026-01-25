@@ -1,11 +1,17 @@
 package com.utn.eventmanager.dto.element;
 
+import com.utn.eventmanager.dto.option.OptionResponse;
+
+import java.util.List;
+
 // este DTO se utiliza para respuesta
 public class ElementResponse {
     private Long id;
     private String name;
     private String description;
     private Boolean available;
+    private List<OptionResponse> options;
+
 
     public Long getId() {
         return id;
@@ -37,5 +43,13 @@ public class ElementResponse {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public List<OptionResponse> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<OptionResponse> options) {
+        this.options = options;
     }
 }

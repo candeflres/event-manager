@@ -8,7 +8,8 @@ import { Contact } from './pages/contact/contact';
 import { MessageSent } from './pages/message-sent/message-sent';
 import { HomeLogged } from './pages/home-logged/home-logged';
 import { EventList } from './pages/event-list/event-list';
-
+import { EventCreate } from './pages/event-create/event-create';
+import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
   {
     path: 'home',
@@ -45,5 +46,11 @@ export const routes: Routes = [
   {
     path: 'event-list',
     component: EventList,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'event-create',
+    component: EventCreate,
+    canActivate: [AuthGuard],
   },
 ];

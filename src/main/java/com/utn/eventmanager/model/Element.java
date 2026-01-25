@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 @Table(name = "elements")
 public class Element {
@@ -24,6 +26,9 @@ public class Element {
 
     @NotNull
     private Boolean available;
+
+    @OneToMany(mappedBy = "element")
+    private List<Option> options;
 
     public Long getId() {
         return id;
@@ -55,5 +60,13 @@ public class Element {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 }

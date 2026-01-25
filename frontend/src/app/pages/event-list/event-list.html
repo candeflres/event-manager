@@ -2,7 +2,7 @@
   <h2>Mis eventos</h2>
   <button class="filter">Filtrar</button>
 
-  <div class="event-grid">
+  <div class="event-grid" *ngIf="eventos.length > 0">
     <div class="event-card" *ngFor="let evento of eventos">
       <h3>{{ evento.name }}</h3>
 
@@ -13,8 +13,15 @@
 
       <div class="actions">
         <button class="share">Compartir</button>
-        <button class="see-more">Ver mas</button>
+        <button class="see-more">Ver más</button>
       </div>
     </div>
+  </div>
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="prevPage()" [disabled]="isFirst">◀ Anterior</button>
+
+    <span> Página {{ page + 1 }} de {{ totalPages }} </span>
+
+    <button (click)="nextPage()" [disabled]="isLast">Siguiente ▶</button>
   </div>
 </section>
