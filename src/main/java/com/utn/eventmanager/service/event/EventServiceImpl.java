@@ -29,6 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -184,6 +186,21 @@ public class EventServiceImpl implements EventService {
 
         event.setStatus(EventStatus.PENDING);
         return mapToResponse(eventRepository.save(event));
+    }
+
+    @Transactional
+    public void updatePastEventsToCompleted() {
+        List<Event> events = eventRepository
+                .findByEventDateBeforeAndStatusIn(
+                        LocalDate.now(),
+                        List.of(EventStatus.PENDING, EventStatus.APPROVED)
+                );
+
+        for (Event event : events) {
+            event.setStatus(EventStatus.COMPLETED);
+        }
+
+        eventRepository.saveAll(events);
     }
 
     @Override

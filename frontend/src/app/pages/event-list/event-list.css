@@ -70,7 +70,31 @@ t-card {
   gap: 0.6rem;
   margin-top: 1.2rem;
 }
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
 
+.filters select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 160px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filters select:focus {
+  outline: none;
+  border-color: #7a5cff;
+  box-shadow: 0 0 0 2px rgba(122, 92, 255, 0.15);
+}
 .actions button {
   flex: 1;
   padding: 0.45rem 0;

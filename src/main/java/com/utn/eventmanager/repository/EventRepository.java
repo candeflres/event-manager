@@ -32,6 +32,11 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             Pageable pageable
     );
 
+    List<Event> findByEventDateBeforeAndStatusIn(
+            LocalDate date,
+            List<EventStatus> statuses
+    );
+
     // =================
     // EMPLOYEE
     // =================
