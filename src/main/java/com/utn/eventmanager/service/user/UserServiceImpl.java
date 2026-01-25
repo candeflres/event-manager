@@ -3,9 +3,14 @@ package com.utn.eventmanager.service.user;
 import com.utn.eventmanager.dto.user.EmployeeCreateRequest;
 import com.utn.eventmanager.dto.user.UserCreateRequest;
 import com.utn.eventmanager.dto.user.UserResponse;
+import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.User;
+import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.model.enums.UserRole;
+import com.utn.eventmanager.repository.EventRepository;
 import com.utn.eventmanager.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,10 +25,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EventRepository eventRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public UserServiceImpl(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            EventRepository eventRepository
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.eventRepository = eventRepository;
     }
 
     @Override
@@ -79,14 +91,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deactivateMyAccount(Authentication authentication) {
         User user = getUserFromAuth(authentication);
 
-        if (user.getRole() != UserRole.CLIENT) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Solo los clientes pueden darse de baja"
-            );
+        deactivateUser(user.getId());
+    }
+    @Override
+    @Transactional
+    public void deactivateUser(Long userId) {
+        System.out.println(">>> ENTRO A deactivateUser, userId = " + userId);
+
+        User user = findUser(userId);
+
+        if (user.getRole() == UserRole.CLIENT) {
+            System.out.println(">>> USUARIO ES CLIENT");
+
+
+            List<Event> eventsToCancel =
+                    eventRepository
+                            .findByUserIdAndStatusNot(
+                                    user.getId(),
+                                    EventStatus.COMPLETED,
+                                    Pageable.unpaged()
+                            )
+                            .getContent();
+
+            for (Event event : eventsToCancel) {
+                System.out.println(">>> CANCELANDO EVENTO " + event.getId() +
+                        " status actual = " + event.getStatus());
+                event.setStatus(EventStatus.CANCELLED);
+            }
+
+            eventRepository.saveAll(eventsToCancel);
         }
 
         user.setActive(false);

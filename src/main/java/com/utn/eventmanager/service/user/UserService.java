@@ -22,6 +22,8 @@ public interface UserService {
 
     void deactivateMyAccount(Authentication authentication);
 
+    void deactivateUser(Long userId);
+
     User getUserFromAuth (Authentication authentication);
 
     List<UserResponse> getAllUsersIncludingInactive();
