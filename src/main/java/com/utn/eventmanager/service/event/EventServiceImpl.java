@@ -91,8 +91,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventResponse createEvent(Authentication authentication,
-                                     EventCreateRequest request) {
+    public EventResponse createEvent(
+            Authentication authentication,
+            EventCreateRequest request
+    ) {
 
         User user = userService.getUserFromAuth(authentication);
 
@@ -100,6 +102,15 @@ public class EventServiceImpl implements EventService {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Los empleados y administradores no pueden crear eventos"
+            );
+        }
+
+        LocalDate minDate = LocalDate.now().plusDays(2);
+
+        if (request.getEventDate().isBefore(minDate)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "El evento debe crearse con al menos 2 días de anticipación"
             );
         }
 
@@ -121,7 +132,6 @@ public class EventServiceImpl implements EventService {
             EventOption eo = new EventOption();
             eo.setEvent(event);
             eo.setOption(option);
-
             event.getOptions().add(eo);
         }
 

@@ -57,6 +57,25 @@ export class EventCreate {
   }
 
   createEvent() {
+    if (!this.form.eventDate) {
+      alert('Seleccioná una fecha para el evento');
+      return;
+    }
+
+    const selectedDate = new Date(this.form.eventDate);
+    const today = new Date();
+
+    // Normalizamos horas para evitar bugs raros
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    const diffInDays = (selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (diffInDays < 2) {
+      alert('El evento debe crearse con al menos 2 días de anticipación');
+      return;
+    }
+
     const payload = {
       name: this.form.name,
       description: this.form.description,
@@ -71,7 +90,7 @@ export class EventCreate {
       },
       error: (err) => {
         console.error('Error creando evento', err);
-        alert('Error al crear el evento');
+        alert(err.error?.message || 'Error al crear el evento');
       },
     });
   }
