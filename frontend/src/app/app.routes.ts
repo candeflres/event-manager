@@ -11,6 +11,7 @@ import { EventList } from './pages/event-list/event-list';
 import { EventCreate } from './pages/event-create/event-create';
 import { AuthGuard } from './guards/auth.guard';
 import { EventDetail } from './pages/event-detail/event-detail';
+import { ResetPassword } from './pages/reset-password/reset-password';
 export const routes: Routes = [
   {
     path: '',
@@ -73,7 +74,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfilePage),
   },
-
+  { path: 'forgot-password', component: ForgotPassword },
+  { path: 'verify-code', component: VerifyCode },
+  { path: 'reset-password', component: ResetPassword },
   {
     path: '**',
     redirectTo: 'home',

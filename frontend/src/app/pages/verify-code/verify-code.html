@@ -3,8 +3,8 @@
     <h2>Te enviamos un código</h2>
     <p>Revisá el correo no deseado</p>
 
-    <form>
-      <input type="text" placeholder="Codigo" />
+    <form (ngSubmit)="confirmCode()">
+      <input type="text" placeholder="Código" [(ngModel)]="code" name="code" required />
 
       <div class="actions">
         <button class="submit" type="submit">Confirmar</button>
@@ -12,7 +12,7 @@
     </form>
 
     <section class="login">
-      <a routerLink="/login" class="login-link">Quiero iniciar sesion</a>
+      <a routerLink="/login" class="login-link">Quiero iniciar sesión</a>
     </section>
   </section>
 </section>

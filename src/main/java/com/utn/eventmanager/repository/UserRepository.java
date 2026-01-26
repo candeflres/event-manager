@@ -37,6 +37,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //--------------------------------------------------------------//
     //----------- VALIDATE DUPLICATES BY RETURNING USER -----------//
     //------------------------------------------------------------//
-    /// Validate duplicates by returning user
     Optional<User> findByEmailIgnoreCase(String email);
 }
