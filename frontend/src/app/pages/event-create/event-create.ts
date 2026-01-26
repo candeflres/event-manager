@@ -3,6 +3,7 @@ import { EventService } from '../../services/event-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-event-create',
@@ -25,6 +26,7 @@ export class EventCreate {
   constructor(
     private eventService: EventService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -34,6 +36,7 @@ export class EventCreate {
   loadElements() {
     this.eventService.getElementsWithOptions().subscribe((res) => {
       this.elements = res;
+      this.cdr.detectChanges();
     });
   }
 
