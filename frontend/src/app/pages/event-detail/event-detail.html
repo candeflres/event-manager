@@ -7,6 +7,31 @@
     <textarea [(ngModel)]="editForm.description" placeholder="Descripción"></textarea>
     <input type="date" [(ngModel)]="editForm.eventDate" />
 
+    <h3>Elementos</h3>
+
+    <div class="elements">
+      <div class="element" *ngFor="let el of elements">
+        <h4>{{ el.name }}</h4>
+
+        <div class="options">
+          <label *ngFor="let opt of el.options">
+            <input
+              type="radio"
+              [name]="'element-' + el.id"
+              [checked]="selectedOptionIds.includes(opt.id)"
+              (change)="selectOption(el.id, opt.id)"
+            />
+            {{ opt.name }} — ${{ opt.price }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <p class="budget">
+      Presupuesto estimado:
+      <strong>${{ estimatedBudget }}</strong>
+    </p>
+
     <button class="primary" (click)="saveChanges()">Guardar cambios</button>
   </div>
 

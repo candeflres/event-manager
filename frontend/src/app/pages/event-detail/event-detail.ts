@@ -22,6 +22,9 @@ export class EventDetail implements OnInit {
   isEmployee = false;
   isClient = false;
   editMode = false;
+  elements: any[] = [];
+  selectedOptionIds: number[] = [];
+  estimatedBudget = 0;
 
   editForm = {
     name: '',
@@ -36,6 +39,30 @@ export class EventDetail implements OnInit {
     private cdr: ChangeDetectorRef,
     private userService: UserService,
   ) {}
+
+  toggleOption(optionId: number, event: any) {
+    if (event.target.checked) {
+      this.selectedOptionIds.push(optionId);
+    } else {
+      this.selectedOptionIds = this.selectedOptionIds.filter((id) => id !== optionId);
+    }
+
+    this.updateEstimatedBudget();
+  }
+
+  updateEstimatedBudget() {
+    let total = 0;
+
+    for (const el of this.elements) {
+      for (const opt of el.options) {
+        if (this.selectedOptionIds.includes(opt.id)) {
+          total += opt.price;
+        }
+      }
+    }
+
+    this.estimatedBudget = total;
+  }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -59,8 +86,24 @@ export class EventDetail implements OnInit {
     });
   }
 
-  enableEdit(): void {
+  enableEdit() {
+    if (!this.canEdit()) return;
+
     this.editMode = true;
+
+    this.editForm = {
+      name: this.event.name,
+      description: this.event.description,
+      eventDate: this.event.eventDate?.substring(0, 10),
+    };
+
+    this.selectedOptionIds = this.event.options.map((o) => o.id);
+
+    this.eventService.getElementsWithOptions().subscribe((elements) => {
+      this.elements = elements;
+      this.updateEstimatedBudget();
+      this.cdr.detectChanges();
+    });
   }
 
   canEdit(): boolean {
@@ -72,16 +115,17 @@ export class EventDetail implements OnInit {
   }
 
   saveChanges() {
-    console.log('Payload que mando:', this.editForm);
+    const payload = {
+      ...this.editForm,
+      optionIds: this.selectedOptionIds,
+    };
 
-    this.eventService.updateEvent(this.event.id, this.editForm).subscribe({
+    this.eventService.updateEvent(this.event.id, payload).subscribe({
       next: (updated) => {
-        console.log('Respuesta backend:', updated);
         this.event = updated;
         this.editMode = false;
       },
       error: (err) => {
-        console.error('Error backend:', err);
         alert(err.error?.message || 'Error al guardar el evento');
       },
     });
@@ -127,5 +171,20 @@ export class EventDetail implements OnInit {
     const link = `${window.location.origin}/event/${this.event.id}`;
     console.log('LINK PUBLICO:', link);
     window.open(link, '_blank');
+  }
+
+  selectOption(elementId: number, optionId: number) {
+    this.selectedOptionIds = this.selectedOptionIds.filter((id) => {
+      for (const el of this.elements) {
+        if (el.id === elementId) {
+          return !el.options.some((opt: any) => opt.id === id);
+        }
+      }
+      return true;
+    });
+
+    this.selectedOptionIds.push(optionId);
+
+    this.updateEstimatedBudget();
   }
 }
