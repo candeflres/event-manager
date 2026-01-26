@@ -125,8 +125,29 @@
 
 .actions-right {
   display: flex;
-  gap: 0.8rem;
-  align-items: center;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.actions-right .danger {
+  align-self: flex-end;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: #c94258;
+  border: 1px solid rgba(211, 107, 124, 0.4);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions-right .danger:hover {
+  background: rgba(211, 107, 124, 0.08);
+  border-color: rgba(211, 107, 124, 0.6);
+}
+
+.actions-right .danger:active {
+  transform: scale(0.97);
 }
 
 .actions-right .edit {

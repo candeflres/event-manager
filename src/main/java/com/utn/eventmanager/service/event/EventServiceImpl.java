@@ -60,6 +60,31 @@ public class EventServiceImpl implements EventService {
         this.notificationService = notificationService;
     }
 
+    @Override
+    @Transactional
+    public void cancelEvent(Long eventId, Authentication authentication) {
+
+        User user = userService.getUserFromAuth(authentication);
+        Event event = findEvent(eventId);
+
+        if (!event.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "No sos dueño de este evento"
+            );
+        }
+
+        if (event.getStatus() == EventStatus.COMPLETED ) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "No se puede cancelar un evento completado"
+            );
+        }
+
+        event.setStatus(EventStatus.CANCELLED);
+        eventRepository.save(event);
+    }
+
     // ======================
     // CLIENT
     // ======================

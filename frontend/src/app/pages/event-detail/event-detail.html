@@ -67,6 +67,14 @@
       <button *ngIf="isClient && !editMode && canEdit()" class="edit" (click)="enableEdit()">
         Editar
       </button>
+      <button
+        *ngIf="isClient && event.status !== 'COMPLETED' && event.status !== 'CANCELLED'"
+        class="danger"
+        type="button"
+        (click)="cancelEvent()"
+      >
+        Cancelar evento
+      </button>
 
       <!-- EMPLOYEE -->
       <button *ngIf="isEmployee && event.status === 'PENDING'" class="approve" (click)="approve()">

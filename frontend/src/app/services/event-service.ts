@@ -117,4 +117,22 @@ export class EventService {
       params,
     });
   }
+
+  cancelEvent(eventId: number) {
+    const auth = localStorage.getItem('auth');
+
+    if (!auth) {
+      console.error('No auth found');
+    }
+
+    return this.http.patch<void>(
+      `http://localhost:8080/api/events/${eventId}/cancel`,
+      {},
+      {
+        headers: {
+          Authorization: 'Basic ' + auth,
+        },
+      },
+    );
+  }
 }

@@ -31,6 +31,7 @@ public interface EventService {
 
     EventResponse getPublicEvent(Long eventId);
 
+    void cancelEvent(Long eventId, Authentication authentication);
     Page<EventResponse> getFilteredEvents(
             Authentication authentication,
             EventStatus status,

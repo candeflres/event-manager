@@ -8,6 +8,7 @@ import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.service.event.EventService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,5 +103,14 @@ public class EventController {
                 page,
                 size
         );
+    }
+
+    @PatchMapping("/{id}/cancel")
+    public ResponseEntity<Void> cancelEvent(
+            @PathVariable Long id,
+            Authentication authentication
+    ) {
+        eventService.cancelEvent(id, authentication);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -187,4 +187,20 @@ export class EventDetail implements OnInit {
 
     this.updateEstimatedBudget();
   }
+
+  cancelEvent() {
+    if (!confirm('¿Estás seguro de que querés cancelar este evento?')) {
+      return;
+    }
+
+    this.eventService.cancelEvent(this.event.id).subscribe({
+      next: () => {
+        this.router.navigate(['/event-list']);
+      },
+      error: (err) => {
+        console.error(err);
+        alert(err.error?.message || 'No se pudo cancelar el evento');
+      },
+    });
+  }
 }
