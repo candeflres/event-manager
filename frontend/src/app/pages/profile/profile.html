@@ -1,7 +1,10 @@
 <div class="profile-container" *ngIf="!loading && user">
   <h2>Mi perfil</h2>
 
-  <div class="profile-card">
+  <!-- ===================== -->
+  <!-- ====== VISTA ======= -->
+  <!-- ===================== -->
+  <div class="profile-card" *ngIf="!editMode">
     <div class="row">
       <span>Nombre</span>
       <strong>{{ user.firstName }}</strong>
@@ -33,10 +36,56 @@
     </div>
   </div>
 
+  <!-- ===================== -->
+  <!-- ===== EDICIÓN ====== -->
+  <!-- ===================== -->
+  <div class="profile-card edit-card" *ngIf="editMode">
+    <h3>Datos personales</h3>
+
+    <input type="text" placeholder="Nombre" [(ngModel)]="profileForm.firstName" />
+
+    <input type="text" placeholder="Apellido" [(ngModel)]="profileForm.lastName" />
+
+    <input type="email" placeholder="Email" [(ngModel)]="profileForm.email" />
+
+    <input type="text" placeholder="Teléfono" [(ngModel)]="profileForm.phone" />
+
+    <div class="edit-actions">
+      <button class="save-btn" (click)="saveProfile()">Guardar cambios</button>
+    </div>
+
+    <!-- ===== CAMBIO PASSWORD ===== -->
+    <h3 class="password-title">Cambiar contraseña</h3>
+
+    <input
+      type="password"
+      placeholder="Contraseña actual"
+      [(ngModel)]="passwordForm.currentPassword"
+    />
+
+    <input type="password" placeholder="Nueva contraseña" [(ngModel)]="passwordForm.newPassword" />
+
+    <button class="password-btn" (click)="changePassword()">Cambiar contraseña</button>
+  </div>
+
+  <!-- ===================== -->
+  <!-- ===== WARNINGS ===== -->
+  <!-- ===================== -->
   <div class="inactive-warning" *ngIf="!user.active">Esta cuenta se encuentra dada de baja</div>
 
+  <!-- ===================== -->
+  <!-- ===== ACCIONES ===== -->
+  <!-- ===================== -->
   <div class="profile-actions">
-    <button class="back-btn" (click)="goHome()">Volver</button>
+    <button class="back-btn" (click)="handleBack()">Volver</button>
+
+    <button
+      class="edit-btn"
+      *ngIf="!editMode && user.role !== 'ADMIN' && user.active"
+      (click)="enableEdit()"
+    >
+      Editar perfil
+    </button>
 
     <button class="delete-btn" *ngIf="isClientUser && user.active" (click)="deleteMyAccount()">
       Quiero borrar mi cuenta

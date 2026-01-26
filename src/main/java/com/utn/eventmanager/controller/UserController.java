@@ -1,7 +1,9 @@
 package com.utn.eventmanager.controller;
 
+import com.utn.eventmanager.dto.user.ChangePasswordRequest;
 import com.utn.eventmanager.dto.user.UserCreateRequest;
 import com.utn.eventmanager.dto.user.UserResponse;
+import com.utn.eventmanager.dto.user.UserUpdateRequest;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,26 @@ public class UserController {
         return userService.createUser(request);
     }
 
+    @PutMapping("/me")
+    public UserResponse updateMyProfile(
+            Authentication authentication,
+            @RequestBody @Valid UserUpdateRequest request
+    ) {
+        return userService.updateMyProfile(authentication, request);
+    }
+
+    @PutMapping("/me/password")
+    public void changeMyPassword(
+            Authentication authentication,
+            @RequestBody @Valid ChangePasswordRequest request
+    ) {
+        userService.changeMyPassword(authentication, request);
+    }
+
+    @PutMapping("/me/deactivate")
+    public void deactivateMyAccount(Authentication authentication) {
+        userService.deactivateMyAccount(authentication);
+    }
     //----------------------------------------------//
     //----------- LIST ACTIVE USERS ---------------//
     //--------------------------------------------//
@@ -51,10 +73,7 @@ public class UserController {
         return userService.getMyProfile(authentication);
     }
 
-    @PutMapping("/me/deactivate")
-    public void deactivateMyAccount(Authentication authentication) {
-        userService.deactivateMyAccount(authentication);
-    }
+
 
     //-----------------------------------------------------------//
     //----------- VIEW ALL ACTIVE AND INACTIVE USERS -----------//
@@ -64,6 +83,9 @@ public class UserController {
     public List<UserResponse> getAllUsersIncludingInactive() {
         return userService.getAllUsersIncludingInactive();
     }
+
+
+
 
 
 

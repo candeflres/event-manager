@@ -1,8 +1,6 @@
 package com.utn.eventmanager.service.user;
 
-import com.utn.eventmanager.dto.user.EmployeeCreateRequest;
-import com.utn.eventmanager.dto.user.UserCreateRequest;
-import com.utn.eventmanager.dto.user.UserResponse;
+import com.utn.eventmanager.dto.user.*;
 import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.EventStatus;
@@ -88,6 +86,39 @@ public class UserServiceImpl implements UserService {
     public UserResponse getMyProfile(Authentication authentication) {
         User user = getUserFromAuth(authentication);
         return mapToResponse(user);
+    }
+
+    @Override
+    @Transactional
+    public UserResponse updateMyProfile(Authentication authentication, UserUpdateRequest request) {
+
+        User user = getUserFromAuth(authentication);
+
+        if (!user.getEmail().equalsIgnoreCase(request.getEmail())
+                && userRepository.existsByEmailIgnoreCase(request.getEmail())) {
+            throw new IllegalStateException("El email ya está en uso");
+        }
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+
+        return mapToResponse(userRepository.save(user));
+    }
+
+    @Override
+    @Transactional
+    public void changeMyPassword(Authentication authentication, ChangePasswordRequest request) {
+
+        User user = getUserFromAuth(authentication);
+
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalStateException("La contraseña actual es incorrecta");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
     }
 
     @Override

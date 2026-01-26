@@ -1,8 +1,6 @@
 package com.utn.eventmanager.service.user;
 
-import com.utn.eventmanager.dto.user.EmployeeCreateRequest;
-import com.utn.eventmanager.dto.user.UserCreateRequest;
-import com.utn.eventmanager.dto.user.UserResponse;
+import com.utn.eventmanager.dto.user.*;
 import com.utn.eventmanager.model.User;
 import org.springframework.security.core.Authentication;
 
@@ -28,5 +26,8 @@ public interface UserService {
 
     List<UserResponse> getAllUsersIncludingInactive();
 
+    UserResponse updateMyProfile(Authentication authentication, UserUpdateRequest request);
+
+    void changeMyPassword(Authentication authentication, ChangePasswordRequest request);
 }
 

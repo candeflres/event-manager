@@ -40,4 +40,24 @@ export class UserService {
       },
     );
   }
+
+  updateMyProfile(payload: { firstName: string; lastName: string; email: string; phone: string }) {
+    const auth = localStorage.getItem('auth');
+
+    return this.http.put<UserProfile>('/api/users/me', payload, {
+      headers: {
+        Authorization: 'Basic ' + auth,
+      },
+    });
+  }
+
+  changeMyPassword(payload: { currentPassword: string; newPassword: string }) {
+    const auth = localStorage.getItem('auth');
+
+    return this.http.put<void>('/api/users/me/password', payload, {
+      headers: {
+        Authorization: 'Basic ' + auth,
+      },
+    });
+  }
 }

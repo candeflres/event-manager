@@ -93,3 +93,144 @@
   align-items: center;
   margin-top: 20px;
 }
+/* ===================== */
+/* === EDIT MODE ====== */
+/* ===================== */
+
+.profile-card.edit-card {
+  background: rgba(30, 18, 23, 0.95);
+  border: 1px solid rgba(205, 162, 177, 0.3);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  padding: 22px 20px;
+}
+
+/* Títulos */
+.profile-card.edit-card h3 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f1e4e9;
+}
+
+/* Inputs */
+.profile-card.edit-card input {
+  width: 100%;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  width: 100%;
+  background: #1f1419;
+  color: #f1e4e9;
+
+  border: 1px solid rgba(241, 228, 233, 0.2);
+  border-radius: 8px;
+
+  font-size: 0.9rem;
+}
+
+.profile-card.edit-card input::placeholder {
+  color: rgba(241, 228, 233, 0.55);
+}
+
+.profile-card.edit-card input:focus {
+  outline: none;
+  border-color: #cda2b1;
+  background: #24181d;
+}
+
+/* Acciones */
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* Botón guardar */
+.save-btn {
+  flex: 1;
+  padding: 10px;
+
+  background: #cda2b1;
+  color: #351923;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #e0b3c1;
+}
+
+/* Botón cancelar */
+.edit-actions .back-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1e4e9;
+  border: 1px solid rgba(241, 228, 233, 0.35);
+}
+
+.edit-actions .back-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.edit-actions .back-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===================== */
+/* === PASSWORD ======= */
+/* ===================== */
+
+.password-title {
+  margin-top: 18px;
+  font-size: 0.95rem;
+  color: #cda2b1;
+}
+
+.password-btn {
+  margin-top: 6px;
+  padding: 9px;
+
+  background: transparent;
+  color: #e57373;
+
+  border: 1px solid rgba(229, 57, 53, 0.5);
+  border-radius: 10px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.password-btn:hover {
+  background: rgba(229, 57, 53, 0.12);
+}
+.edit-btn {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  background: transparent;
+  color: #f1e4e9;
+
+  border: 1px solid rgba(241, 228, 233, 0.35);
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.2px;
+}
+
+.edit-btn:hover {
+  background: rgba(241, 228, 233, 0.12);
+  border-color: rgba(241, 228, 233, 0.6);
+}
+
+.edit-btn:active {
+  transform: scale(0.96);
+}
