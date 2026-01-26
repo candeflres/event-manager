@@ -6,6 +6,8 @@ import { EventResponse } from '../../model/event-response';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { EventStatus } from '../../model/event-status';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-event-detail',
@@ -32,14 +34,16 @@ export class EventDetail implements OnInit {
     private eventService: EventService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
-    const role = localStorage.getItem('role');
-    this.isEmployee = role === 'EMPLOYEE';
-    this.isClient = role === 'CLIENT';
-
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.userService.getMyProfile().subscribe((user) => {
+      this.isEmployee = user.role === 'EMPLOYEE';
+      this.isClient = user.role === 'CLIENT';
+    });
 
     this.eventService.getEventDetail(id).subscribe((res) => {
       this.event = res;
@@ -75,13 +79,26 @@ export class EventDetail implements OnInit {
     this.changeStatus('REJECTED');
   }
 
-  changeStatus(status: 'APPROVED' | 'REJECTED'): void {
-    this.eventService.updateEventStatus(this.event.id, status).subscribe(() => {
-      alert(`Evento ${status}`);
-      this.reload();
+  changeStatus(status: EventStatus): void {
+    if (status !== 'APPROVED' && status !== 'REJECTED') return;
+
+    if (!confirm(`¿Confirmar ${status === 'APPROVED' ? 'aprobación' : 'rechazo'} del evento?`)) {
+      return;
+    }
+
+    this.eventService.updateEventStatus(this.event.id, status).subscribe({
+      next: (updatedEvent) => {
+        this.event = updatedEvent;
+
+        this.cdr.detectChanges();
+
+        alert('Estado actualizado');
+      },
+      error: (err) => {
+        alert(err.error?.message || 'No se pudo actualizar el estado');
+      },
     });
   }
-
   reload(): void {
     this.router.navigate(['/event-list']);
   }

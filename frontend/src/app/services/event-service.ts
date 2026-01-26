@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
 import { EventResponse } from '../model/event-response';
 import { Page } from '../model/page';
-
+import { EventStatus } from '../model/event-status';
 @Injectable({
   providedIn: 'root',
 })
@@ -70,8 +70,18 @@ export class EventService {
     return this.http.put(`${this.apiUrl}/${eventId}`, payload);
   }
 
-  updateEventStatus(eventId: number, status: 'APPROVED' | 'REJECTED') {
-    return this.http.put(`${this.apiUrl}/${eventId}/status`, { status });
+  updateEventStatus(eventId: number, status: EventStatus): Observable<EventResponse> {
+    const auth = localStorage.getItem('auth');
+
+    return this.http.put<EventResponse>(
+      `/api/events/${eventId}/status`,
+      { status },
+      {
+        headers: {
+          Authorization: 'Basic ' + auth,
+        },
+      },
+    );
   }
 
   getPublicEvent(id: number) {

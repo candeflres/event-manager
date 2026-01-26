@@ -77,49 +77,114 @@
   min-height: 80px;
 }
 
-/* ACCIONES */
+/* CONTENEDOR GENERAL */
 .actions {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+/* =========================
+   IZQUIERDA
+========================= */
+.actions-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* VOLVER (discreto, tranquilo) */
+.actions-left .secondary {
+  align-self: flex-start;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: #cda2b1;
+  border: 1px solid rgba(205, 162, 177, 0.4);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions-left .secondary:hover {
+  background: rgba(205, 162, 177, 0.08);
+}
+
+/* COMPARTIR */
+.actions-left .share {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  background: rgba(241, 228, 233, 0.08);
+  color: #f1e4e9;
+  border: 1px solid rgba(241, 228, 233, 0.25);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions-left .share:hover {
+  background: rgba(241, 228, 233, 0.18);
+}
+
+/* =========================
+   DERECHA
+========================= */
+.actions-right {
   display: flex;
   gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
+  align-items: center;
 }
 
-/* BOTONES BASE */
-button {
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
+/* EDITAR (cliente) */
+.actions-right .edit {
+  padding: 8px 18px;
   font-size: 0.85rem;
+  background: rgba(205, 162, 177, 0.15);
+  color: #f1e4e9;
+  border: 1px solid rgba(205, 162, 177, 0.4);
+  border-radius: 12px;
   cursor: pointer;
-  border: none;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-button:hover {
-  opacity: 0.9;
+.actions-right .edit:hover {
+  background: rgba(205, 162, 177, 0.25);
+}
+
+/* APROBAR */
+.actions-right .approve {
+  padding: 9px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions-right .approve:hover {
+  filter: brightness(1.1);
   transform: translateY(-1px);
 }
 
-/* VARIANTES */
-.primary {
-  background: #cda2b1;
-  color: #351923;
-}
-
-.secondary {
-  background: transparent;
-  border: 1px solid #cda2b1;
-  color: #cda2b1;
-}
-
-.approve {
-  background: #4caf50;
-  color: #ffffff;
-}
-
-.reject {
+/* RECHAZAR */
+.actions-right .reject {
+  padding: 9px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
   background: #e53935;
   color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actions-right .reject:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
 }

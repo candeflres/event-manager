@@ -278,12 +278,19 @@ public class EventServiceImpl implements EventService {
         return event.getStatus() == EventStatus.PENDING;
     }
 
-    private void validateStatusTransition(EventStatus current,
-                                          EventStatus next) {
+    private void validateStatusTransition(EventStatus current, EventStatus next) {
 
-        if (current == EventStatus.APPROVED || current == EventStatus.CANCELLED) {
-            throw new IllegalStateException(
-                    "No se puede modificar un evento finalizado"
+        if (current != EventStatus.PENDING) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Solo se pueden aprobar o rechazar eventos pendientes"
+            );
+        }
+
+        if (next != EventStatus.APPROVED && next != EventStatus.REJECTED) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Estado inválido"
             );
         }
     }

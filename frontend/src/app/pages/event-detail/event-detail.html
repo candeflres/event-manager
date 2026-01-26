@@ -28,15 +28,23 @@
 
   <!-- BOTONES -->
   <div class="actions">
-    <!-- CLIENT -->
-    <button *ngIf="isClient && !editMode" (click)="enableEdit()">Editar</button>
+    <div class="actions-left">
+      <button class="secondary" (click)="goBack()">Volver</button>
+      <button class="share" [routerLink]="['/event', event.id]">Compartir</button>
+    </div>
 
-    <!-- EMPLOYEE -->
-    <button *ngIf="isEmployee" class="approve" (click)="approve()">Aprobar</button>
-    <button *ngIf="isEmployee" class="reject" (click)="reject()">Rechazar</button>
+    <div class="actions-right">
+      <!-- CLIENT -->
+      <button *ngIf="isClient && !editMode" class="edit" (click)="enableEdit()">Editar</button>
 
-    <!-- COMUNES -->
-    <button class="share" [routerLink]="['/event', event.id]">Compartir</button>
-    <button class="secondary" (click)="goBack()">Volver</button>
+      <!-- EMPLOYEE -->
+      <button *ngIf="isEmployee && event.status === 'PENDING'" class="approve" (click)="approve()">
+        Aprobar
+      </button>
+
+      <button *ngIf="isEmployee && event.status === 'PENDING'" class="reject" (click)="reject()">
+        Rechazar
+      </button>
+    </div>
   </div>
 </section>
