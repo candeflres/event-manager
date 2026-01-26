@@ -48,7 +48,8 @@ public class PasswordResetService {
         token.setExpiresAt(LocalDateTime.now().plusMinutes(15));
 
         tokenRepository.save(token);
-        emailService.sendResetCode(email, code);
+        emailService.sendPasswordResetCode(email, code);
+
     }
 
     public void resetPassword(ResetPasswordRequest request) {

@@ -16,6 +16,7 @@ import com.utn.eventmanager.repository.EventOptionRepository;
 import com.utn.eventmanager.repository.EventRepository;
 import com.utn.eventmanager.repository.OptionRepository;
 import com.utn.eventmanager.repository.UserRepository;
+import com.utn.eventmanager.service.notification.NotificationService;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,19 +43,21 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserService userService;
-
+    private final NotificationService notificationService;
     public EventServiceImpl(
             EventRepository eventRepository,
             UserRepository userRepository,
             UserService userService,
             OptionRepository optionRepository,
-            EventOptionRepository eventOptionRepository
+            EventOptionRepository eventOptionRepository,
+            NotificationService notificationService
     ) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.optionRepository = optionRepository;
         this.eventOptionRepository = eventOptionRepository;
+        this.notificationService = notificationService;
     }
 
     // ======================
@@ -103,6 +106,12 @@ public class EventServiceImpl implements EventService {
 
         Event savedEvent = eventRepository.save(event);
 
+        notificationService.notifyEventStatusChange(
+                savedEvent,
+                null,
+                EventStatus.PENDING
+        );
+
         return mapToResponse(savedEvent);
     }
 
@@ -139,7 +148,7 @@ public class EventServiceImpl implements EventService {
             );
         }
 
-
+        EventStatus oldStatus = event.getStatus();
 
         if (request.getName() != null) {
             event.setName(request.getName());
@@ -176,11 +185,21 @@ public class EventServiceImpl implements EventService {
             );
         }
 
-        if (event.getStatus() == EventStatus.REJECTED) {
+        if (oldStatus == EventStatus.REJECTED) {
             event.setStatus(EventStatus.PENDING);
         }
 
-        return mapToResponse(eventRepository.save(event));
+        Event savedEvent = eventRepository.save(event);
+
+        if (oldStatus == EventStatus.REJECTED) {
+            notificationService.notifyEventStatusChange(
+                    savedEvent,
+                    oldStatus,
+                    EventStatus.PENDING
+            );
+        }
+
+        return mapToResponse(savedEvent);
     }
 
     @Override
@@ -197,8 +216,10 @@ public class EventServiceImpl implements EventService {
         return mapToResponse(eventRepository.save(event));
     }
 
+
     @Transactional
     public void updatePastEventsToCompleted() {
+
         List<Event> events = eventRepository
                 .findByEventDateBeforeAndStatusIn(
                         LocalDate.now(),
@@ -207,10 +228,13 @@ public class EventServiceImpl implements EventService {
 
         for (Event event : events) {
             event.setStatus(EventStatus.COMPLETED);
+
+            notificationService.notifyEventCompleted(event);
         }
 
         eventRepository.saveAll(events);
     }
+
 
     @Override
     public Page<EventResponse> getEventsByUser(Authentication authentication, int page, int size) {
@@ -267,11 +291,21 @@ public class EventServiceImpl implements EventService {
             );
         }
 
-        validateStatusTransition(event.getStatus(), request.getStatus());
+        EventStatus oldStatus = event.getStatus();
+
+        validateStatusTransition(oldStatus, request.getStatus());
 
         event.setStatus(request.getStatus());
 
-        return mapToResponse(eventRepository.save(event));
+        Event savedEvent = eventRepository.save(event);
+
+        notificationService.notifyEventStatusChange(
+                savedEvent,
+                oldStatus,
+                request.getStatus()
+        );
+
+        return mapToResponse(savedEvent);
     }
 
     // ======================
