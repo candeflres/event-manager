@@ -129,12 +129,17 @@ public class EventServiceImpl implements EventService {
             );
         }
 
-        if (!isEditable(event)) {
+        if (
+                event.getStatus() != EventStatus.PENDING &&
+                        event.getStatus() != EventStatus.REJECTED
+        ) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
-                    "El evento solo puede editarse mientras esté en estado PENDIENTE"
+                    "El evento solo puede editarse si está PENDIENTE o RECHAZADO"
             );
         }
+
+
 
         if (request.getName() != null) {
             event.setName(request.getName());
@@ -169,6 +174,10 @@ public class EventServiceImpl implements EventService {
             event.setEstimatedBudget(
                     calculateEstimatedBudget(event.getOptions())
             );
+        }
+
+        if (event.getStatus() == EventStatus.REJECTED) {
+            event.setStatus(EventStatus.PENDING);
         }
 
         return mapToResponse(eventRepository.save(event));

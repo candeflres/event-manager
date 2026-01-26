@@ -63,11 +63,27 @@ export class EventDetail implements OnInit {
     this.editMode = true;
   }
 
-  saveChanges(): void {
-    this.eventService.updateEvent(this.event.id, this.editForm).subscribe(() => {
-      alert('Evento actualizado');
-      this.editMode = false;
-      this.reload();
+  canEdit(): boolean {
+    return this.event.status === 'PENDING' || this.event.status === 'REJECTED';
+  }
+
+  goToEdit() {
+    this.router.navigate(['/events', this.event.id, 'edit']);
+  }
+
+  saveChanges() {
+    console.log('Payload que mando:', this.editForm);
+
+    this.eventService.updateEvent(this.event.id, this.editForm).subscribe({
+      next: (updated) => {
+        console.log('Respuesta backend:', updated);
+        this.event = updated;
+        this.editMode = false;
+      },
+      error: (err) => {
+        console.error('Error backend:', err);
+        alert(err.error?.message || 'Error al guardar el evento');
+      },
     });
   }
 

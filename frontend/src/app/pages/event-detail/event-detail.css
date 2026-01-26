@@ -86,16 +86,12 @@
   gap: 2rem;
 }
 
-/* =========================
-   IZQUIERDA
-========================= */
 .actions-left {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
 }
 
-/* VOLVER (discreto, tranquilo) */
 .actions-left .secondary {
   align-self: flex-start;
   padding: 6px 14px;
@@ -112,7 +108,6 @@
   background: rgba(205, 162, 177, 0.08);
 }
 
-/* COMPARTIR */
 .actions-left .share {
   padding: 8px 16px;
   font-size: 0.85rem;
@@ -128,16 +123,12 @@
   background: rgba(241, 228, 233, 0.18);
 }
 
-/* =========================
-   DERECHA
-========================= */
 .actions-right {
   display: flex;
   gap: 0.8rem;
   align-items: center;
 }
 
-/* EDITAR (cliente) */
 .actions-right .edit {
   padding: 8px 18px;
   font-size: 0.85rem;
@@ -153,7 +144,6 @@
   background: rgba(205, 162, 177, 0.25);
 }
 
-/* APROBAR */
 .actions-right .approve {
   padding: 9px 20px;
   font-size: 0.9rem;
@@ -171,7 +161,6 @@
   transform: translateY(-1px);
 }
 
-/* RECHAZAR */
 .actions-right .reject {
   padding: 9px 20px;
   font-size: 0.9rem;
@@ -187,4 +176,39 @@
 .actions-right .reject:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
+}
+button.primary {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px 0;
+
+  background: linear-gradient(135deg, #e0b3c1, #c58ea3);
+  color: #351923;
+
+  border: none;
+  border-radius: 14px;
+
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+button.primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #edc4d0, #d19ab0);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+button.primary:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.3),
+    inset 0 3px 6px rgba(0, 0, 0, 0.25);
 }

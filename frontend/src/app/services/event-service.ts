@@ -59,15 +59,14 @@ export class EventService {
     return this.http.get<EventResponse>(`${this.apiUrl}/${id}`, { headers });
   }
 
-  updateEvent(
-    eventId: number,
-    payload: {
-      name?: string;
-      description?: string;
-      eventDate?: string;
-    },
-  ) {
-    return this.http.put(`${this.apiUrl}/${eventId}`, payload);
+  updateEvent(eventId: number, payload: any) {
+    const auth = localStorage.getItem('auth');
+
+    const headers = {
+      Authorization: 'Basic ' + auth,
+    };
+
+    return this.http.put<EventResponse>(`${this.apiUrl}/${eventId}`, payload, { headers });
   }
 
   updateEventStatus(eventId: number, status: EventStatus): Observable<EventResponse> {

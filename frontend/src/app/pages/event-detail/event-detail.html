@@ -34,8 +34,14 @@
     </div>
 
     <div class="actions-right">
+      <p *ngIf="event.status === 'REJECTED'" class="warning">
+        Este evento fue rechazado. Podés editarlo para corregir la información y volver a enviarlo a
+        aprobación.
+      </p>
       <!-- CLIENT -->
-      <button *ngIf="isClient && !editMode" class="edit" (click)="enableEdit()">Editar</button>
+      <button *ngIf="isClient && !editMode && canEdit()" class="edit" (click)="enableEdit()">
+        Editar
+      </button>
 
       <!-- EMPLOYEE -->
       <button *ngIf="isEmployee && event.status === 'PENDING'" class="approve" (click)="approve()">
