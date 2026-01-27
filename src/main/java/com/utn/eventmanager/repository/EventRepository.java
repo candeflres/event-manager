@@ -63,4 +63,13 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     // =================
 
     boolean existsByIdAndStatusIn(Long id, List<EventStatus> statuses);
+
+    // Trae eventos por fecha y estado
+    List<Event> findByEventDateAndStatusIn(
+            LocalDate eventDate,
+            List<EventStatus> statuses
+    );
+
+    // Trae todas las fechas ocupadas
+    List<Event> findByStatusIn(List<EventStatus> statuses);
 }
