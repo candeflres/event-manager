@@ -1,5 +1,5 @@
 export interface BotOption{
   id: number;
-  label: string;
+  text: string;
   action: string;
 }

@@ -8,18 +8,18 @@ import {BotActionRequest} from '../model/bot-action.model';
 })
 export class BotService{
 
-  private API = 'http://localhost:8080/api/bot';
+  private apiUrl = 'http://localhost:8080/api/bot';
 
   constructor(private http: HttpClient) {}
 
   startBot(){
-    return this.http.get<BotResponse>(`${this.API}/start`);
+    return this.http.get<BotResponse>(`${this.apiUrl}/start`);
   }
   startLoggedBot() {
-    return this.http.get<BotResponse>(`${this.API}/logged`);
+    return this.http.get<BotResponse>(`${this.apiUrl}/logged`);
   }
 
-  sendAction(request: BotActionRequest) {
-    return this.http.post<BotResponse>(`${this.API}/action`, request);
+  sendAction(action: string, value?: string) {
+    return this.http.post<BotResponse>(`${this.apiUrl}/action`, {action, value});
   }
 }

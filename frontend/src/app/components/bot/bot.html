@@ -1,0 +1,15 @@
+<div class="bot">
+  <h2>Event Bot 🤖</h2>
+
+  <div class="messages">
+    <div *ngFor="let msg of messages" style="margin-bottom: 0.5rem;">
+      {{ msg }}
+    </div>
+  </div>
+
+  <div class="options" *ngIf="options && options.length > 0">
+    <button *ngFor="let option of options" (click)="handleOption(option)">
+      {{ option.text }}
+    </button>
+  </div>
+</div>
