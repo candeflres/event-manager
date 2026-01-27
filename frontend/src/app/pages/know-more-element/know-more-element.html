@@ -1,0 +1,15 @@
+<section class="know-more-wrapper">
+  <h2>¿Qué podés elegir para tu evento?</h2>
+  <p class="subtitle">Explorá nuestras opciones</p>
+
+  <div class="elements-grid">
+    <div
+      class="element-card"
+      *ngFor="let element of elements"
+      [routerLink]="['/know-more/element', element.id]"
+    >
+      <h3>{{ element.name }}</h3>
+      <p>{{ element.description }}</p>
+    </div>
+  </div>
+</section>

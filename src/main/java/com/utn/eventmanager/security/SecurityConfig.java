@@ -44,6 +44,10 @@ public class SecurityConfig {
                         ///  este deja q se pueda compartir invitacion a evento
                         .requestMatchers("/api/public/**").permitAll()
 
+                        /// ver elementos
+                        .requestMatchers("/api/elements/available").permitAll()
+                        .requestMatchers("/api/elements/{id}").permitAll()
+                        .requestMatchers("/api/elements/**").hasRole("EMPLOYEE")
 
                         /// esto hace q ninguno pueda entrar a cualquier ruta sin estar logeado
                         .anyRequest().authenticated()

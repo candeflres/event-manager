@@ -12,4 +12,5 @@ public interface ElementService {
     ElementResponse update (Long id, ElementUpdateRequest request);
     List<ElementResponse> findAll();
     List<ElementResponse> findAvailable();
+    ElementResponse findById(Long id);
 }

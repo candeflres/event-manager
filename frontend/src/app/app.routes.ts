@@ -12,6 +12,8 @@ import { EventCreate } from './pages/event-create/event-create';
 import { AuthGuard } from './guards/auth.guard';
 import { EventDetail } from './pages/event-detail/event-detail';
 import { ResetPassword } from './pages/reset-password/reset-password';
+import { KnowMoreElement } from './pages/know-more-element/know-more-element';
+import { KnowMoreElementOptions } from './pages/know-more-element-options/know-more-element-options';
 export const routes: Routes = [
   {
     path: '',
@@ -73,6 +75,14 @@ export const routes: Routes = [
     path: 'profile',
     canActivate: [AuthGuard],
     loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfilePage),
+  },
+  {
+    path: 'know-more',
+    component: KnowMoreElement,
+  },
+  {
+    path: 'know-more/element/:id',
+    component: KnowMoreElementOptions,
   },
   { path: 'forgot-password', component: ForgotPassword },
   { path: 'verify-code', component: VerifyCode },

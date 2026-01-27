@@ -1,0 +1,17 @@
+<section class="options-wrapper" *ngIf="element">
+  <h2>{{ element.name }}</h2>
+  <p class="subtitle">{{ element.description }}</p>
+
+  <div class="options-grid">
+    <div class="option-card" *ngFor="let option of element.options">
+      <div class="option-main">
+        <h3>{{ option.name }}</h3>
+        <p>{{ option.description }}</p>
+      </div>
+
+      <span class="option-price">$ {{ option.price }}</span>
+    </div>
+  </div>
+
+  <button class="back-btn" routerLink="/know-more">Volver</button>
+</section>

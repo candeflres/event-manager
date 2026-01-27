@@ -5,9 +5,12 @@ import com.utn.eventmanager.dto.element.ElementResponse;
 import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.model.Option;
 import com.utn.eventmanager.repository.ElementRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.utn.eventmanager.model.Element;
 import com.utn.eventmanager.dto.element.ElementUpdateRequest;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 
@@ -112,4 +115,22 @@ public class ElementServiceImpl implements ElementService {
 
         return dto;
     }
+
+    public ElementResponse findById(Long id) {
+        Element element = elementRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Elemento no encontrado"
+                ));
+
+        if (!element.getAvailable()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Elemento no disponible"
+            );
+        }
+
+        return toResponse(element);
+    }
+
 }

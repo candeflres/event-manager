@@ -53,4 +53,9 @@ public class ElementController {
     public List<ElementResponse> findAvailable() {
         return elementService.findAvailable();
     }
+
+    @GetMapping("/{id}")
+    public ElementResponse findById(@PathVariable Long id) {
+        return elementService.findById(id);
+    }
 }
