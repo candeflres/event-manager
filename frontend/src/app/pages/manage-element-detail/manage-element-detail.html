@@ -1,0 +1,62 @@
+<section *ngIf="element" class="manage-element">
+  <!-- ========= ELEMENTO ========= -->
+  <div class="element-card">
+    <div class="element-header">
+      <h2>Editar elemento</h2>
+    </div>
+
+    <div class="element-row">
+      <input [(ngModel)]="element.name" placeholder="Nombre del elemento" class="input" />
+
+      <input [(ngModel)]="element.description" placeholder="Descripción" class="input" />
+
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="element.available" />
+        <span></span>
+        <small>Disponible</small>
+      </label>
+
+      <button class="primary" (click)="updateElement()">Guardar</button>
+    </div>
+  </div>
+
+  <!-- ========= OPCIONES ========= -->
+  <div class="options-section">
+    <div class="options-header">
+      <h3>Opciones</h3>
+    </div>
+
+    <p class="hint" *ngIf="hasUnsavedOption()">Guardá la opción antes de agregar otra</p>
+
+    <div class="option-row" *ngFor="let option of element.options">
+      <input [(ngModel)]="option.name" placeholder="Nombre" class="input" />
+
+      <input [(ngModel)]="option.description" placeholder="Descripción" class="input" />
+
+      <input type="number" [(ngModel)]="option.price" placeholder="Precio" class="input price" />
+
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="option.available" />
+        <span></span>
+      </label>
+
+      <div class="option-actions">
+        <button class="primary" (click)="saveOption(option)">Guardar</button>
+      </div>
+    </div>
+    <!-- BOTÓN AGREGAR OPCIÓN -->
+    <button
+      class="add-option"
+      (click)="addOption()"
+      [disabled]="hasUnsavedOption()"
+      title="Agregar opción"
+    >
+      +
+    </button>
+  </div>
+
+  <!-- ========= VOLVER ========= -->
+  <div class="back-wrapper">
+    <button class="back" (click)="goBack()">Volver</button>
+  </div>
+</section>

@@ -5,6 +5,7 @@ import com.utn.eventmanager.dto.element.ElementResponse;
 import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.model.Option;
 import com.utn.eventmanager.repository.ElementRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.utn.eventmanager.model.Element;
@@ -44,6 +45,37 @@ public class ElementServiceImpl implements ElementService {
         return toResponse(saved);
     }
 
+    @Override
+    public ElementResponse findByIdForManagement(Long id) {
+        Element element = elementRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Elemento no encontrado"
+                ));
+
+        ElementResponse dto = new ElementResponse();
+        dto.setId(element.getId());
+        dto.setName(element.getName());
+        dto.setDescription(element.getDescription());
+        dto.setAvailable(element.getAvailable());
+
+        List<OptionResponse> optionResponses =
+                element.getOptions().stream()
+                        .map(option -> {
+                            OptionResponse or = new OptionResponse();
+                            or.setId(option.getId());
+                            or.setName(option.getName());
+                            or.setDescription(option.getDescription());
+                            or.setPrice(option.getPrice());
+                            or.setAvailable(option.getAvailable());
+                            or.setElementId(element.getId());
+                            return or;
+                        })
+                        .toList();
+
+        dto.setOptions(optionResponses);
+        return dto;
+    }
     //--------------------------------------//
     //----------- UPDATE METHOD -----------//
     //------------------------------------//

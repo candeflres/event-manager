@@ -1,0 +1,16 @@
+<section class="admin-wrapper">
+  <h2>Elementos</h2>
+
+  <p *ngIf="loading">Cargando...</p>
+
+  <p *ngIf="!loading && elements.length === 0">No hay elementos</p>
+
+  <div class="element-row" *ngFor="let el of elements">
+    <div>
+      <strong>{{ el.name }}</strong>
+      <small *ngIf="!el.available">(No disponible)</small>
+    </div>
+
+    <button [routerLink]="['/manage-elements', el.id]">Editar</button>
+  </div>
+</section>

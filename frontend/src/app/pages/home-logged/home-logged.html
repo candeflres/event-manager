@@ -1,14 +1,33 @@
-<section class="home-logged">
-  <h2 class="first">Empecemos a crear.</h2>
+<section *ngIf="!loading" class="home-logged">
+  <!-- CLIENT -->
+  <ng-container *ngIf="isClient">
+    <h2 class="first">Empecemos a crear.</h2>
 
-  <section class="create-event-section">
-    <a routerLink="/event-create" class="create-event">Crear un evento</a>
-  </section>
+    <section class="create-event-section">
+      <a routerLink="/event-create" class="create-event"> Crear un evento </a>
+    </section>
 
-  <h2 class="second">O revisá tus avances.</h2>
+    <h2 class="second">O revisá tus avances.</h2>
 
-  <section class="event-list-section">
-    <a routerLink="/event-list" class="event-list">Ver mis eventos</a>
-  </section>
+    <section class="event-list-section">
+      <a routerLink="/event-list" class="event-list"> Ver mis eventos </a>
+    </section>
+  </ng-container>
+
+  <!-- EMPLOYEE -->
+  <ng-container *ngIf="isEmployee">
+    <h2 class="first">Panel de gestión</h2>
+
+    <section class="create-event-section">
+      <a routerLink="/manage-elements" class="create-event"> Gestionar elementos y opciones </a>
+    </section>
+
+    <h2 class="second">Eventos</h2>
+
+    <section class="event-list-section">
+      <a routerLink="/event-list" class="event-list"> Ver eventos </a>
+    </section>
+  </ng-container>
 </section>
+
 <button class="logout" type="button" (click)="logout()">Cerrar sesión</button>

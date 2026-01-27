@@ -23,6 +23,12 @@ public class OptionServiceImpl implements OptionService {
         this.optionRepository = optionRepository;
         this.elementRepository = elementRepository;
     }
+    public void delete(Long id) {
+        Option option = optionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Opción no encontrada"));
+
+        optionRepository.delete(option);
+    }
 
     //--------------------------------------//
     //----------- CREATE METHOD -----------//

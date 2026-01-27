@@ -5,6 +5,7 @@ import com.utn.eventmanager.dto.element.ElementResponse;
 import com.utn.eventmanager.dto.element.ElementUpdateRequest;
 import com.utn.eventmanager.service.element.ElementService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public class ElementController {
             @Valid @RequestBody ElementCreateRequest request) {
         return elementService.create(request);
     }
+    @GetMapping("/{id}/manage")
+    public ElementResponse findByIdForManagement(@PathVariable Long id) {
+        return elementService.findByIdForManagement(id);
+    }
 
     //-----------------------------------------------//
     //----------- UPDATE (only employee) -----------//
@@ -37,6 +42,8 @@ public class ElementController {
             @Valid @RequestBody ElementUpdateRequest request) {
         return elementService.update(id, request);
     }
+
+
 
     //------------------------------------------------------//
     //----------- LIST ALL (employee and admin) -----------//

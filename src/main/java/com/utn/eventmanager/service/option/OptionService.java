@@ -14,6 +14,6 @@ public interface OptionService {
     List<OptionResponse> findAll();
 
     List<OptionResponse> findAvailable();
-
+    void delete(Long id);
     List<OptionResponse> findByElement(Long elementId);
 }

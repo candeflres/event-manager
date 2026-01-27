@@ -1,0 +1,67 @@
+.admin-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  color: #f1e4e9;
+}
+
+.admin-wrapper h2 {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* Fila de elemento */
+.element-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(53, 25, 35, 0.65);
+  border: 1px solid rgba(87, 62, 71, 0.35);
+  border-radius: 8px;
+
+  padding: 14px 18px;
+  margin-bottom: 12px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.element-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* Texto */
+.element-row strong {
+  font-size: 0.95rem;
+}
+
+.element-row small {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  color: rgba(241, 228, 233, 0.6);
+}
+
+/* Botón editar */
+.element-row button {
+  background: transparent;
+  border: 1px solid #cda2b1;
+  color: #f1e4e9;
+
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
+}
+
+.element-row button:hover {
+  background: #cda2b1;
+  color: #351923;
+}

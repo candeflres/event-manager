@@ -14,6 +14,8 @@ import { EventDetail } from './pages/event-detail/event-detail';
 import { ResetPassword } from './pages/reset-password/reset-password';
 import { KnowMoreElement } from './pages/know-more-element/know-more-element';
 import { KnowMoreElementOptions } from './pages/know-more-element-options/know-more-element-options';
+import { ManageElementsList } from './pages/manage-elements-list/manage-elements-list';
+import { ManageElementDetail } from './pages/manage-element-detail/manage-element-detail';
 export const routes: Routes = [
   {
     path: '',
@@ -83,6 +85,16 @@ export const routes: Routes = [
   {
     path: 'know-more/element/:id',
     component: KnowMoreElementOptions,
+  },
+  {
+    path: 'manage-elements',
+    canActivate: [AuthGuard],
+    component: ManageElementsList,
+  },
+  {
+    path: 'manage-elements/:id',
+    canActivate: [AuthGuard],
+    component: ManageElementDetail,
   },
   { path: 'forgot-password', component: ForgotPassword },
   { path: 'verify-code', component: VerifyCode },

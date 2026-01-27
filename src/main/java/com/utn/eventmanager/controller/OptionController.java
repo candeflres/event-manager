@@ -5,6 +5,7 @@ import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.dto.option.OptionUpdateRequest;
 import com.utn.eventmanager.service.option.OptionService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,16 @@ public class OptionController {
     //----------- CREATE (employee) -------------//
     //------------------------------------------//
     @PostMapping
-    public OptionResponse create(
-            @Valid @RequestBody OptionCreateRequest request) {
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public OptionResponse create(@RequestBody OptionCreateRequest request) {
         return optionService.create(request);
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public void delete(@PathVariable Long id) {
+        optionService.delete(id);
+    }
     //--------------------------------------------//
     //----------- UPDATE (employee) -------------//
     //------------------------------------------//

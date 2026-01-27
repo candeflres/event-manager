@@ -4,6 +4,7 @@ import com.utn.eventmanager.service.user.UserService;
 import com.utn.eventmanager.service.user.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,29 +30,45 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain publicApi(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher(
+                        "/api/elements/**",
+                        "/api/options/**",
+                        "/api/public/**",
+                        "/api/auth/**",
+                        "/api/users"
+                )
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/api/elements/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/options/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .anyRequest().permitAll()
+                );
 
+        return http.build();
+    }
+    @Bean
+    @Order(2)
+    public SecurityFilterChain securedApi(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/api/bot/**").anonymous()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        ///  este sirve para mandar mail de recuperar contra
-                        .requestMatchers("/api/auth/**").permitAll()
-                        /// esto hace q todos puedan crearse un user
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        // ELEMENTS
+                        .requestMatchers(HttpMethod.POST, "/api/elements/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT, "/api/elements/**").hasRole("EMPLOYEE")
+                        // OPTIONS
+                        .requestMatchers(HttpMethod.POST, "/api/options/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT, "/api/options/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/options/**").hasRole("EMPLOYEE")
 
-                        ///  este deja q se pueda compartir invitacion a evento
-                        .requestMatchers("/api/public/**").permitAll()
-
-                        /// ver elementos
-                        .requestMatchers("/api/elements/available").permitAll()
-                        .requestMatchers("/api/elements/{id}").permitAll()
-                        .requestMatchers("/api/elements/**").hasRole("EMPLOYEE")
-
-                        /// esto hace q ninguno pueda entrar a cualquier ruta sin estar logeado
+                        // RESTO
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
@@ -62,7 +79,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers("/api/bot/**");
