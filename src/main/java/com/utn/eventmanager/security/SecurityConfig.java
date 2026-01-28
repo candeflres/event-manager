@@ -38,7 +38,8 @@ public class SecurityConfig {
                         "/api/options/**",
                         "/api/public/**",
                         "/api/auth/**",
-                        "/api/users"
+                        "/api/users",
+                        "/api/bot/**"
                 )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -47,8 +48,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/bot/start").permitAll() // Siempre público
+                        .requestMatchers("/api/bot/action").permitAll() // Permitir a todos
                         .anyRequest().permitAll()
-                );
+                )
+                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
@@ -83,8 +87,5 @@ public class SecurityConfig {
 
         return http.build();
     }
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/api/bot/**");
-    }
+
 }

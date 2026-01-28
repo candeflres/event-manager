@@ -4,6 +4,9 @@ package com.utn.eventmanager.controller;
 import com.utn.eventmanager.dto.bot.BotActionRequest;
 import com.utn.eventmanager.dto.bot.BotResponseDTO;
 import com.utn.eventmanager.service.bot.BotService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +32,10 @@ public class BotController {
 
     @PostMapping("/action")
     public BotResponseDTO handleAction(@RequestBody BotActionRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Usuario intentando acción: " + (auth != null ? auth.getName() : "ANÓNIMO"));
+        boolean isLogged = auth != null && auth.isAuthenticated() &&
+                !(auth instanceof AnonymousAuthenticationToken);
 
         return switch (request.getAction()) {
 
