@@ -3,10 +3,13 @@ package com.utn.eventmanager.service.user;
 import com.utn.eventmanager.dto.user.*;
 import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.User;
+import com.utn.eventmanager.model.enums.AuditAction;
+import com.utn.eventmanager.model.enums.AuditEntity;
 import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.EventRepository;
 import com.utn.eventmanager.repository.UserRepository;
+import com.utn.eventmanager.service.audit.AuditLogService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,16 +27,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EventRepository eventRepository;
+    private final AuditLogService auditLogService;
 
 
     public UserServiceImpl(
             UserRepository userRepository,
             PasswordEncoder passwordEncoder,
-            EventRepository eventRepository
+            EventRepository eventRepository,
+            AuditLogService auditLogService
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.eventRepository = eventRepository;
+        this.auditLogService = auditLogService;
     }
 
     @Override
@@ -58,6 +64,12 @@ public class UserServiceImpl implements UserService {
         // password temporal PARA PRUEBAS EN POSTMAN UNICAMENTE !
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntity.USER,
+                "Creó cuenta de cliente: " + user.getEmail(),
+                user
+        );
         return mapToResponse(userRepository.save(user));
     }
 
@@ -104,6 +116,13 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
 
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.USER,
+                "Actualizó su perfil: " + user.getEmail(),
+                user
+        );
+
         return mapToResponse(userRepository.save(user));
     }
 
@@ -118,6 +137,12 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.USER,
+                "Cambió su contraseña desde el perfil: " + user.getEmail(),
+                user
+        );
         userRepository.save(user);
     }
 
@@ -126,6 +151,12 @@ public class UserServiceImpl implements UserService {
     public void deactivateMyAccount(Authentication authentication) {
         User user = getUserFromAuth(authentication);
 
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntity.USER,
+                "Dio de baja su cuenta: " + user.getEmail(),
+                user
+        );
         deactivateUser(user.getId());
     }
     @Override
@@ -174,6 +205,16 @@ public class UserServiceImpl implements UserService {
         if (admin.getRole() != UserRole.ADMIN) {
             throw new AccessDeniedException("Solo un ADMIN puede dar de baja usuarios");
         }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario a desactivar no encontrado"));
+
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntity.USER,
+                "El admin dio de baja la cuenta: " + user.getEmail(),
+                admin
+        );
 
         deactivateUser(userId);
     }
@@ -226,6 +267,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalStateException("El email ya está registrado");
         }
 
+
         User employee = new User();
         employee.setFirstName(request.getFirstName());
         employee.setLastName(request.getLastName());
@@ -236,6 +278,12 @@ public class UserServiceImpl implements UserService {
         employee.setCreated(LocalDateTime.now());
         employee.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntity.USER,
+                "El admin creó el empleado: " + employee.getEmail(),
+                admin
+        );
         return mapToResponse(userRepository.save(employee));
     }
     @Override
@@ -281,6 +329,12 @@ public class UserServiceImpl implements UserService {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.USER,
+                "El admin actualizó el user: " + user.getEmail(),
+                admin
+        );
 
         return mapToResponse(userRepository.save(user));
     }

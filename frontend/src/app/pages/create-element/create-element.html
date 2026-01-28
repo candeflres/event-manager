@@ -1,0 +1,23 @@
+<section class="create-element">
+  <h2>Crear nuevo elemento</h2>
+
+  <div class="card">
+    <label>
+      Nombre
+      <input [(ngModel)]="name" />
+    </label>
+
+    <label>
+      Descripción
+      <textarea [(ngModel)]="description"></textarea>
+    </label>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+    <div class="actions">
+      <button type="button" class="secondary" (click)="cancel()">Cancelar</button>
+
+      <button type="button" class="primary" (click)="save()" [disabled]="loading">Guardar</button>
+    </div>
+  </div>
+</section>

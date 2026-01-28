@@ -4,9 +4,15 @@ import com.utn.eventmanager.dto.element.ElementCreateRequest;
 import com.utn.eventmanager.dto.element.ElementResponse;
 import com.utn.eventmanager.dto.option.OptionResponse;
 import com.utn.eventmanager.model.Option;
+import com.utn.eventmanager.model.User;
+import com.utn.eventmanager.model.enums.AuditAction;
+import com.utn.eventmanager.model.enums.AuditEntity;
 import com.utn.eventmanager.repository.ElementRepository;
+import com.utn.eventmanager.repository.UserRepository;
+import com.utn.eventmanager.service.audit.AuditLogService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import com.utn.eventmanager.model.Element;
 import com.utn.eventmanager.dto.element.ElementUpdateRequest;
@@ -19,17 +25,22 @@ import java.util.List;
 public class ElementServiceImpl implements ElementService {
 
     private final ElementRepository elementRepository;
-
-    public ElementServiceImpl(ElementRepository elementRepository) {
+    private final AuditLogService auditLogService;
+    private final UserRepository userRepository;
+    public ElementServiceImpl(ElementRepository elementRepository, AuditLogService auditLogService, UserRepository userRepository) {
         this.elementRepository = elementRepository;
+        this.auditLogService = auditLogService;
+        this.userRepository = userRepository;
     }
 
     //--------------------------------------//
     //----------- CREATE METHOD -----------//
     //------------------------------------//
     @Override
-    public ElementResponse create(ElementCreateRequest request) {
-
+    public ElementResponse create(ElementCreateRequest request, Authentication authentication) {
+        User user = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
         // chequea que no exista uno con el mismo nombre
         if (elementRepository.existsByNameIgnoreCase(request.getName())) {
             throw new RuntimeException("Element already exists");
@@ -41,7 +52,16 @@ public class ElementServiceImpl implements ElementService {
         element.setAvailable(true);
 
         Element saved = elementRepository.save(element);
-
+        try {
+            auditLogService.log(
+                    AuditAction.CREATE,
+                    AuditEntity.ELEMENT,
+                    "El usuario creó un elemento: " + element.getName(),
+                    user
+            );
+        } catch (Exception e) {
+            System.err.println("ERROR AUDITORIA: " + e.getMessage());
+        }
         return toResponse(saved);
     }
 
@@ -80,8 +100,11 @@ public class ElementServiceImpl implements ElementService {
     //----------- UPDATE METHOD -----------//
     //------------------------------------//
     @Override
-    public ElementResponse update(Long id, ElementUpdateRequest request) {
+    public ElementResponse update(Long id, ElementUpdateRequest request, Authentication authentication) {
 
+        User user = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
         // chequea que exista
         Element element = elementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Element not found"));
@@ -91,7 +114,12 @@ public class ElementServiceImpl implements ElementService {
         element.setAvailable(request.getAvailable());
 
         Element updated = elementRepository.save(element);
-
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.ELEMENT,
+                "El usuario actualizó la opción: " + element.getName(),
+                user
+        );
         return toResponse(updated);
     }
 

@@ -5,5 +5,5 @@ public enum AuditEntity {
     EVENT,
     ELEMENT,
     OPTION,
-    EVENT_ELEMENT
+    EVENT_OPTION,
 }

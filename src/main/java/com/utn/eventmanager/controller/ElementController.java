@@ -6,6 +6,7 @@ import com.utn.eventmanager.dto.element.ElementUpdateRequest;
 import com.utn.eventmanager.service.element.ElementService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class ElementController {
     //---------------------------------------------//
     @PostMapping
     public ElementResponse create(
-            @Valid @RequestBody ElementCreateRequest request) {
-        return elementService.create(request);
+            @Valid @RequestBody ElementCreateRequest request, Authentication authentication) {
+        return elementService.create(request, authentication);
     }
     @GetMapping("/{id}/manage")
     public ElementResponse findByIdForManagement(@PathVariable Long id) {
@@ -39,8 +40,8 @@ public class ElementController {
     @PutMapping("/{id}")
     public ElementResponse update(
             @PathVariable Long id,
-            @Valid @RequestBody ElementUpdateRequest request) {
-        return elementService.update(id, request);
+            @Valid @RequestBody ElementUpdateRequest request, Authentication authentication) {
+        return elementService.update(id, request, authentication);
     }
 
 

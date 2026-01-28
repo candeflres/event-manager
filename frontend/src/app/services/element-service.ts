@@ -42,6 +42,15 @@ export class ElementService {
       }),
     });
   }
+  create(payload: { name: string; description: string }): Observable<ElementResponse> {
+    const auth = localStorage.getItem('auth');
+
+    return this.http.post<ElementResponse>(this.baseUrl, payload, {
+      headers: {
+        Authorization: 'Basic ' + auth,
+      },
+    });
+  }
 
   update(
     id: number,

@@ -1,1 +1,33 @@
-<p>admin-audit works!</p>
+<section class="audit-wrapper">
+  <h2>Auditoría del sistema</h2>
+
+  <div class="toolbar">
+    <label>
+      Orden:
+      <select [(ngModel)]="orderSelected" (change)="load()">
+        <option value="desc">Más recientes primero</option>
+        <option value="asc">Más antiguos primero</option>
+      </select>
+    </label>
+  </div>
+
+  <p *ngIf="loading" class="loading">Cargando auditoría...</p>
+
+  <div *ngIf="!loading && logs.length === 0" class="empty">No hay registros de auditoría.</div>
+
+  <div class="log-list" *ngIf="!loading && logs.length > 0">
+    <div class="log-card" *ngFor="let log of logs">
+      <div class="top">
+        <span class="entity">{{ log.entity }}</span>
+        <span class="action">{{ log.action }}</span>
+      </div>
+
+      <p class="description">{{ log.description }}</p>
+
+      <div class="bottom">
+        <span class="user">{{ log.userEmail }}</span>
+        <span class="date">{{ log.timestamp | date: 'short' }}</span>
+      </div>
+    </div>
+  </div>
+</section>

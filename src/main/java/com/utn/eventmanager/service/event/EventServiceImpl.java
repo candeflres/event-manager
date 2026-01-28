@@ -10,12 +10,15 @@ import com.utn.eventmanager.model.Event;
 import com.utn.eventmanager.model.EventOption;
 import com.utn.eventmanager.model.Option;
 import com.utn.eventmanager.model.User;
+import com.utn.eventmanager.model.enums.AuditAction;
+import com.utn.eventmanager.model.enums.AuditEntity;
 import com.utn.eventmanager.model.enums.EventStatus;
 import com.utn.eventmanager.model.enums.UserRole;
 import com.utn.eventmanager.repository.EventOptionRepository;
 import com.utn.eventmanager.repository.EventRepository;
 import com.utn.eventmanager.repository.OptionRepository;
 import com.utn.eventmanager.repository.UserRepository;
+import com.utn.eventmanager.service.audit.AuditLogService;
 import com.utn.eventmanager.service.notification.NotificationService;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.transaction.Transactional;
@@ -43,6 +46,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final AuditLogService auditLogService;
     private final NotificationService notificationService;
     public EventServiceImpl(
             EventRepository eventRepository,
@@ -50,7 +54,8 @@ public class EventServiceImpl implements EventService {
             UserService userService,
             OptionRepository optionRepository,
             EventOptionRepository eventOptionRepository,
-            NotificationService notificationService
+            NotificationService notificationService,
+            AuditLogService auditLogService
     ) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
@@ -58,6 +63,7 @@ public class EventServiceImpl implements EventService {
         this.optionRepository = optionRepository;
         this.eventOptionRepository = eventOptionRepository;
         this.notificationService = notificationService;
+        this.auditLogService = auditLogService;
     }
 
     @Override
@@ -82,6 +88,12 @@ public class EventServiceImpl implements EventService {
         }
 
         event.setStatus(EventStatus.CANCELLED);
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntity.EVENT,
+                "El usuario dio de baja el evento: " + event.getName(),
+                user
+        );
         eventRepository.save(event);
     }
 
@@ -145,6 +157,13 @@ public class EventServiceImpl implements EventService {
                 savedEvent,
                 null,
                 EventStatus.PENDING
+        );
+
+        auditLogService.log(
+                AuditAction.CREATE,
+                AuditEntity.EVENT,
+                "El usuario creó el evento: " + event.getName(),
+                user
         );
 
         return mapToResponse(savedEvent);
@@ -233,6 +252,12 @@ public class EventServiceImpl implements EventService {
                     EventStatus.PENDING
             );
         }
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.EVENT,
+                "El usuario actualizó el evento: " + event.getName(),
+                user
+        );
 
         return mapToResponse(savedEvent);
     }
@@ -264,8 +289,16 @@ public class EventServiceImpl implements EventService {
         for (Event event : events) {
             event.setStatus(EventStatus.COMPLETED);
 
+            auditLogService.log(
+                    AuditAction.UPDATE,
+                    AuditEntity.EVENT,
+                    "El sistema actualizó los eventos pasados a completos: " + event.getName(),
+                    null
+            );
             notificationService.notifyEventCompleted(event);
         }
+
+
 
         eventRepository.saveAll(events);
     }
@@ -279,7 +312,7 @@ public class EventServiceImpl implements EventService {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        if (user.getRole() == UserRole.EMPLOYEE) {
+        if (user.getRole() == UserRole.EMPLOYEE || user.getRole() == UserRole.ADMIN) {
             eventos = eventRepository.findByStatusNot(EventStatus.CANCELLED, pageable);
         } else {
             eventos = eventRepository.findByUserIdAndStatusNot(
@@ -319,7 +352,7 @@ public class EventServiceImpl implements EventService {
         User user = userService.getUserFromAuth(authentication);
         Event event = findEvent(eventId);
 
-        if (user.getRole() != UserRole.EMPLOYEE) {
+        if (user.getRole() != UserRole.EMPLOYEE || user.getRole() != UserRole.ADMIN) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Solo empleados pueden aprobar o rechazar eventos"
@@ -339,6 +372,13 @@ public class EventServiceImpl implements EventService {
                 oldStatus,
                 request.getStatus()
         );
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.EVENT,
+                "El empleado cambió el estado del evento: " + event.getName(),
+                user
+        );
+
 
         return mapToResponse(savedEvent);
     }
@@ -422,7 +462,7 @@ public class EventServiceImpl implements EventService {
 
         Page<Event> events;
 
-        if (user.getRole() == UserRole.EMPLOYEE) {
+        if (user.getRole() == UserRole.EMPLOYEE || user.getRole() == UserRole.ADMIN) {
 
             if (status != null) {
                 events = eventRepository.findByStatusNotAndStatus(

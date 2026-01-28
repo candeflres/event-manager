@@ -6,6 +6,7 @@ import com.utn.eventmanager.dto.option.OptionUpdateRequest;
 import com.utn.eventmanager.service.option.OptionService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,14 +26,14 @@ public class OptionController {
     //------------------------------------------//
     @PostMapping
     @PreAuthorize("hasRole('EMPLOYEE')")
-    public OptionResponse create(@RequestBody OptionCreateRequest request) {
-        return optionService.create(request);
+    public OptionResponse create(@RequestBody OptionCreateRequest request, Authentication authentication) {
+        return optionService.create(request, authentication);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('EMPLOYEE')")
-    public void delete(@PathVariable Long id) {
-        optionService.delete(id);
+    public void delete(Authentication authentication ,@PathVariable Long id) {
+        optionService.delete(authentication ,id);
     }
     //--------------------------------------------//
     //----------- UPDATE (employee) -------------//
@@ -40,8 +41,8 @@ public class OptionController {
     @PutMapping("/{id}")
     public OptionResponse update(
             @PathVariable Long id,
-            @Valid @RequestBody OptionUpdateRequest request) {
-        return optionService.update(id, request);
+            @Valid @RequestBody OptionUpdateRequest request, Authentication authentication) {
+        return optionService.update(id, request, authentication);
     }
 
     //--------------------------------------------//

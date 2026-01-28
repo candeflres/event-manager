@@ -92,6 +92,12 @@ export const routes: Routes = [
     component: ManageElementsList,
   },
   {
+    path: 'manage-elements/create',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/create-element/create-element').then((m) => m.CreateElement),
+  },
+  {
     path: 'manage-elements/:id',
     canActivate: [AuthGuard],
     component: ManageElementDetail,

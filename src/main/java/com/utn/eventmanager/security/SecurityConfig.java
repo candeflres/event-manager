@@ -34,8 +34,6 @@ public class SecurityConfig {
     public SecurityFilterChain publicApi(HttpSecurity http) throws Exception {
         http
                 .securityMatcher(
-                        "/api/elements/**",
-                        "/api/options/**",
                         "/api/public/**",
                         "/api/auth/**",
                         "/api/users",
@@ -43,8 +41,6 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/elements/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/options/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
@@ -65,16 +61,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // ELEMENTS
-                        .requestMatchers(HttpMethod.POST, "/api/elements/**").hasRole("EMPLOYEE")
-                        .requestMatchers(HttpMethod.PUT, "/api/elements/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/api/elements/**")
+                        .hasAnyRole("EMPLOYEE", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/elements/**")
+                        .hasAnyRole("EMPLOYEE", "ADMIN")
+
                         // OPTIONS
-                        .requestMatchers(HttpMethod.POST, "/api/options/**").hasRole("EMPLOYEE")
-                        .requestMatchers(HttpMethod.PUT, "/api/options/**").hasRole("EMPLOYEE")
-                        // ESTE DELETE NO SE USAAAA
-                        .requestMatchers(HttpMethod.DELETE, "/api/options/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.POST, "/api/options/**")
+                        .hasAnyRole("EMPLOYEE", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/options/**")
+                        .hasAnyRole("EMPLOYEE", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/options/**")
+                        .hasAnyRole("EMPLOYEE", "ADMIN")
+
+                        // USERS
                         .requestMatchers(HttpMethod.POST, "/api/users/employees").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/users/*/deactivate").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/users/*").hasRole("ADMIN")
+
+                        // AUDIT
+                        .requestMatchers(HttpMethod.GET, "/api/audit/**").hasRole("ADMIN")
 
                         // RESTO
                         .anyRequest().authenticated()

@@ -2,9 +2,12 @@ package com.utn.eventmanager.service.passwordReset;
 
 import com.utn.eventmanager.dto.passwordReset.ResetPasswordRequest;
 import com.utn.eventmanager.model.User;
+import com.utn.eventmanager.model.enums.AuditAction;
+import com.utn.eventmanager.model.enums.AuditEntity;
 import com.utn.eventmanager.repository.PasswordResetTokenRepository;
 import com.utn.eventmanager.repository.UserRepository;
 import com.utn.eventmanager.model.PasswordResetToken;
+import com.utn.eventmanager.service.audit.AuditLogService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,17 +22,19 @@ public class PasswordResetService {
     private final PasswordResetTokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final AuditLogService auditLogService;
 
     public PasswordResetService(
             UserRepository userRepository,
             PasswordResetTokenRepository tokenRepository,
             PasswordEncoder passwordEncoder,
-            EmailService emailService
-    ) {
+            EmailService emailService,
+            AuditLogService auditLogService) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.auditLogService = auditLogService;
     }
     @Transactional
     public void sendCode(String email) {
@@ -70,6 +75,12 @@ public class PasswordResetService {
         userRepository.save(user);
 
         token.setUsed(true);
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.USER,
+                "Cambió su contraseña mediante recuperación: " + user.getEmail(),
+                user
+        );
         tokenRepository.save(token);
     }
 }

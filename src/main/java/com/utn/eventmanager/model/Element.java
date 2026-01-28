@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,8 +28,8 @@ public class Element {
     @NotNull
     private Boolean available;
 
-    @OneToMany(mappedBy = "element")
-    private List<Option> options;
+    @OneToMany(mappedBy = "element", cascade = CascadeType.ALL)
+    private List<Option> options = new ArrayList<>();
 
     public Long getId() {
         return id;

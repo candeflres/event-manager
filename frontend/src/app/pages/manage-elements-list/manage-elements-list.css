@@ -65,3 +65,24 @@
   background: #cda2b1;
   color: #351923;
 }
+.add-element {
+  margin: 16px 0;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: #351923;
+  color: #f1e4e9;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.add-element:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}
