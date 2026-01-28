@@ -66,8 +66,10 @@ public class SecurityConfig {
                         // OPTIONS
                         .requestMatchers(HttpMethod.POST, "/api/options/**").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.PUT, "/api/options/**").hasRole("EMPLOYEE")
+                        // ESTE DELETE NO SE USAAAA
                         .requestMatchers(HttpMethod.DELETE, "/api/options/**").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/api/users/employees").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/*/deactivate").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/users/*").hasRole("ADMIN")
 
                         // RESTO

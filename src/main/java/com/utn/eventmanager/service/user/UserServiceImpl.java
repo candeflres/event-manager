@@ -162,7 +162,19 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @Transactional
-    public void deactivateUserByAdmin(Long userId) {
+    public void deactivateUserByAdmin(
+            Authentication authentication,
+            Long userId
+    ) {
+
+        User admin = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
+
+        if (admin.getRole() != UserRole.ADMIN) {
+            throw new AccessDeniedException("Solo un ADMIN puede dar de baja usuarios");
+        }
+
         deactivateUser(userId);
     }
 

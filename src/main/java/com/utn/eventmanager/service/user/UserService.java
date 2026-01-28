@@ -16,7 +16,8 @@ public interface UserService {
     List<UserResponse> getAllUsers();
 
     UserResponse getUserById(Long userId);
-    void deactivateUserByAdmin(Long userId);
+    void deactivateUserByAdmin(Authentication authentication,
+                               Long userId);
     UserResponse getMyProfile(Authentication authentication);
 
     void deactivateMyAccount(Authentication authentication);

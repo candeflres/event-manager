@@ -51,6 +51,27 @@ export class AdminEmployeeDetail implements OnInit {
     this.load();
   }
 
+  deactivate(): void {
+    const confirmed = confirm('¿Estás seguro de que querés dar de baja este empleado?');
+
+    if (!confirmed) return;
+
+    this.error = null;
+
+    this.userService.deactivateUser(this.employeeId).subscribe({
+      next: () => {
+        alert('Empleado dado de baja correctamente');
+        this.employee.active = false;
+        this.editMode = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message || 'No se pudo dar de baja el empleado';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   private load(): void {
     this.loading = true;
     this.error = null;

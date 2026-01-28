@@ -42,9 +42,12 @@ public class UserController {
         userService.changeMyPassword(authentication, request);
     }
 
-    @PutMapping("/me/deactivate")
-    public void deactivateMyAccount(Authentication authentication) {
-        userService.deactivateMyAccount(authentication);
+    @PutMapping("/{id}/deactivate")
+    public void deactivateUserByAdmin(
+            Authentication authentication,
+            @PathVariable Long id
+    ) {
+        userService.deactivateUserByAdmin(authentication, id);
     }
     //----------------------------------------------//
     //----------- LIST ACTIVE USERS ---------------//

@@ -102,8 +102,10 @@ export class UserService {
 
   deactivateUser(userId: number) {
     const auth = localStorage.getItem('auth');
-    return this.http.delete(`${this.urlApi}/${userId}`, {
-      headers: { Authorization: 'Basic ' + auth },
-    });
+    return this.http.put(
+      `/api/users/${userId}/deactivate`,
+      {},
+      { headers: { Authorization: 'Basic ' + auth } },
+    );
   }
 }

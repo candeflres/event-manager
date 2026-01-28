@@ -89,3 +89,33 @@ button {
   opacity: 0.8;
   text-align: center;
 }
+.danger {
+  background: #c25347;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.danger:hover {
+  background: #a93226;
+  box-shadow: 0 4px 10px rgba(192, 57, 43, 0.25);
+}
+
+.danger:active {
+  transform: translateY(1px);
+}
+
+.danger:disabled {
+  background: #8e8e8e;
+  cursor: not-allowed;
+  box-shadow: none;
+}
