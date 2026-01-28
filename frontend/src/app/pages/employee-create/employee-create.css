@@ -1,0 +1,64 @@
+.admin-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  color: #f1e4e9;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 18px;
+}
+
+.error {
+  background: rgba(255, 80, 120, 0.15);
+  border: 1px solid rgba(255, 80, 120, 0.35);
+  color: #ffd3de;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+input {
+  background: rgba(53, 25, 35, 0.7);
+  border: 1px solid rgba(87, 62, 71, 0.4);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #f1e4e9;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(241, 228, 233, 0.75);
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  justify-content: flex-end;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary {
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #351923;
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid rgba(241, 228, 233, 0.45);
+  color: rgba(241, 228, 233, 0.9);
+}

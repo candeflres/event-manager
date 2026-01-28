@@ -1,0 +1,103 @@
+.admin-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  color: #f1e4e9;
+}
+
+/* Título */
+.admin-wrapper h2 {
+  font-size: 1.8rem;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+/* Fila de usuario */
+.user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(53, 25, 35, 0.7);
+  border: 1px solid rgba(87, 62, 71, 0.4);
+  border-radius: 12px;
+
+  padding: 14px 18px;
+  margin-bottom: 12px;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.user-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  background: rgba(53, 25, 35, 0.85);
+}
+
+/* Info usuario */
+.user-row strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.user-row small {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Link editar */
+.user-row a {
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  color: #351923;
+  background: #f1e4e9;
+
+  padding: 6px 14px;
+  border-radius: 20px;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.user-row a:hover {
+  background: #cda2b1;
+  transform: translateY(-1px);
+}
+
+/* Botón crear empleado */
+.add {
+  margin-top: 28px;
+  width: 100%;
+
+  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
+  color: #351923;
+
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.add:active {
+  transform: translateY(0);
+}

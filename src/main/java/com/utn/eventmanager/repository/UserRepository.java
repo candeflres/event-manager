@@ -34,6 +34,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //------------------------------------------------------//
     Optional<User> findByEmailAndActiveTrue(String email);
 
+    List<User> findByRoleAndActiveTrue(UserRole role);
+
     //--------------------------------------------------------------//
     //----------- VALIDATE DUPLICATES BY RETURNING USER -----------//
     //------------------------------------------------------------//

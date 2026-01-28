@@ -15,6 +15,7 @@ import { UserService } from '../../services/user-service';
 export class HomeLogged implements OnInit {
   isClient = false;
   isEmployee = false;
+  isAdmin = false;
   loading = true;
 
   constructor(
@@ -27,14 +28,16 @@ export class HomeLogged implements OnInit {
   ngOnInit(): void {
     this.userService.getMyProfile().subscribe({
       next: (user) => {
-        console.log('ROL: ', user.role);
         this.isClient = user.role === 'CLIENT';
         this.isEmployee = user.role === 'EMPLOYEE';
+        this.isAdmin = user.role === 'ADMIN';
+
         this.loading = false;
-        this.cdr.markForCheck();
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
       },
     });
   }

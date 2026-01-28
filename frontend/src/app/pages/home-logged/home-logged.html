@@ -3,14 +3,14 @@
   <ng-container *ngIf="isClient">
     <h2 class="first">Empecemos a crear.</h2>
 
-    <section class="create-event-section">
-      <a routerLink="/event-create" class="create-event"> Crear un evento </a>
+    <section class="action-section">
+      <a routerLink="/event-create" class="action-card">Crear un evento</a>
     </section>
 
     <h2 class="second">O revisá tus avances.</h2>
 
-    <section class="event-list-section">
-      <a routerLink="/event-list" class="event-list"> Ver mis eventos </a>
+    <section class="action-section">
+      <a routerLink="/event-list" class="action-card">Ver mis eventos</a>
     </section>
   </ng-container>
 
@@ -18,15 +18,25 @@
   <ng-container *ngIf="isEmployee">
     <h2 class="first">Panel de gestión</h2>
 
-    <section class="create-event-section">
-      <a routerLink="/manage-elements" class="create-event"> Gestionar elementos y opciones </a>
+    <section class="action-section">
+      <a routerLink="/manage-elements" class="action-card"> Gestionar elementos y opciones </a>
     </section>
 
     <h2 class="second">Eventos</h2>
 
-    <section class="event-list-section">
-      <a routerLink="/event-list" class="event-list"> Ver eventos </a>
+    <section class="action-section">
+      <a routerLink="/event-list" class="action-card"> Ver eventos </a>
     </section>
+  </ng-container>
+
+  <!-- ADMIN -->
+  <ng-container *ngIf="isAdmin">
+    <h2>Administración</h2>
+
+    <a routerLink="/admin/employees" class="card">Empleados</a>
+    <a routerLink="/event-list" class="card">Eventos</a>
+    <a routerLink="/admin/audit" class="card disabled">Auditoría (próx)</a>
+    <a routerLink="/admin/stats" class="card disabled">Estadísticas</a>
   </ng-container>
 </section>
 

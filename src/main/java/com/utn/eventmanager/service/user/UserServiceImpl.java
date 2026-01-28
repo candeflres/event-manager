@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import org.springframework.security.access.AccessDeniedException;import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -160,6 +160,11 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         userRepository.save(user);
     }
+    @Override
+    @Transactional
+    public void deactivateUserByAdmin(Long userId) {
+        deactivateUser(userId);
+    }
 
     private UserResponse mapToResponse(User user) {
         UserResponse res = new UserResponse();
@@ -192,23 +197,34 @@ public class UserServiceImpl implements UserService {
     }
     // crear empleado como admin !
     @Override
-    public UserResponse createEmployee(EmployeeCreateRequest request) {
+    public UserResponse createEmployee(
+            Authentication authentication,
+            EmployeeCreateRequest request
+    ) {
+
+        User admin = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
+
+        if (admin.getRole() != UserRole.ADMIN) {
+            throw new AccessDeniedException("Solo un ADMIN puede crear empleados");
+        }
 
         if (userRepository.existsByEmailIgnoreCase(request.getEmail())) {
             throw new IllegalStateException("El email ya está registrado");
         }
 
-        User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
-        user.setRole(UserRole.EMPLOYEE);
-        user.setActive(true);
-        user.setCreated(LocalDateTime.now());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        User employee = new User();
+        employee.setFirstName(request.getFirstName());
+        employee.setLastName(request.getLastName());
+        employee.setEmail(request.getEmail());
+        employee.setPhone(request.getPhone());
+        employee.setRole(UserRole.EMPLOYEE);
+        employee.setActive(true);
+        employee.setCreated(LocalDateTime.now());
+        employee.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        return mapToResponse(userRepository.save(user));
+        return mapToResponse(userRepository.save(employee));
     }
     @Override
     public List<UserResponse> getAllUsersIncludingInactive() {
@@ -216,5 +232,44 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
+    }
+
+    @Override
+    public List<UserResponse> getEmployees() {
+        return userRepository.findByRoleAndActiveTrue(UserRole.EMPLOYEE)
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    @Override
+    public UserResponse updateUserByAdmin(
+            Authentication authentication,
+            Long userId,
+            UserUpdateRequest request
+    ) {
+
+        User admin = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
+
+        if (admin.getRole() != UserRole.ADMIN) {
+            throw new AccessDeniedException("Solo ADMIN puede editar usuarios");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        if (!user.getEmail().equalsIgnoreCase(request.getEmail())
+                && userRepository.existsByEmailIgnoreCase(request.getEmail())) {
+            throw new IllegalStateException("El email ya está registrado");
+        }
+
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+
+        return mapToResponse(userRepository.save(user));
     }
 }

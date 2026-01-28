@@ -1,0 +1,14 @@
+<section class="admin-wrapper">
+  <h2>Empleados</h2>
+
+  <div class="user-row" *ngFor="let u of employees">
+    <div>
+      <strong>{{ u.firstName }} {{ u.lastName }}</strong>
+      <small>{{ u.email }}</small>
+    </div>
+
+    <a [routerLink]="['/admin/employees', u.id]">Editar</a>
+  </div>
+
+  <button class="add" [routerLink]="['/admin/employees/new']">+</button>
+</section>

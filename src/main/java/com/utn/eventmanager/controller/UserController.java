@@ -1,9 +1,6 @@
 package com.utn.eventmanager.controller;
 
-import com.utn.eventmanager.dto.user.ChangePasswordRequest;
-import com.utn.eventmanager.dto.user.UserCreateRequest;
-import com.utn.eventmanager.dto.user.UserResponse;
-import com.utn.eventmanager.dto.user.UserUpdateRequest;
+import com.utn.eventmanager.dto.user.*;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -60,9 +57,33 @@ public class UserController {
     //----------------------------------------------//
     //----------- SEARCH USER BY ID ---------------//
     //--------------------------------------------//
+    @GetMapping("/employees")
+    public List<UserResponse> getEmployees() {
+        return userService.getEmployees();
+    }
     @GetMapping("/{id}")
     public UserResponse getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUserByAdmin(
+            Authentication authentication,
+            @PathVariable Long id,
+            @RequestBody @Valid UserUpdateRequest request
+    ) {
+        return userService.updateUserByAdmin(authentication, id, request);
+    }
+
+    //----------------------------------------------//
+//----------- CREATE EMPLOYEE (ADMIN) ----------//
+//----------------------------------------------//
+    @PostMapping("/employees")
+    public UserResponse createEmployee(
+            Authentication authentication,
+            @RequestBody @Valid EmployeeCreateRequest request
+    ) {
+        return userService.createEmployee(authentication, request);
     }
 
     //---------------------------------------//
@@ -73,6 +94,9 @@ public class UserController {
         return userService.getMyProfile(authentication);
     }
 
+    //----------------------------------------------//
+//----------- LIST EMPLOYEES (ADMIN) -----------//
+//----------------------------------------------//
 
 
     //-----------------------------------------------------------//
@@ -83,12 +107,5 @@ public class UserController {
     public List<UserResponse> getAllUsersIncludingInactive() {
         return userService.getAllUsersIncludingInactive();
     }
-
-
-
-
-
-
-
 
 }

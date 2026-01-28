@@ -1,0 +1,20 @@
+<section class="admin-wrapper">
+  <h2>Crear empleado</h2>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <div class="form">
+    <input [(ngModel)]="form.firstName" placeholder="Nombre" />
+    <input [(ngModel)]="form.lastName" placeholder="Apellido" />
+    <input [(ngModel)]="form.email" placeholder="Email" />
+    <input [(ngModel)]="form.phone" placeholder="Teléfono" />
+    <input [(ngModel)]="form.password" placeholder="Contraseña" type="password" />
+  </div>
+
+  <div class="actions">
+    <button class="secondary" (click)="cancel()">Volver</button>
+    <button class="primary" (click)="save()" [disabled]="loading">
+      {{ loading ? 'Guardando...' : 'Crear' }}
+    </button>
+  </div>
+</section>

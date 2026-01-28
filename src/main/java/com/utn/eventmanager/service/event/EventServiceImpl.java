@@ -159,7 +159,7 @@ public class EventServiceImpl implements EventService {
         User user = userService.getUserFromAuth(authentication);
         Event event = findEvent(eventId);
 
-        if (user.getRole() != UserRole.CLIENT) {
+        if (user.getRole() != UserRole.CLIENT ) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Solo los clientes pueden editar eventos"

@@ -1,0 +1,84 @@
+<section class="employee-detail" *ngIf="!loading; else loadingTpl">
+  <div class="header">
+    <h2>Detalle de empleado</h2>
+
+    <div class="header-actions">
+      <button class="secondary" (click)="goBack()">Volver</button>
+
+      <button *ngIf="!editMode" class="primary" (click)="enableEdit()">Editar</button>
+
+      <button *ngIf="editMode" class="primary" (click)="save()">Guardar</button>
+      <button *ngIf="editMode" class="secondary" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </div>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <div class="card">
+    <!-- VIEW MODE -->
+    <div *ngIf="!editMode" class="grid">
+      <div class="field">
+        <span class="label">Nombre</span>
+        <span class="value">{{ employee.firstName }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Apellido</span>
+        <span class="value">{{ employee.lastName }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Email</span>
+        <span class="value">{{ employee.email }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Teléfono</span>
+        <span class="value">{{ employee.phone }}</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Rol</span>
+        <span class="value">{{ employee.role }}</span>
+      </div>
+    </div>
+
+    <!-- EDIT MODE -->
+    <div *ngIf="editMode" class="grid">
+      <div class="field">
+        <span class="label">Nombre</span>
+        <input [(ngModel)]="form.firstName" name="firstName" />
+      </div>
+
+      <div class="field">
+        <span class="label">Apellido</span>
+        <input [(ngModel)]="form.lastName" name="lastName" />
+      </div>
+
+      <div class="field">
+        <span class="label">Email</span>
+        <input [(ngModel)]="form.email" name="email" type="email" />
+      </div>
+
+      <div class="field">
+        <span class="label">Teléfono</span>
+        <input [(ngModel)]="form.phone" name="phone" />
+      </div>
+
+      <div class="field">
+        <span class="label">Rol</span>
+        <select [(ngModel)]="form.role" name="role">
+          <option value="CLIENT">CLIENT</option>
+          <option value="EMPLOYEE">EMPLOYEE</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #loadingTpl>
+  <section class="employee-detail">
+    <p class="loading">Cargando...</p>
+  </section>
+</ng-template>

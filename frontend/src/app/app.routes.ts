@@ -96,6 +96,36 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     component: ManageElementDetail,
   },
+
+  {
+    path: 'admin/audit',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/admin-audit/admin-audit').then((m) => m.AdminAudit),
+  },
+  {
+    path: 'admin/employees',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import('./pages/admin-employees-list/admin-employees-list').then((m) => m.AdminEmployeesList),
+  },
+  {
+    path: 'admin/employees/new',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import('./pages/employee-create/employee-create').then((m) => m.AdminEmployeeCreate),
+  },
+  {
+    path: 'admin/employees/:id',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import('./pages/admin-employee-detail/admin-employee-detail').then(
+        (m) => m.AdminEmployeeDetail,
+      ),
+  },
+
   { path: 'forgot-password', component: ForgotPassword },
   { path: 'verify-code', component: VerifyCode },
   { path: 'reset-password', component: ResetPassword },
