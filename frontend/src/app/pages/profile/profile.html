@@ -79,11 +79,7 @@
   <div class="profile-actions">
     <button class="back-btn" (click)="handleBack()">Volver</button>
 
-    <button
-      class="edit-btn"
-      *ngIf="!editMode && user.role !== 'ADMIN' && user.active"
-      (click)="enableEdit()"
-    >
+    <button class="edit-btn" *ngIf="!editMode && user.active" (click)="enableEdit()">
       Editar perfil
     </button>
 
