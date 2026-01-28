@@ -28,10 +28,11 @@ public class BotService {
         return new BotResponseDTO(
                 "¡Hola! 👋 Soy el asistente de EventManager. ¿En qué puedo ayudarte?",
                 List.of(
-                        new BotOptionDTO(1, "Conocer sobre nosotros", "ABOUT"),
-                        new BotOptionDTO(2, "Cómo registrarme", "REGISTER"),
-                        new BotOptionDTO(3, "Cómo iniciar sesión", "LOGIN"),
-                        new BotOptionDTO(4, "Recuperar contraseña", "RECOVER_PASSWORD")
+                        new BotOptionDTO(1, "¿Conocer sobre nosotros?", "ABOUT"),
+                        new BotOptionDTO(2, "¿Cómo registrarme?", "REGISTER"),
+                        new BotOptionDTO(3, "'Cómo iniciar sesión?", "LOGIN"),
+                        new BotOptionDTO(4, "Recuperar contraseña", "RECOVER_PASSWORD"),
+                        new BotOptionDTO(5,"¡Contactate con nosotros!","WHATSAPP")
                 )
         );
     }
@@ -64,6 +65,17 @@ public class BotService {
         );
     }
 
+    public BotResponseDTO whatsapp() {
+        String numero = "5492235243997";
+        String mensaje = "Quiero contactarme con un asesor.";
+        String url = "https://wa.me/" + numero + "?text=" + mensaje.replace(" ", "%20");
+
+        return new BotResponseDTO(
+                "¡Claro! Podés contactarnos haciendo clic aquí: " +
+                        "<a href='" + url + "' target='_blank' style='color: #25D366; font-weight: bold;'>Chatear por WhatsApp 💬</a>",
+                backOption()
+        );
+    }
     // ==========================
     // BOT LOGUEADO
     // ==========================
@@ -75,7 +87,8 @@ public class BotService {
                         new BotOptionDTO(1, "Crear un evento", "CREATE_EVENT"),
                         new BotOptionDTO(2, "Ver estado de mis eventos", "MY_EVENTS"),
                         new BotOptionDTO(3, "Ver fechas disponibles", "AVAILABLE_DATES"),
-                        new BotOptionDTO(4, "Verificar fecha específica", "CHECK_DATE")
+                        new BotOptionDTO(4, "Verificar fecha específica", "CHECK_DATE"),
+                        new BotOptionDTO(5,"¡Contactate con nosotros!","WHATSAPP")
                 )
         );
     }

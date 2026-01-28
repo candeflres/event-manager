@@ -43,7 +43,7 @@ public class BotController {
             case "REGISTER" -> botService.registerInfo();
             case "LOGIN" -> botService.loginInfo();
             case "RECOVER_PASSWORD" -> botService.recoverPasswordInfo();
-
+            case "WHATSAPP" ->botService.whatsapp();
             case "CREATE_EVENT" -> botService.createEvent();
             case "MY_EVENTS" -> botService.myEvents();
             case "AVAILABLE_DATES" -> botService.availableDates();

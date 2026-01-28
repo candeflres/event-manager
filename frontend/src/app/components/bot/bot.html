@@ -2,13 +2,18 @@
   <h2>Event Bot 🤖</h2>
 
   <div class="messages">
-    <div *ngFor="let msg of messages" style="margin-bottom: 0.5rem;">
-      {{ msg }}
+    <div *ngFor="let msg of messages"
+         [ngClass]="{'user-msg': msg.startsWith('> ')}"
+         style="margin-bottom: 0.8rem; line-height: 1.4;">
+
+      <span [innerHTML]="msg"></span>
     </div>
   </div>
 
   <div class="options" *ngIf="options && options.length > 0">
-    <button *ngFor="let option of options" (click)="handleOption(option)">
+    <button *ngFor="let option of options"
+            (click)="handleOption(option)"
+            style="margin-right: 5px; margin-top: 5px; cursor: pointer;">
       {{ option.text }}
     </button>
   </div>
