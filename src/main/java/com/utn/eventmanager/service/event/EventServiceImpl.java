@@ -88,13 +88,15 @@ public class EventServiceImpl implements EventService {
         }
 
         event.setStatus(EventStatus.CANCELLED);
+        eventRepository.save(event);
+
         auditLogService.log(
                 AuditAction.DELETE,
                 AuditEntity.EVENT,
                 "El usuario dio de baja el evento: " + event.getName(),
-                user
+                user,
+                event.getId()
         );
-        eventRepository.save(event);
     }
 
     // ======================
@@ -163,7 +165,8 @@ public class EventServiceImpl implements EventService {
                 AuditAction.CREATE,
                 AuditEntity.EVENT,
                 "El usuario creó el evento: " + event.getName(),
-                user
+                user,
+                savedEvent.getId()
         );
 
         return mapToResponse(savedEvent);
@@ -256,7 +259,8 @@ public class EventServiceImpl implements EventService {
                 AuditAction.UPDATE,
                 AuditEntity.EVENT,
                 "El usuario actualizó el evento: " + event.getName(),
-                user
+                user,
+                savedEvent.getId()
         );
 
         return mapToResponse(savedEvent);
@@ -293,7 +297,8 @@ public class EventServiceImpl implements EventService {
                     AuditAction.UPDATE,
                     AuditEntity.EVENT,
                     "El sistema actualizó los eventos pasados a completos: " + event.getName(),
-                    null
+                    null,
+                    event.getId()
             );
             notificationService.notifyEventCompleted(event);
         }
@@ -376,7 +381,8 @@ public class EventServiceImpl implements EventService {
                 AuditAction.UPDATE,
                 AuditEntity.EVENT,
                 "El empleado cambió el estado del evento: " + event.getName(),
-                user
+                user,
+                savedEvent.getId()
         );
 
 

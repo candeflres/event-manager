@@ -1,16 +1,39 @@
 <section class="audit-wrapper">
   <h2>Auditoría del sistema</h2>
 
-  <div class="toolbar">
-    <label>
-      Orden:
-      <select [(ngModel)]="orderSelected" (change)="load()">
-        <option value="desc">Más recientes primero</option>
-        <option value="asc">Más antiguos primero</option>
-      </select>
-    </label>
-  </div>
+  <select [(ngModel)]="filters.entity" (change)="load()">
+    <option [ngValue]="undefined">Todas</option>
+    <option value="EVENT">Eventos</option>
+    <option value="ELEMENT">Elementos</option>
+    <option value="OPTION">Opciones</option>
+    <option value="USER">Usuarios</option>
+  </select>
 
+  <input type="number" placeholder="User ID" [(ngModel)]="filters.userId" />
+
+  <input type="text" placeholder="Email de usuario" [(ngModel)]="filters.userEmail" />
+
+  <input type="number" placeholder="Event ID" [(ngModel)]="filters.eventId" />
+  <select [(ngModel)]="filters.order" (change)="load()">
+    <option value="desc">Más recientes</option>
+    <option value="asc">Más antiguos</option>
+  </select>
+
+  <button (click)="load()">Filtrar</button>
+  <button
+    (click)="
+      filters = {
+        entity: undefined,
+        userId: undefined,
+        userEmail: '',
+        eventId: undefined,
+        order: 'desc',
+      };
+      load()
+    "
+  >
+    Limpiar filtros
+  </button>
   <p *ngIf="loading" class="loading">Cargando auditoría...</p>
 
   <div *ngIf="!loading && logs.length === 0" class="empty">No hay registros de auditoría.</div>

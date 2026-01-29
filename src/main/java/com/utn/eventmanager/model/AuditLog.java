@@ -38,6 +38,17 @@ public class AuditLog {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "event_id")
+    private Long eventId;
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
     public Long getId() {
         return id;
     }

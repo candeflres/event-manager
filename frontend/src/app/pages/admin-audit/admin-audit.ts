@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,13 @@ export class AdminAudit implements OnInit {
   logs: any[] = [];
   loading = true;
 
-  orderSelected: 'asc' | 'desc' = 'desc';
+  filters = {
+    entity: undefined as 'EVENT' | 'ELEMENT' | 'OPTION' | 'USER' | undefined,
+    userId: undefined as number | undefined,
+    userEmail: '',
+    eventId: undefined as number | undefined,
+    order: 'desc' as 'asc' | 'desc',
+  };
 
   constructor(
     private http: HttpClient,
@@ -29,17 +35,24 @@ export class AdminAudit implements OnInit {
 
     const auth = localStorage.getItem('auth');
 
+    const params: any = {
+      order: this.filters.order,
+    };
+
+    if (this.filters.entity) params.entity = this.filters.entity;
+    if (this.filters.userId) params.userId = this.filters.userId;
+    if (this.filters.userEmail?.trim()) params.userEmail = this.filters.userEmail.trim();
+    if (this.filters.eventId) params.eventId = this.filters.eventId;
+
     this.http
       .get<any[]>('/api/audit', {
         headers: {
           Authorization: 'Basic ' + auth,
         },
-        params: {
-          order: this.orderSelected,
-        },
+        params,
       })
       .subscribe({
-        next: (res) => {
+        next: (res: any[]) => {
           this.logs = res;
           this.loading = false;
           this.cdr.detectChanges();
@@ -49,5 +62,17 @@ export class AdminAudit implements OnInit {
           this.cdr.detectChanges();
         },
       });
+  }
+
+  clearFilters(): void {
+    this.filters = {
+      entity: undefined,
+      userId: undefined,
+      userEmail: '',
+      eventId: undefined,
+      order: 'desc',
+    };
+
+    this.load();
   }
 }
