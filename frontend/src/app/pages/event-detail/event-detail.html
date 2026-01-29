@@ -32,7 +32,13 @@
       <strong>${{ estimatedBudget }}</strong>
     </p>
 
-    <button class="primary" (click)="saveChanges()">Guardar cambios</button>
+    <button class="primary" [disabled]="isSubmitting" (click)="saveChanges()">
+      <span *ngIf="!isSubmitting">Guardar cambios</span>
+      <span *ngIf="isSubmitting" class="loading">
+        <span class="spinner"></span>
+        Guardando...
+      </span>
+    </button>
   </div>
 
   <!-- VISUALIZACIÓN -->
@@ -71,18 +77,41 @@
         *ngIf="isClient && event.status !== 'COMPLETED' && event.status !== 'CANCELLED'"
         class="danger"
         type="button"
+        [disabled]="isSubmitting"
         (click)="cancelEvent()"
       >
-        Cancelar evento
+        <span *ngIf="!isSubmitting">Cancelar evento</span>
+        <span *ngIf="isSubmitting" class="loading">
+          <span class="spinner"></span>
+          Cancelando...
+        </span>
       </button>
 
       <!-- EMPLOYEE -->
-      <button *ngIf="isEmployee && event.status === 'PENDING'" class="approve" (click)="approve()">
-        Aprobar
+      <button
+        *ngIf="isEmployee && event.status === 'PENDING'"
+        class="approve"
+        [disabled]="isSubmitting"
+        (click)="approve()"
+      >
+        <span *ngIf="!isSubmitting">Aprobar</span>
+        <span *ngIf="isSubmitting" class="loading">
+          <span class="spinner"></span>
+          Procesando...
+        </span>
       </button>
 
-      <button *ngIf="isEmployee && event.status === 'PENDING'" class="reject" (click)="reject()">
-        Rechazar
+      <button
+        *ngIf="isEmployee && event.status === 'PENDING'"
+        class="reject"
+        [disabled]="isSubmitting"
+        (click)="reject()"
+      >
+        <span *ngIf="!isSubmitting">Rechazar</span>
+        <span *ngIf="isSubmitting" class="loading">
+          <span class="spinner"></span>
+          Procesando...
+        </span>
       </button>
     </div>
   </div>

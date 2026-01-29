@@ -352,10 +352,10 @@ public class EventServiceImpl implements EventService {
         User user = userService.getUserFromAuth(authentication);
         Event event = findEvent(eventId);
 
-        if (user.getRole() != UserRole.EMPLOYEE || user.getRole() != UserRole.ADMIN) {
+        if (user.getRole() != UserRole.EMPLOYEE && user.getRole() != UserRole.ADMIN) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
-                    "Solo empleados pueden aprobar o rechazar eventos"
+                    "Solo empleados o administradores pueden aprobar o rechazar eventos"
             );
         }
 

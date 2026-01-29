@@ -14,7 +14,7 @@ import { ChangeDetectorRef } from '@angular/core';
 export class EventCreate {
   elements: any[] = [];
   selectedOptions: Map<number, any> = new Map();
-
+  isSubmitting = false;
   estimatedBudget = 0;
 
   form = {
@@ -35,7 +35,7 @@ export class EventCreate {
 
   loadElements() {
     this.eventService.getElementsWithOptions().subscribe((res) => {
-      this.elements = res;
+      this.elements = res.filter((e) => e.options && e.options.length > 0);
       this.cdr.detectChanges();
     });
   }
@@ -57,6 +57,8 @@ export class EventCreate {
   }
 
   createEvent() {
+    if (this.isSubmitting) return;
+
     if (!this.form.eventDate) {
       alert('Seleccioná una fecha para el evento');
       return;
@@ -65,7 +67,6 @@ export class EventCreate {
     const selectedDate = new Date(this.form.eventDate);
     const today = new Date();
 
-    // Normalizamos horas para evitar bugs raros
     today.setHours(0, 0, 0, 0);
     selectedDate.setHours(0, 0, 0, 0);
 
@@ -83,6 +84,8 @@ export class EventCreate {
       optionIds: Array.from(this.selectedOptions.values()).map((o) => o.id),
     };
 
+    this.isSubmitting = true;
+
     this.eventService.createEvent(payload).subscribe({
       next: () => {
         alert('Evento creado con éxito');
@@ -91,6 +94,7 @@ export class EventCreate {
       error: (err) => {
         console.error('Error creando evento', err);
         alert(err.error?.message || 'Error al crear el evento');
+        this.isSubmitting = false;
       },
     });
   }

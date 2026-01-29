@@ -192,5 +192,28 @@ public class ElementServiceImpl implements ElementService {
 
         return toResponse(element);
     }
+@Override
+    @Transactional
+    public void deactivateElement(Long elementId, Authentication authentication) {
+        User user = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
+        Element element = elementRepository.findById(elementId)
+                .orElseThrow(() -> new IllegalArgumentException("Elemento no encontrado"));
+
+        for (Option option : element.getOptions()) {
+            option.setAvailable(false);
+        }
+
+        element.setAvailable(false);
+        auditLogService.log(
+                AuditAction.DELETE,
+                AuditEntity.ELEMENT,
+                "El empleado dio de baja un elemento y sus opciones: " + element.getName(),
+                user
+        );
+
+        elementRepository.save(element);
+    }
 
 }

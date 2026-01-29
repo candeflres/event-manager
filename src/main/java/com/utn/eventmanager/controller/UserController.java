@@ -3,6 +3,7 @@ package com.utn.eventmanager.controller;
 import com.utn.eventmanager.dto.user.*;
 import com.utn.eventmanager.service.user.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +77,12 @@ public class UserController {
             @RequestBody @Valid UserUpdateRequest request
     ) {
         return userService.updateUserByAdmin(authentication, id, request);
+    }
+
+    @PutMapping("/me/deactivate")
+    public ResponseEntity<Void> deactivateMyAccount(Authentication authentication) {
+        userService.deactivateMyAccount(authentication);
+        return ResponseEntity.noContent().build();
     }
 
     //----------------------------------------------//

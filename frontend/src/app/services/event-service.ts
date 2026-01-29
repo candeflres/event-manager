@@ -73,7 +73,7 @@ export class EventService {
     const auth = localStorage.getItem('auth');
 
     return this.http.put<EventResponse>(
-      `/api/events/${eventId}/status`,
+      `${this.apiUrl}/${eventId}/status`,
       { status },
       {
         headers: {

@@ -36,12 +36,12 @@ public class SecurityConfig {
                 .securityMatcher(
                         "/api/public/**",
                         "/api/auth/**",
-                        "/api/users",
+                        "/api/users/**",
                         "/api/bot/**"
                 )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/api/bot/start").permitAll() // Siempre público

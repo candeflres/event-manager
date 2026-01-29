@@ -54,15 +54,12 @@ public class UserServiceImpl implements UserService {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-
-        // rol para crear cliente
         user.setRole(UserRole.CLIENT);
-
         user.setActive(true);
         user.setCreated(LocalDateTime.now());
-
-        // password temporal PARA PRUEBAS EN POSTMAN UNICAMENTE !
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        user = userRepository.save(user);
 
         auditLogService.log(
                 AuditAction.CREATE,
@@ -70,7 +67,8 @@ public class UserServiceImpl implements UserService {
                 "Creó cuenta de cliente: " + user.getEmail(),
                 user
         );
-        return mapToResponse(userRepository.save(user));
+
+        return mapToResponse(user);
     }
 
 

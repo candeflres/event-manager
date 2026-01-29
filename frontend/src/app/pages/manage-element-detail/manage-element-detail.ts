@@ -58,6 +58,26 @@ export class ManageElementDetail implements OnInit {
   // UPDATE ELEMENT
   // =========================
   updateElement() {
+    if (!this.element.available) {
+      if (!confirm('¿Dar de baja este elemento? También se desactivarán sus opciones.')) {
+        this.element.available = true;
+        return;
+      }
+
+      this.elementService.deactivate(this.element.id).subscribe({
+        next: () => {
+          alert('Elemento dado de baja correctamente');
+          this.goBack();
+        },
+        error: (err) => {
+          alert(err.error?.message || 'No se pudo dar de baja el elemento');
+          this.element.available = true;
+        },
+      });
+
+      return;
+    }
+
     this.elementService
       .update(this.element.id, {
         name: this.element.name,
@@ -68,13 +88,10 @@ export class ManageElementDetail implements OnInit {
         next: (updated) => {
           this.element.name = updated.name;
           this.element.description = updated.description;
-          this.element.available = updated.available;
-
-          this.cdr.detectChanges();
-          alert('Elemento guardado correctamente');
+          alert('Elemento actualizado correctamente');
         },
         error: (err) => {
-          alert(err.error?.message || 'No se pudo guardar el elemento');
+          alert(err.error?.message || 'No se pudo actualizar el elemento');
         },
       });
   }

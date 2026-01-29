@@ -6,6 +6,7 @@ import com.utn.eventmanager.dto.element.ElementUpdateRequest;
 import com.utn.eventmanager.service.element.ElementService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,13 @@ public class ElementController {
             @PathVariable Long id,
             @Valid @RequestBody ElementUpdateRequest request, Authentication authentication) {
         return elementService.update(id, request, authentication);
+    }
+
+    @PutMapping("/{id}/deactivate")
+    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+    public ResponseEntity<Void> deactivateElement(@PathVariable Long id, Authentication authentication) {
+        elementService.deactivateElement(id, authentication);
+        return ResponseEntity.noContent().build();
     }
 
 

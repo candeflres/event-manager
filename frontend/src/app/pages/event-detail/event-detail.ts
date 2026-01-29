@@ -22,6 +22,8 @@ export class EventDetail implements OnInit {
   isEmployee = false;
   isClient = false;
   editMode = false;
+  processingAction: 'APPROVE' | 'REJECT' | 'SAVE' | 'CANCEL' | null = null;
+  isSubmitting = false;
   elements: any[] = [];
   selectedOptionIds: number[] = [];
   estimatedBudget = 0;
@@ -115,6 +117,10 @@ export class EventDetail implements OnInit {
   }
 
   saveChanges() {
+    if (this.processingAction) return;
+
+    this.processingAction = 'SAVE';
+
     const payload = {
       ...this.editForm,
       optionIds: this.selectedOptionIds,
@@ -124,8 +130,12 @@ export class EventDetail implements OnInit {
       next: (updated) => {
         this.event = updated;
         this.editMode = false;
+        this.processingAction = null;
+        this.cdr.detectChanges();
+        alert('Evento actualizado');
       },
       error: (err) => {
+        this.processingAction = null;
         alert(err.error?.message || 'Error al guardar el evento');
       },
     });
@@ -140,21 +150,23 @@ export class EventDetail implements OnInit {
   }
 
   changeStatus(status: EventStatus): void {
-    if (status !== 'APPROVED' && status !== 'REJECTED') return;
+    if (this.processingAction) return;
 
     if (!confirm(`¿Confirmar ${status === 'APPROVED' ? 'aprobación' : 'rechazo'} del evento?`)) {
       return;
     }
 
+    this.processingAction = status === 'APPROVED' ? 'APPROVE' : 'REJECT';
+
     this.eventService.updateEventStatus(this.event.id, status).subscribe({
       next: (updatedEvent) => {
         this.event = updatedEvent;
-
+        this.processingAction = null;
         this.cdr.detectChanges();
-
         alert('Estado actualizado');
       },
       error: (err) => {
+        this.processingAction = null;
         alert(err.error?.message || 'No se pudo actualizar el estado');
       },
     });
@@ -189,16 +201,20 @@ export class EventDetail implements OnInit {
   }
 
   cancelEvent() {
+    if (this.processingAction) return;
+
     if (!confirm('¿Estás seguro de que querés cancelar este evento?')) {
       return;
     }
+
+    this.processingAction = 'CANCEL';
 
     this.eventService.cancelEvent(this.event.id).subscribe({
       next: () => {
         this.router.navigate(['/event-list']);
       },
       error: (err) => {
-        console.error(err);
+        this.processingAction = null;
         alert(err.error?.message || 'No se pudo cancelar el evento');
       },
     });

@@ -66,15 +66,6 @@
         <span class="label">Teléfono</span>
         <input [(ngModel)]="form.phone" name="phone" />
       </div>
-
-      <div class="field">
-        <span class="label">Rol</span>
-        <select [(ngModel)]="form.role" name="role">
-          <option value="CLIENT">CLIENT</option>
-          <option value="EMPLOYEE">EMPLOYEE</option>
-          <option value="ADMIN">ADMIN</option>
-        </select>
-      </div>
     </div>
   </div>
   <button *ngIf="employee.active" class="danger" (click)="deactivate()">Dar de baja</button>

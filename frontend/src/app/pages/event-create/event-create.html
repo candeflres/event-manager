@@ -39,6 +39,12 @@
     Presupuesto estimado:
     <strong>\${{ estimatedBudget }}</strong>
   </p>
+  <button class="submit" [disabled]="isSubmitting" (click)="createEvent()">
+    <span *ngIf="!isSubmitting">Crear un evento</span>
 
-  <button class="submit" (click)="createEvent()">Crear un evento</button>
+    <span *ngIf="isSubmitting" class="loading">
+      <span class="spinner"></span>
+      Creando evento...
+    </span>
+  </button>
 </section>

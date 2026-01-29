@@ -19,6 +19,20 @@ export class ElementService {
     return this.http.get<ElementResponse[]>(`${this.baseUrl}/available`);
   }
 
+  deactivate(id: number): Observable<void> {
+    const auth = localStorage.getItem('auth');
+
+    return this.http.put<void>(
+      `${this.baseUrl}/${id}/deactivate`,
+      {},
+      {
+        headers: {
+          Authorization: 'Basic ' + auth,
+        },
+      },
+    );
+  }
+
   getById(id: number): Observable<ElementResponse> {
     const auth = localStorage.getItem('auth');
 
@@ -63,9 +77,9 @@ export class ElementService {
     const auth = localStorage.getItem('auth');
 
     return this.http.put<ElementResponse>(`${this.baseUrl}/${id}`, payload, {
-      headers: new HttpHeaders({
+      headers: {
         Authorization: 'Basic ' + auth,
-      }),
+      },
     });
   }
   getByIdForManagement(id: number): Observable<ElementResponse> {

@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 // interfaz para implementacion
 public interface ElementService {
-
+    void deactivateElement(Long elementId, Authentication authentication);
     ElementResponse findByIdForManagement(Long id);
     ElementResponse create (ElementCreateRequest request, Authentication authentication);
     ElementResponse update (Long id, ElementUpdateRequest request, Authentication authentication);
