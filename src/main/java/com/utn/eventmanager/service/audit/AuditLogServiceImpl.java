@@ -7,6 +7,9 @@ import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.AuditAction;
 import com.utn.eventmanager.model.enums.AuditEntity;
 import com.utn.eventmanager.repository.AuditLogRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -76,26 +79,27 @@ public class AuditLogServiceImpl implements AuditLogService {
         res.setEventId(log.getEventId());
         return res;
     }
-    @Override
-    public List<AuditLogResponse> getFiltered(
+    public Page<AuditLogResponse> getFiltered(
             AuditEntity entity,
-            Long userId,
             String userEmail,
             Long eventId,
-            String order
+            String order,
+            int page,
+            int size
     ) {
         Sort sort = order.equalsIgnoreCase("asc")
                 ? Sort.by("timestamp").ascending()
                 : Sort.by("timestamp").descending();
 
-        List<AuditLog> logs = auditLogRepository.findAll(sort);
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        return logs.stream()
-                .filter(l -> entity == null || l.getEntity() == entity)
-                .filter(l -> userId == null || (l.getUser() != null && l.getUser().getId().equals(userId)))
-                .filter(l -> userEmail == null || (l.getUser() != null && l.getUser().getEmail().equalsIgnoreCase(userEmail)))
-                .filter(l -> eventId == null || (l.getEventId() != null && l.getEventId().equals(eventId)))
-                .map(this::map)
-                .toList();
+        Page<AuditLog> logs = auditLogRepository.findFiltered(
+                entity,
+                userEmail,
+                eventId,
+                pageable
+        );
+
+        return logs.map(this::map);
     }
 }

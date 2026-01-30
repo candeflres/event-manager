@@ -1,7 +1,7 @@
 <section class="audit-wrapper">
   <h2>Auditoría del sistema</h2>
 
-  <select [(ngModel)]="filters.entity" (change)="load()">
+  <select [(ngModel)]="filters.entity" (change)="applyFilters()">
     <option [ngValue]="undefined">Todas</option>
     <option value="EVENT">Eventos</option>
     <option value="ELEMENT">Elementos</option>
@@ -9,31 +9,17 @@
     <option value="USER">Usuarios</option>
   </select>
 
-  <input type="number" placeholder="User ID" [(ngModel)]="filters.userId" />
-
-  <input type="text" placeholder="Email de usuario" [(ngModel)]="filters.userEmail" />
-
   <input type="number" placeholder="Event ID" [(ngModel)]="filters.eventId" />
-  <select [(ngModel)]="filters.order" (change)="load()">
+  <input type="text" placeholder="Email" [(ngModel)]="filters.userEmail" />
+
+  <select [(ngModel)]="filters.order" (change)="applyFilters()">
     <option value="desc">Más recientes</option>
     <option value="asc">Más antiguos</option>
   </select>
 
-  <button (click)="load()">Filtrar</button>
-  <button
-    (click)="
-      filters = {
-        entity: undefined,
-        userId: undefined,
-        userEmail: '',
-        eventId: undefined,
-        order: 'desc',
-      };
-      load()
-    "
-  >
-    Limpiar filtros
-  </button>
+  <button (click)="applyFilters()">Filtrar</button>
+  <button (click)="clearFilters()">Limpiar filtros</button>
+
   <p *ngIf="loading" class="loading">Cargando auditoría...</p>
 
   <div *ngIf="!loading && logs.length === 0" class="empty">No hay registros de auditoría.</div>
@@ -52,5 +38,17 @@
         <span class="date">{{ log.timestamp | date: 'short' }}</span>
       </div>
     </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="page-btn" (click)="prevPage()" [disabled]="page === 0">Anterior</button>
+
+    <span class="page-info">
+      Página <strong>{{ page + 1 }}</strong> de <strong>{{ totalPages }}</strong>
+    </span>
+
+    <button class="page-btn" (click)="nextPage()" [disabled]="page + 1 >= totalPages">
+      Siguiente
+    </button>
   </div>
 </section>

@@ -5,6 +5,7 @@ import com.utn.eventmanager.model.AuditLog;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.AuditAction;
 import com.utn.eventmanager.model.enums.AuditEntity;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -24,12 +25,13 @@ public interface AuditLogService {
             User user,
             Long eventId
     );
-    List<AuditLogResponse> getFiltered(
+    Page<AuditLogResponse> getFiltered(
             AuditEntity entity,
-            Long userId,
             String userEmail,
             Long eventId,
-            String order
+            String order,
+            int page,
+            int size
     );
 
     List<AuditLog> getAll();

@@ -123,3 +123,40 @@
 .log-card .date {
   white-space: nowrap;
 }
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.9rem;
+}
+
+.page-btn {
+  background: #cda2b1;
+  color: #351923;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease,
+    opacity 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #e0bcc8;
+  transform: translateY(-1px);
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.page-info {
+  opacity: 0.85;
+  white-space: nowrap;
+}
