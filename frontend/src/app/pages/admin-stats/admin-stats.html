@@ -4,9 +4,9 @@
   <p *ngIf="loading">Cargando estadísticas…</p>
 
   <div *ngIf="!loading && stats">
-    <!-- CARDS -->
-    <div class="grid">
-      <div class="card">
+    <!-- FILA 1: KPIs EVENTOS -->
+    <div class="kpi-row">
+      <div class="card card-main">
         <strong>{{ stats.totalEvents }}</strong>
         <span>Eventos totales</span>
       </div>
@@ -30,17 +30,35 @@
         <strong>{{ stats.completedEvents }}</strong>
         <span>Completados</span>
       </div>
+    </div>
 
+    <!-- FILA 2: KPIs USUARIOS -->
+    <div class="kpi-row">
       <div class="card">
         <strong>{{ stats.totalUsers }}</strong>
         <span>Usuarios totales</span>
       </div>
+
+      <div class="card">
+        <strong>{{ stats.adminUsers }}</strong>
+        <span>Administradores</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.employeeUsers }}</strong>
+        <span>Empleados</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.clientUsers }}</strong>
+        <span>Clientes</span>
+      </div>
     </div>
 
-    <!-- CHART -->
+    <!-- FILA 3: GRÁFICOS -->
     <div class="charts">
       <div class="chart-box">
-        <h3>Estado de eventos</h3>
+        <h3>Eventos por estado</h3>
         <canvas #eventsChart></canvas>
       </div>
 

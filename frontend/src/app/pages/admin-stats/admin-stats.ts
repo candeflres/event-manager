@@ -19,10 +19,10 @@ export class AdminStats implements OnInit {
   loading = true;
 
   @ViewChild('eventsChart') eventsChart!: ElementRef<HTMLCanvasElement>;
-  private chart?: Chart;
-
   @ViewChild('usersChart') usersChart!: ElementRef<HTMLCanvasElement>;
-  private usersPieChart?: Chart;
+
+  private eventsBarChart?: Chart;
+  private usersBarChart?: Chart;
 
   constructor(
     private adminService: AdminService,
@@ -38,42 +38,15 @@ export class AdminStats implements OnInit {
         this.cdr.detectChanges();
 
         this.buildEventsBarChart(res);
-        this.buildUsersPieChart(res);
-      },
-    });
-  }
-
-  private buildUsersPieChart(stats: AdminStatsDTO): void {
-    if (this.usersPieChart) {
-      this.usersPieChart.destroy();
-    }
-
-    this.usersPieChart = new Chart(this.usersChart.nativeElement, {
-      type: 'pie',
-      data: {
-        labels: ['Administradores', 'Empleados', 'Clientes'],
-        datasets: [
-          {
-            data: [stats.adminUsers, stats.employeeUsers, stats.clientUsers],
-            backgroundColor: ['#7e57c2', '#42a5f5', '#66bb6a'],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'bottom' },
-        },
+        this.buildUsersBarChart(res);
       },
     });
   }
 
   private buildEventsBarChart(stats: AdminStatsDTO): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    this.eventsBarChart?.destroy();
 
-    this.chart = new Chart(this.eventsChart.nativeElement, {
+    this.eventsBarChart = new Chart(this.eventsChart.nativeElement, {
       type: 'bar',
       data: {
         labels: ['Pendientes', 'Aprobados', 'Cancelados', 'Completados'],
@@ -86,12 +59,38 @@ export class AdminStats implements OnInit {
               stats.cancelledEvents,
               stats.completedEvents,
             ],
-            backgroundColor: ['#f4c542', '#4caf50', '#e57373', '#90a4ae'],
+            backgroundColor: '#351725',
           },
         ],
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+        },
+      },
+    });
+  }
+
+  private buildUsersBarChart(stats: AdminStatsDTO): void {
+    this.usersBarChart?.destroy();
+
+    this.usersBarChart = new Chart(this.usersChart.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: ['Administradores', 'Empleados', 'Clientes'],
+        datasets: [
+          {
+            label: 'Usuarios',
+            data: [stats.adminUsers, stats.employeeUsers, stats.clientUsers],
+            backgroundColor: '#351725',
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
         },
