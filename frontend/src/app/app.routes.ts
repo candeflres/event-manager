@@ -131,6 +131,12 @@ export const routes: Routes = [
   },
 
   {
+    path: 'admin/stats',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () => import('./pages/admin-stats/admin-stats').then((m) => m.AdminStats),
+  },
+  {
     path: '**',
     redirectTo: 'home',
   },

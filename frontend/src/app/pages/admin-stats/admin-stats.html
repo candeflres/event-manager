@@ -1,0 +1,17 @@
+<section class="admin-wrapper">
+  <h2>Estadísticas</h2>
+
+  <p *ngIf="loading">Cargando estadísticas…</p>
+
+  <div *ngIf="!loading && stats">
+    <p>Total usuarios: {{ stats.totalUsers }}</p>
+    <p>Usuarios activos: {{ stats.activeUsers }}</p>
+    <p>Usuarios inactivos: {{ stats.inactiveUsers }}</p>
+
+    <p>Total eventos: {{ stats.totalEvents }}</p>
+    <p>Eventos aprobados: {{ stats.approvedEvents }}</p>
+    <p>Eventos pendientes: {{ stats.pendingEvents }}</p>
+    <p>Eventos cancelados: {{ stats.cancelledEvents }}</p>
+    <p>Eventos completados: {{ stats.completedEvents }}</p>
+  </div>
+</section>

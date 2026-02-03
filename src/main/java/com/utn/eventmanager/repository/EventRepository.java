@@ -72,4 +72,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     // Trae todas las fechas ocupadas
     List<Event> findByStatusIn(List<EventStatus> statuses);
+    long count();
+    long countByStatus(EventStatus status);
+
 }
