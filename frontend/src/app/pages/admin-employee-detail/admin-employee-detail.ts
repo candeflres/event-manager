@@ -136,6 +136,27 @@ export class AdminEmployeeDetail implements OnInit {
     this.patchFormFromEmployee();
   }
 
+  activate(): void {
+    const confirmed = confirm('¿Querés reactivar este usuario?');
+
+    if (!confirmed) return;
+
+    this.error = null;
+
+    this.userService.activateUser(this.employeeId).subscribe({
+      next: () => {
+        alert('Usuario reactivado correctamente');
+        this.employee.active = true;
+        this.editMode = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.error = err?.error?.message || 'No se pudo reactivar el usuario';
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
   save(): void {
     this.error = null;
 

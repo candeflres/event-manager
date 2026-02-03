@@ -1,0 +1,14 @@
+<section class="admin-wrapper">
+  <h2>Usuarios</h2>
+
+  <div class="user-row" *ngFor="let u of users">
+    <div>
+      <strong>{{ u.firstName }} {{ u.lastName }}</strong>
+      <small>{{ u.email }}</small>
+      <span class="role">{{ u.role }}</span>
+      <span *ngIf="!u.active" class="inactive-label">Inactivo</span>
+    </div>
+
+    <a [routerLink]="['/admin/users', u.id]">Editar</a>
+  </div>
+</section>

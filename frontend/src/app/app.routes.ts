@@ -22,38 +22,25 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+
+  { path: 'home', component: Home },
+  { path: 'register', component: Register },
+  { path: 'login', component: Login },
+  { path: 'forgot-password', component: ForgotPassword },
+  { path: 'verify-code', component: VerifyCode },
+  { path: 'reset-password', component: ResetPassword },
+  { path: 'contact', component: Contact },
+  { path: 'message-sent', component: MessageSent },
+  { path: 'know-more', component: KnowMoreElement },
+  { path: 'know-more/element/:id', component: KnowMoreElementOptions },
+
+  { path: 'home-logged', component: HomeLogged },
   {
-    path: 'home',
-    component: Home,
+    path: 'profile',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfilePage),
   },
-  {
-    path: 'register',
-    component: Register,
-  },
-  {
-    path: 'login',
-    component: Login,
-  },
-  {
-    path: 'forgot-password',
-    component: ForgotPassword,
-  },
-  {
-    path: 'verify-code',
-    component: VerifyCode,
-  },
-  {
-    path: 'contact',
-    component: Contact,
-  },
-  {
-    path: 'message-sent',
-    component: MessageSent,
-  },
-  {
-    path: 'home-logged',
-    component: HomeLogged,
-  },
+
   {
     path: 'event-list',
     component: EventList,
@@ -73,19 +60,7 @@ export const routes: Routes = [
     path: 'event/:id',
     loadComponent: () => import('./pages/event-public/event-public').then((m) => m.EventPublic),
   },
-  {
-    path: 'profile',
-    canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/profile/profile').then((m) => m.ProfilePage),
-  },
-  {
-    path: 'know-more',
-    component: KnowMoreElement,
-  },
-  {
-    path: 'know-more/element/:id',
-    component: KnowMoreElementOptions,
-  },
+
   {
     path: 'manage-elements',
     canActivate: [AuthGuard],
@@ -103,11 +78,34 @@ export const routes: Routes = [
     component: ManageElementDetail,
   },
 
+  // ==========================
+  // ===== ADMIN SECTION =====
+  // ==========================
+
   {
     path: 'admin/audit',
     canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
     loadComponent: () => import('./pages/admin-audit/admin-audit').then((m) => m.AdminAudit),
   },
+
+  {
+    path: 'admin/users',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import('./pages/admin-users-list/admin-users-list').then((m) => m.AdminUsersList),
+  },
+  {
+    path: 'admin/users/:id',
+    canActivate: [AuthGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import('./pages/admin-employee-detail/admin-employee-detail').then(
+        (m) => m.AdminEmployeeDetail,
+      ),
+  },
+
   {
     path: 'admin/employees',
     canActivate: [AuthGuard],
@@ -132,9 +130,6 @@ export const routes: Routes = [
       ),
   },
 
-  { path: 'forgot-password', component: ForgotPassword },
-  { path: 'verify-code', component: VerifyCode },
-  { path: 'reset-password', component: ResetPassword },
   {
     path: '**',
     redirectTo: 'home',

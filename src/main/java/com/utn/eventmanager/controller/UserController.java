@@ -35,6 +35,14 @@ public class UserController {
         return userService.updateMyProfile(authentication, request);
     }
 
+    @PutMapping("/{id}/activate")
+    public void activateUserByAdmin(
+            Authentication authentication,
+            @PathVariable Long id
+    ) {
+        userService.activateUserByAdmin(authentication, id);
+    }
+
     @PutMapping("/me/password")
     public void changeMyPassword(
             Authentication authentication,

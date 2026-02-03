@@ -336,4 +336,31 @@ public class UserServiceImpl implements UserService {
 
         return mapToResponse(userRepository.save(user));
     }
+
+    @Override
+    @Transactional
+    public void activateUserByAdmin(Authentication authentication, Long userId) {
+
+        User admin = userRepository
+                .findByEmailIgnoreCase(authentication.getName())
+                .orElseThrow(() -> new IllegalStateException("Usuario no encontrado"));
+
+        if (admin.getRole() != UserRole.ADMIN) {
+            throw new AccessDeniedException("Solo un ADMIN puede reactivar usuarios");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        user.setActive(true);
+
+        auditLogService.log(
+                AuditAction.UPDATE,
+                AuditEntity.USER,
+                "El admin reactivó la cuenta: " + user.getEmail(),
+                admin
+        );
+
+        userRepository.save(user);
+    }
 }

@@ -20,6 +20,7 @@ public interface UserService {
                                Long userId);
     UserResponse getMyProfile(Authentication authentication);
 
+    void activateUserByAdmin(Authentication authentication, Long userId);
     void deactivateMyAccount(Authentication authentication);
 
     void deactivateUser(Long userId);

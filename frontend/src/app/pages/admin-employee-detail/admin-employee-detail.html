@@ -68,7 +68,18 @@
       </div>
     </div>
   </div>
-  <button *ngIf="employee.active" class="danger" (click)="deactivate()">Dar de baja</button>
+  <!-- ACCIONES DE ESTADO -->
+  <div class="state-actions">
+    <!-- Usuario activo -->
+    <button *ngIf="employee.active && !editMode" class="danger" (click)="deactivate()">
+      Dar de baja
+    </button>
+
+    <!-- Usuario inactivo -->
+    <button *ngIf="!employee.active && !editMode" class="primary" (click)="activate()">
+      Reactivar usuario
+    </button>
+  </div>
 </section>
 
 <ng-template #loadingTpl>

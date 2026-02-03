@@ -108,4 +108,20 @@ export class UserService {
       { headers: { Authorization: 'Basic ' + auth } },
     );
   }
+
+  getAllUsersIncludingInactive() {
+    const auth = localStorage.getItem('auth');
+    return this.http.get<UserProfile[]>(`${this.urlApi}/all`, {
+      headers: { Authorization: 'Basic ' + auth },
+    });
+  }
+
+  activateUser(userId: number) {
+    const auth = localStorage.getItem('auth');
+    return this.http.put(
+      `${this.urlApi}/${userId}/activate`,
+      {},
+      { headers: { Authorization: 'Basic ' + auth } },
+    );
+  }
 }
