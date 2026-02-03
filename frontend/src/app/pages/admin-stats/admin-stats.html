@@ -4,14 +4,50 @@
   <p *ngIf="loading">Cargando estadísticas…</p>
 
   <div *ngIf="!loading && stats">
-    <p>Total usuarios: {{ stats.totalUsers }}</p>
-    <p>Usuarios activos: {{ stats.activeUsers }}</p>
-    <p>Usuarios inactivos: {{ stats.inactiveUsers }}</p>
+    <!-- CARDS -->
+    <div class="grid">
+      <div class="card">
+        <strong>{{ stats.totalEvents }}</strong>
+        <span>Eventos totales</span>
+      </div>
 
-    <p>Total eventos: {{ stats.totalEvents }}</p>
-    <p>Eventos aprobados: {{ stats.approvedEvents }}</p>
-    <p>Eventos pendientes: {{ stats.pendingEvents }}</p>
-    <p>Eventos cancelados: {{ stats.cancelledEvents }}</p>
-    <p>Eventos completados: {{ stats.completedEvents }}</p>
+      <div class="card">
+        <strong>{{ stats.pendingEvents }}</strong>
+        <span>Pendientes</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.approvedEvents }}</strong>
+        <span>Aprobados</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.cancelledEvents }}</strong>
+        <span>Cancelados</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.completedEvents }}</strong>
+        <span>Completados</span>
+      </div>
+
+      <div class="card">
+        <strong>{{ stats.totalUsers }}</strong>
+        <span>Usuarios totales</span>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="charts">
+      <div class="chart-box">
+        <h3>Estado de eventos</h3>
+        <canvas #eventsChart></canvas>
+      </div>
+
+      <div class="chart-box">
+        <h3>Usuarios por rol</h3>
+        <canvas #usersChart></canvas>
+      </div>
+    </div>
   </div>
 </section>

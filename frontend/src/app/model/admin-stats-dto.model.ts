@@ -1,14 +1,15 @@
-export interface AdminStatsdto {
-  totalEvents: number;
-  pendingEvents: number;
-  approvedEvents: number;
-  cancelledEvents: number;
-  completedEvents: number;
-
+export interface AdminStatsDTO {
   totalUsers: number;
   activeUsers: number;
   inactiveUsers: number;
-  clientUsers: number;
-  employeeUsers: number;
+
   adminUsers: number;
+  employeeUsers: number;
+  clientUsers: number;
+
+  totalEvents: number;
+  approvedEvents: number;
+  pendingEvents: number;
+  cancelledEvents: number;
+  completedEvents: number;
 }
