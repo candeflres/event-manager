@@ -80,3 +80,17 @@
     align-self: flex-end;
   }
 }
+.filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(53, 25, 35, 0.25);
+  background: #fff;
+  font-size: 14px;
+}

@@ -1,7 +1,20 @@
 <section class="admin-wrapper">
   <h2>Usuarios</h2>
+  <div class="filters">
+    <select [(ngModel)]="roleFilter" (change)="applyFilters()">
+      <option value="">Todos los roles</option>
+      <option value="CLIENT">Clientes</option>
+      <option value="EMPLOYEE">Empleados</option>
+      <option value="ADMIN">Admins</option>
+    </select>
 
-  <div class="user-row" *ngFor="let u of users">
+    <select [(ngModel)]="statusFilter" (change)="applyFilters()">
+      <option value="">Todos</option>
+      <option value="active">Activos</option>
+      <option value="inactive">Inactivos</option>
+    </select>
+  </div>
+  <div class="user-row" *ngFor="let u of filteredUsers">
     <div>
       <strong>{{ u.firstName }} {{ u.lastName }}</strong>
       <small>{{ u.email }}</small>
