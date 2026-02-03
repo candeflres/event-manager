@@ -1,81 +1,111 @@
-section {
+/* =========================
+   HERO – Layout
+========================= */
+.hero {
   height: 40%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: 3rem;
   margin-top: 6rem;
   padding-left: 11rem;
+  padding-right: 11rem;
 }
-section h2 {
+
+/* =========================
+   HERO – Typography
+========================= */
+.hero-title {
   font-size: 3rem;
   font-weight: 600;
 }
-section .textos {
-  text-align: center;
+
+.hero-text {
   color: #f1e4e9;
   text-align: left;
 }
-section .sub {
+
+.hero-sub {
   font-size: 1.5rem;
   margin: 0;
 }
-section .min {
+
+.hero-min {
   color: #cda2b1;
 }
 
-.botones {
+/* =========================
+   HERO – Actions
+========================= */
+.hero-actions {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: left;
   margin-top: 24px;
 }
-.botones button {
+
+.hero-btn {
   padding: 10px 20px;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-weight: bold;
 }
-.botones .register {
+
+/* Primary */
+.hero-btn--primary {
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
   border: none;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease,
-    color 0.2s ease,
-    border 0.2s ease;
 }
-.botones .register:hover {
+
+.hero-btn--primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
   background: #f1e4e9;
   color: #b87a8f;
   border: 1px solid #b87a8f;
 }
-.botones .login:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
-  background: #f1e4e9;
-  color: #b87a8f;
-  border: 1px solid #b87a8f;
-}
-.botones .register:active {
+
+.hero-btn--primary:active {
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-.botones .login:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-.botones .login {
+
+/* Secondary */
+.hero-btn--secondary {
   background-color: transparent;
   color: #f1e4e9;
   border: 1px solid #f1e4e9;
+}
+
+.hero-btn--secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  background: #f1e4e9;
+  color: #b87a8f;
+  border: 1px solid #b87a8f;
+}
+
+.hero-btn--secondary:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================
+   HERO – Image
+========================= */
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-img {
+  height: 280px;
+  width: auto;
+  display: block;
 }

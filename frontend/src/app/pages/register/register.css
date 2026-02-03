@@ -1,20 +1,17 @@
 .register {
-  min-height: 100vh;
+  min-height: calc(100dvh - 80px);
   display: flex;
-  flex-direction: column;
-
-  background: linear-gradient(to bottom, transparent 33%, #351923 33%);
+  justify-content: center;
+  align-items: center;
 }
 
 .register-card {
-  margin: 0 auto;
-  margin-top: 10vh;
   padding: 24px;
   width: 500px;
 
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 40px;
 
   background: #351923;
   border: 1px solid rgba(87, 62, 71, 0.3);

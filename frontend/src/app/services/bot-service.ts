@@ -1,25 +1,31 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BotResponse} from '../model/bot-response.model';
-import {BotActionRequest} from '../model/bot-action.model';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class BotService{
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BotResponse } from '../model/bot-response.model';
+@Injectable({ providedIn: 'root' })
+export class BotService {
   private apiUrl = 'http://localhost:8080/api/bot';
 
   constructor(private http: HttpClient) {}
 
-  startBot(){
+  startBot() {
     return this.http.get<BotResponse>(`${this.apiUrl}/start`);
   }
+
   startLoggedBot() {
-    return this.http.get<BotResponse>(`${this.apiUrl}/logged`);
+    const headers = this.buildAuthHeaders();
+
+    return this.http.get<BotResponse>(`${this.apiUrl}/logged`, { headers });
   }
 
   sendAction(action: string, value?: string) {
-    return this.http.post<BotResponse>(`${this.apiUrl}/action`, {action, value});
+    const headers = this.buildAuthHeaders();
+
+    return this.http.post<BotResponse>(`${this.apiUrl}/action`, { action, value }, { headers });
+  }
+
+  private buildAuthHeaders(): HttpHeaders {
+    const auth = localStorage.getItem('auth');
+
+    return auth ? new HttpHeaders({ Authorization: 'Basic ' + auth }) : new HttpHeaders();
   }
 }

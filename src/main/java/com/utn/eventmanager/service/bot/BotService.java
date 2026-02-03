@@ -8,6 +8,7 @@ import com.utn.eventmanager.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,9 +87,8 @@ public class BotService {
                 List.of(
                         new BotOptionDTO(1, "Crear un evento", "CREATE_EVENT"),
                         new BotOptionDTO(2, "Ver estado de mis eventos", "MY_EVENTS"),
-                        new BotOptionDTO(3, "Ver fechas disponibles", "AVAILABLE_DATES"),
-                        new BotOptionDTO(4, "Verificar fecha específica", "CHECK_DATE"),
-                        new BotOptionDTO(5,"¡Contactate con nosotros!","WHATSAPP")
+                        new BotOptionDTO(3, "Verificar fecha específica", "CHECK_DATE"),
+                        new BotOptionDTO(4, "¡Contactate con nosotros!", "WHATSAPP")
                 )
         );
     }
@@ -107,45 +107,56 @@ public class BotService {
         );
     }
 
-    public BotResponseDTO availableDates() {
+    public BotResponseDTO checkDate(String date) {
 
-        List<Event> events = eventRepository.findByStatusIn(
-                List.of(EventStatus.APPROVED, EventStatus.PENDING)
-        );
+        LocalDate selectedDate;
 
-        if (events.isEmpty()) {
+        try {
+            selectedDate = LocalDate.parse(date);
+        } catch (DateTimeParseException e) {
             return new BotResponseDTO(
-                    "No hay eventos registrados. Todas las fechas están disponibles 📅",
-                    backOption()
+                    "La fecha ingresada no es válida ❌\n" +
+                            "Probá nuevamente (YYYY-MM-DD)",
+                    backOption(),
+                    "WAITING_DATE"
             );
         }
 
-        String fechasOcupadas = events.stream()
-                .map(event -> event.getEventDate().toString())
-                .distinct()
-                .sorted()
-                .collect(Collectors.joining("\n📅 "));
+        LocalDate today = LocalDate.now();
 
-        return new BotResponseDTO(
-                "Estas fechas ya están ocupadas:\n📅 " + fechasOcupadas,
-                backOption()
-        );
-    }
+        if (selectedDate.isBefore(today)) {
+            return new BotResponseDTO(
+                    "La fecha " + selectedDate + " ya pasó 📆\n" +
+                            "Elegí una fecha futura.",
+                    backOption(),
+                    "WAITING_DATE"
+            );
+        }
 
-    public BotResponseDTO checkDate(String date) {
+        LocalDate minAllowedDate = today.plusDays(2);
 
-        LocalDate selectedDate = LocalDate.parse(date);
+        if (selectedDate.isBefore(minAllowedDate)) {
+            return new BotResponseDTO(
+                    "Los eventos deben crearse con al menos 48 hs de anticipación ⏳\n" +
+                            "Probá con una fecha a partir del " + minAllowedDate,
+                    backOption(),
+                    "WAITING_DATE"
+            );
+        }
 
         boolean occupied = eventRepository.existsByEventDateAndStatusIn(
                 selectedDate,
-                List.of(EventStatus.APPROVED, EventStatus.PENDING)
+                List.of(EventStatus.APPROVED)
         );
 
         return new BotResponseDTO(
                 occupied
-                        ? "La fecha " + date + " ya está ocupada ❌"
-                        : "La fecha " + date + " está disponible ✅",
-                backOption()
+                        ? "La fecha " + selectedDate + " ya está ocupada ❌\n" +
+                        "Podés probar otra fecha."
+                        : "La fecha " + selectedDate + " está disponible ✅\n" +
+                        "¿Querés probar otra?",
+                backOption(),
+                "WAITING_DATE"
         );
     }
 
@@ -158,4 +169,13 @@ public class BotService {
                 new BotOptionDTO(0, "Volver al inicio", "BACK")
         );
     }
+    public BotResponseDTO askForDate() {
+        return new BotResponseDTO(
+                "Decime la fecha que querés verificar 📅 (YYYY-MM-DD)",
+                backOption(),
+                "WAITING_DATE"
+        );
+    }
+
+
 }

@@ -1,20 +1,45 @@
-<div class="bot">
-  <h2>Event Bot 🤖</h2>
+<!-- CLOSED: floating circle -->
+<button type="button" class="bot-fab" (click)="openBot()">🤖</button>
 
+<!-- OPEN: chat panel -->
+<section *ngIf="isOpen" class="bot-panel">
+  <header class="bot-header">
+    <div class="bot-avatar">B</div>
+
+    <div class="bot-title">
+      <strong>Botsito</strong>
+      <small>Tu asistente personal</small>
+    </div>
+
+    <button type="button" class="bot-close" (click)="closeBot()">×</button>
+  </header>
+
+  <!-- Messages -->
   <div class="messages">
-    <div *ngFor="let msg of messages"
-         [ngClass]="{'user-msg': msg.startsWith('> ')}"
-         style="margin-bottom: 0.8rem; line-height: 1.4;">
-
-      <span [innerHTML]="msg"></span>
+    <div
+      *ngFor="let msg of messages"
+      class="msg"
+      [ngClass]="{ user: msg.startsWith('> '), bot: !msg.startsWith('> ') }"
+    >
+      <div class="bubble">
+        <span [innerHTML]="msg"></span>
+      </div>
     </div>
   </div>
 
-  <div class="options" *ngIf="options && options.length > 0">
-    <button *ngFor="let option of options"
-            (click)="handleOption(option)"
-            style="margin-right: 5px; margin-top: 5px; cursor: pointer;">
-      {{ option.text }}
-    </button>
-  </div>
-</div>
+  <!-- Footer -->
+  <footer class="bot-footer">
+    <!-- input dinámico -->
+    <div *ngIf="pendingAction === 'WAITING_DATE'" class="input-area">
+      <input type="date" [(ngModel)]="inputValue" />
+      <button type="button" (click)="sendInput()">Enviar</button>
+    </div>
+
+    <!-- opciones -->
+    <div class="options" *ngIf="options.length > 0">
+      <button type="button" *ngFor="let option of options" (click)="handleOption(option)">
+        {{ option.text }}
+      </button>
+    </div>
+  </footer>
+</section>

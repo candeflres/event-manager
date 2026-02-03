@@ -1,15 +1,12 @@
 .message-sent {
-  min-height: 100vh;
+  min-height: calc(100dvh - 80px);
   display: flex;
   justify-content: center;
-  background: linear-gradient(to bottom, transparent 33%, #351923 33%);
-  align-items: flex-start;
-  padding-top: 2vh;
+  /* background: linear-gradient(to bottom, transparent 33%, #351923 33%); */
+  align-items: center;
 }
 
 .message-sent-card {
-  margin: 0;
-  margin-top: 15vh;
   padding: 24px;
   width: 500px;
 

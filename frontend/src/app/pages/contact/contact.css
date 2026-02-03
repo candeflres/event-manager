@@ -1,10 +1,22 @@
 .contact {
-  min-height: 100vh;
+  min-height: calc(100dvh - 80px);
   display: flex;
   justify-content: center;
-  background: linear-gradient(to bottom, transparent 33%, #351923 33%);
-  align-items: flex-start;
-  padding-top: 6vh;
+  /* background: linear-gradient(to bottom, transparent 33%, #351923 33%); */
+  align-items: center;
+}
+
+.contact-card {
+  padding: 24px;
+  width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  background: #351923;
+  border: 1px solid rgba(87, 62, 71, 0.3);
+  border-radius: 5px;
 }
 
 .contact-card input {
@@ -17,21 +29,6 @@
 
   color: rgba(241, 228, 233, 0.8);
   outline: none;
-}
-
-.contact-card {
-  margin: 0;
-  margin-top: 10vh;
-  padding: 24px;
-  width: 500px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  background: #351923;
-  border: 1px solid rgba(87, 62, 71, 0.3);
-  border-radius: 5px;
 }
 
 .contact-card h2 {

@@ -1,0 +1,198 @@
+.bot-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: #351923;
+  color: #f1e4e9;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.bot-fab:hover {
+  transform: translateY(-1px);
+}
+
+.bot-panel {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 360px;
+  height: 520px;
+  background: #f1e4e9;
+  border: 1px solid rgba(53, 25, 35, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.bot-header {
+  background: #351923;
+  color: #f1e4e9;
+  padding: 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bot-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(241, 228, 233, 0.25);
+  border: 1px solid rgba(241, 228, 233, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.bot-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.bot-title strong {
+  font-size: 14px;
+}
+
+.bot-title small {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.bot-close {
+  margin-left: auto;
+  background: transparent;
+  color: #f1e4e9;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.bot-close:hover {
+  background: rgba(241, 228, 233, 0.12);
+}
+
+.messages {
+  flex: 1;
+  padding: 14px 12px;
+  overflow-y: auto;
+  background: linear-gradient(to bottom, #f1e4e9 0%, #f7eef2 100%);
+}
+
+.msg {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.msg .bubble {
+  max-width: 78%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.35;
+  border: 1px solid rgba(53, 25, 35, 0.12);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.msg.bot {
+  justify-content: flex-start;
+}
+
+.msg.bot .bubble {
+  background: #ffffff;
+  color: #351923;
+  border-top-left-radius: 6px;
+}
+
+.msg.user {
+  justify-content: flex-end;
+}
+
+.msg.user .bubble {
+  background: #351923;
+  color: #f1e4e9;
+  border-top-right-radius: 6px;
+}
+
+.bot-footer {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(53, 25, 35, 0.12);
+  background: #f1e4e9;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.options button {
+  border: 1px solid rgba(53, 25, 35, 0.18);
+  background: #fff;
+  color: #351923;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.options button:hover {
+  background: rgba(53, 25, 35, 0.06);
+}
+
+.input-area {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-area input {
+  flex: 1;
+  border: 1px solid rgba(53, 25, 35, 0.18);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.input-area button {
+  border: none;
+  background: #351923;
+  color: #f1e4e9;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.input-area button:hover {
+  filter: brightness(1.05);
+}
+
+@media (max-width: 420px) {
+  .bot-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: 70vh;
+  }
+}

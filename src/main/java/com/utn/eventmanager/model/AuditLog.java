@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "audit_logs")
 public class AuditLog {
