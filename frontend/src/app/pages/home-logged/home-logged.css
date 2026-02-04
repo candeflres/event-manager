@@ -4,9 +4,7 @@
   flex-direction: column;
   align-items: center;
 
-  background: linear-gradient(to bottom, transparent 35%, #351923 35%);
   padding: 6vh 16px 80px;
-  color: #f1e4e9;
 }
 
 .home-logged h2 {

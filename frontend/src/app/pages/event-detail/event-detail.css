@@ -1,320 +1,195 @@
-/* CONTENEDOR PRINCIPAL */
 .event-detail {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 1.5rem 4rem;
   color: #f1e4e9;
 }
 
-/* TÍTULO */
-.event-detail h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #ffffff;
+/* HEADER */
+.event-header {
+  margin-bottom: 2rem;
 }
 
-/* DESCRIPCIÓN */
-.event-detail p {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #d7c5cc;
-  margin-bottom: 1.2rem;
+.event-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.6rem;
 }
 
-/* INFO (fecha / estado / presupuesto) */
-.info {
+.event-meta {
   display: flex;
-  gap: 1.5rem;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 1.8rem;
-  font-size: 0.95rem;
 }
 
-.info span {
-  background: rgba(255, 255, 255, 0.04);
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
+.meta-item {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
 }
 
-/* SECCIÓN OPCIONES */
-.event-detail h3 {
-  margin: 1.5rem 0 0.8rem;
-  font-size: 1.2rem;
+/* VIEW */
+.event-view .description {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #e2d2d9;
 }
 
-.event-detail ul {
+.options-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.event-detail li {
-  padding: 0.4rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.95rem;
-}
-
-/* FORMULARIO EDICIÓN */
-.edit-form {
+.options-list li {
   display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
-.edit-form input,
-.edit-form textarea {
+/* EDIT */
+.event-edit {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.event-edit input,
+.event-edit textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: #2a1d23;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 0.6rem 0.8rem;
   color: #f1e4e9;
-  font-size: 0.95rem;
 }
 
-.edit-form textarea {
-  resize: vertical;
-  min-height: 80px;
+.elements {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-/* CONTENEDOR GENERAL */
-.actions {
+.element {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.element label {
+  display: block;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.budget-box {
+  margin-top: 1.4rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(205, 162, 177, 0.15);
+  text-align: center;
+}
+
+.event-actions {
   margin-top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-.actions-left {
+.actions-left,
+.actions-right {
   display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+  gap: 12px;
 }
 
-.actions-left .secondary {
-  align-self: flex-start;
-  padding: 6px 14px;
+/* BOTÓN VOLVER */
+.ghost {
+  padding: 8px 16px;
+  border-radius: 12px;
   font-size: 0.8rem;
   background: transparent;
   color: #cda2b1;
   border: 1px solid rgba(205, 162, 177, 0.4);
-  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.actions-left .secondary:hover {
+.ghost:hover {
   background: rgba(205, 162, 177, 0.08);
 }
 
-.actions-left .share {
+/* CANCELAR */
+.danger {
   padding: 8px 16px;
-  font-size: 0.85rem;
-  background: rgba(241, 228, 233, 0.08);
-  color: #f1e4e9;
-  border: 1px solid rgba(241, 228, 233, 0.25);
   border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.actions-left .share:hover {
-  background: rgba(241, 228, 233, 0.18);
-}
-
-.actions-right {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
-}
-
-.actions-right .danger {
-  align-self: flex-end;
-  padding: 6px 14px;
   font-size: 0.8rem;
   background: transparent;
-  color: #c94258;
-  border: 1px solid rgba(211, 107, 124, 0.4);
-  border-radius: 10px;
+  color: #d36b7c;
+  border: 1px solid rgba(211, 107, 124, 0.45);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.actions-right .danger:hover {
+.danger:hover {
   background: rgba(211, 107, 124, 0.08);
-  border-color: rgba(211, 107, 124, 0.6);
+  border-color: rgba(211, 107, 124, 0.7);
 }
 
-.actions-right .danger:active {
-  transform: scale(0.97);
-}
-
-.actions-right .edit {
-  padding: 8px 18px;
+/* EDITAR */
+.secondary {
+  padding: 10px 20px;
+  border-radius: 14px;
   font-size: 0.85rem;
   background: rgba(205, 162, 177, 0.15);
   color: #f1e4e9;
-  border: 1px solid rgba(205, 162, 177, 0.4);
-  border-radius: 12px;
+  border: 1px solid rgba(205, 162, 177, 0.45);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.actions-right .edit:hover {
-  background: rgba(205, 162, 177, 0.25);
+.secondary:hover {
+  background: rgba(205, 162, 177, 0.3);
 }
 
-.actions-right .approve {
-  padding: 9px 20px;
+/* COMPARTIR (DESTACADO) */
+.share {
+  padding: 12px 24px;
+  border-radius: 16px;
   font-size: 0.9rem;
-  font-weight: 500;
-  background: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.actions-right .approve:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-
-.actions-right .reject {
-  padding: 9px 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  background: #e53935;
-  color: #ffffff;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.actions-right .reject:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-button.primary {
-  width: 100%;
-  margin-top: 18px;
-  padding: 14px 0;
+  font-weight: 600;
 
   background: linear-gradient(135deg, #e0b3c1, #c58ea3);
   color: #351923;
 
   border: none;
-  border-radius: 14px;
-
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-
   cursor: pointer;
-  transition: all 0.25s ease;
 
   box-shadow:
     0 8px 22px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-button.primary:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #edc4d0, #d19ab0);
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.45);
-}
-button.primary:active {
-  transform: translateY(0);
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.3),
-    inset 0 3px 6px rgba(0, 0, 0, 0.25);
-}
-textarea {
-  resize: none;
-  min-height: 90px;
-  max-height: 90px;
-}
-.elements {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
-  margin-top: 1rem;
-}
-
-.element {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 1rem 1.1rem;
 
   transition: all 0.25s ease;
 }
 
-.element:hover {
-  background: rgba(255, 255, 255, 0.07);
+.share:hover {
   transform: translateY(-2px);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
-.element h4 {
-  margin: 0 0 0.6rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-/* OPCIONES */
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+.share:active {
+  transform: translateY(0);
 }
 
-.options label {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-
-  font-size: 0.9rem;
-  color: #e6d7dd;
-
-  padding: 0.35rem 0.4rem;
-  border-radius: 8px;
-
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.options label:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-.options input[type='checkbox'] {
-  accent-color: #cda2b1;
-  cursor: pointer;
-}
-.budget {
-  margin-top: 1.4rem;
-  padding: 0.8rem 1rem;
-
-  background: rgba(205, 162, 177, 0.15);
-  border: 1px solid rgba(205, 162, 177, 0.35);
-  border-radius: 12px;
-
-  font-size: 0.95rem;
-  color: #f1e4e9;
-}
-
-.budget strong {
-  font-size: 1.05rem;
-  color: #ffffff;
-}
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
+/* LOADING */
 .loading {
   display: inline-flex;
   align-items: center;
@@ -333,5 +208,16 @@ button:disabled {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .event-actions {
+    flex-direction: column;
+  }
+
+  .event-actions button {
+    width: 100%;
   }
 }
