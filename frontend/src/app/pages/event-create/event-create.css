@@ -223,6 +223,13 @@ input:focus {
     transform: rotate(360deg);
   }
 }
+.ticket-mobile {
+  display: none;
+}
+
+.ticket-desktop {
+  display: block;
+}
 
 /* =========================
    MOBILE
@@ -231,16 +238,14 @@ input:focus {
 @media (max-width: 768px) {
   .event-create-wrapper {
     grid-template-columns: 1fr;
-    padding: 16px;
   }
 
-  .event-create {
-    max-width: 100%;
-    padding: 24px 16px;
+  .ticket-desktop {
+    display: none;
   }
 
-  .ticket {
-    position: static;
-    margin-top: 24px;
+  .ticket-mobile {
+    display: block;
+    margin: 24px 0;
   }
 }

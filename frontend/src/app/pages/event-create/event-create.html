@@ -37,6 +37,23 @@
       </div>
     </div>
 
+    <!-- TICKET MOBILE -->
+    <aside class="ticket ticket-mobile">
+      <h3>Resumen del evento</h3>
+
+      <div class="ticket-line" *ngFor="let opt of selectedOptionsArray">
+        <span>{{ opt.name }}</span>
+        <span>${{ opt.price }}</span>
+      </div>
+
+      <div class="ticket-separator"></div>
+
+      <div class="ticket-total">
+        <span>Total estimado</span>
+        <strong>${{ estimatedBudget }}</strong>
+      </div>
+    </aside>
+
     <div *ngIf="errorMessage" class="form-error">
       {{ errorMessage }}
     </div>
@@ -51,8 +68,8 @@
     </button>
   </section>
 
-  <!-- COLUMNA DERECHA – TICKET -->
-  <aside class="ticket">
+  <!-- TICKET DESKTOP -->
+  <aside class="ticket ticket-desktop">
     <h3>Resumen del evento</h3>
 
     <div class="ticket-line" *ngFor="let opt of selectedOptionsArray">
