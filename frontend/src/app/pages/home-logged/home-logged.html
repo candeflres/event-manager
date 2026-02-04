@@ -1,13 +1,13 @@
 <section *ngIf="!loading" class="home-logged">
   <!-- CLIENT -->
   <ng-container *ngIf="isClient">
-    <h2 class="first">Empecemos a crear.</h2>
+    <h2>Empezá a crear tu próximo evento</h2>
 
     <section class="action-section">
       <a routerLink="/event-create" class="action-card">Crear un evento</a>
     </section>
 
-    <h2 class="second">O revisá tus avances.</h2>
+    <h2>Tus eventos, todos en un solo lugar</h2>
 
     <section class="action-section">
       <a routerLink="/event-list" class="action-card">Ver mis eventos</a>
@@ -16,27 +16,34 @@
 
   <!-- EMPLOYEE -->
   <ng-container *ngIf="isEmployee">
-    <h2 class="first">Panel de gestión</h2>
+    <h2>Gestioná elementos y opciones con impacto real</h2>
 
     <section class="action-section">
       <a routerLink="/manage-elements" class="action-card"> Gestionar elementos y opciones </a>
     </section>
 
-    <h2 class="second">Eventos</h2>
+    <h2>Administrá y acompañá cada evento</h2>
 
     <section class="action-section">
-      <a routerLink="/event-list" class="action-card"> Ver eventos </a>
+      <a routerLink="/event-list" class="action-card">Ver eventos</a>
     </section>
   </ng-container>
 
   <!-- ADMIN -->
   <ng-container *ngIf="isAdmin">
-    <h2>Administración</h2>
-
+    <h2>Control total sobre los usuarios del sistema</h2>
     <a routerLink="/admin/users" class="card">Usuarios</a>
+
+    <h2>Gestión y control del staff operativo</h2>
     <a routerLink="/admin/employees" class="card">Empleados</a>
+
+    <h2>Visión global de todos los eventos</h2>
     <a routerLink="/event-list" class="card">Eventos</a>
+
+    <h2>Trazabilidad y control de cada acción</h2>
     <a routerLink="/admin/audit" class="card">Auditoría</a>
+
+    <h2>Indicadores clave del funcionamiento del sistema</h2>
     <a routerLink="/admin/stats" class="card">Estadísticas</a>
   </ng-container>
 </section>

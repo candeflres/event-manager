@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-event-create',
   imports: [CommonModule, FormsModule],
@@ -16,6 +16,7 @@ export class EventCreate {
   selectedOptions: Map<number, any> = new Map();
   isSubmitting = false;
   estimatedBudget = 0;
+  errorMessage: string | null = null;
 
   form = {
     name: '',
@@ -27,10 +28,15 @@ export class EventCreate {
     private eventService: EventService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
     this.loadElements();
+  }
+
+  get selectedOptionsArray() {
+    return Array.from(this.selectedOptions.values());
   }
 
   loadElements() {
@@ -59,8 +65,25 @@ export class EventCreate {
   createEvent() {
     if (this.isSubmitting) return;
 
+    this.errorMessage = null;
+
+    if (!this.form.name.trim()) {
+      this.errorMessage = 'El nombre del evento es obligatorio';
+      return;
+    }
+
+    if (!this.form.description.trim()) {
+      this.errorMessage = 'La descripción es obligatoria';
+      return;
+    }
+
     if (!this.form.eventDate) {
-      alert('Seleccioná una fecha para el evento');
+      this.errorMessage = 'Seleccioná una fecha para el evento';
+      return;
+    }
+
+    if (this.selectedOptions.size === 0) {
+      this.errorMessage = 'Tenés que seleccionar al menos una opción';
       return;
     }
 
@@ -73,9 +96,11 @@ export class EventCreate {
     const diffInDays = (selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
 
     if (diffInDays < 2) {
-      alert('El evento debe crearse con al menos 2 días de anticipación');
+      this.errorMessage = 'El evento debe crearse con al menos 2 días de anticipación';
       return;
     }
+
+    this.isSubmitting = true;
 
     const payload = {
       name: this.form.name,
@@ -84,16 +109,25 @@ export class EventCreate {
       optionIds: Array.from(this.selectedOptions.values()).map((o) => o.id),
     };
 
-    this.isSubmitting = true;
-
     this.eventService.createEvent(payload).subscribe({
       next: () => {
-        alert('Evento creado con éxito');
         this.router.navigate(['/event-list']);
       },
-      error: (err) => {
-        console.error('Error creando evento', err);
-        alert(err.error?.message || 'Error al crear el evento');
+      error: (err: any) => {
+        if (err.status === 409) {
+          this.errorMessage =
+            typeof err.error === 'string'
+              ? err.error
+              : err.error?.message || 'Ya existe un evento confirmado para esa fecha';
+        } else {
+          this.errorMessage = err.error?.message || 'Error al crear el evento';
+        }
+        this.cdr.detectChanges();
+
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.cdr.detectChanges();
         this.isSubmitting = false;
       },
     });

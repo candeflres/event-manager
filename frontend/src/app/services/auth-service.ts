@@ -9,9 +9,31 @@ export class AuthService {
 
   private api = 'http://localhost:8080/api/auth';
 
-  login(auth: string) {
-    localStorage.setItem('auth', auth);
-    this.authSubject.next(auth);
+  loading = false;
+
+  login() {
+    if (this.loading) return;
+
+    this.loading = true;
+
+    this.http
+      .post('http://localhost:8080/api/auth/login', {
+        email: this.email,
+        password: this.password,
+      })
+      .subscribe({
+        next: (res: any) => {
+          this.authService.login(res.auth); // guardás el auth
+          this.router.navigate(['/home-logged']);
+        },
+        error: (err) => {
+          alert(err.error?.message || 'Credenciales incorrectas');
+          this.loading = false;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   logout() {

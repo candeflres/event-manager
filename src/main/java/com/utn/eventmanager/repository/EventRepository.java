@@ -75,4 +75,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     long count();
     long countByStatus(EventStatus status);
 
+
+    boolean existsByEventDateAndStatus(LocalDate eventDate, EventStatus status);
 }

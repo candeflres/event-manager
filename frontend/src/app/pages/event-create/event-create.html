@@ -1,50 +1,66 @@
-<section class="event-create">
-  <h2>Empecemos a crear hoy.</h2>
-  <p>Completá los datos de tu evento</p>
+<section class="event-create-wrapper">
+  <!-- COLUMNA IZQUIERDA -->
+  <section class="event-create">
+    <h2>Empecemos a crear hoy</h2>
+    <p>Completá los datos de tu evento</p>
 
-  <div class="form-group">
-    <label>Nombre</label>
-    <input type="text" [(ngModel)]="form.name" />
-  </div>
-
-  <div class="form-group">
-    <label>Descripción</label>
-    <input type="text" [(ngModel)]="form.description" />
-  </div>
-
-  <div class="form-row">
     <div class="form-group">
-      <label>Fecha</label>
-      <input type="date" [(ngModel)]="form.eventDate" />
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="form.name" />
     </div>
-  </div>
 
-  <div class="elements">
-    <div class="element-card" *ngFor="let element of elements">
-      <h4>{{ element.name }}</h4>
+    <div class="form-group">
+      <label>Descripción</label>
+      <input type="text" [(ngModel)]="form.description" />
+    </div>
 
-      <div class="options">
-        <button
-          *ngFor="let option of element.options"
-          [class.selected]="isSelected(option.id)"
-          (click)="selectOption(element.id, option)"
-        >
-          {{ option.name }}
-        </button>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" [(ngModel)]="form.eventDate" />
       </div>
     </div>
-  </div>
 
-  <p class="budget">
-    Presupuesto estimado:
-    <strong>\${{ estimatedBudget }}</strong>
-  </p>
-  <button class="submit" [disabled]="isSubmitting" (click)="createEvent()">
-    <span *ngIf="!isSubmitting">Crear un evento</span>
+    <div class="elements">
+      <div class="element-card" *ngFor="let element of elements">
+        <h4>{{ element.name }}</h4>
 
-    <span *ngIf="isSubmitting" class="loading">
-      <span class="spinner"></span>
-      Creando evento...
-    </span>
-  </button>
+        <div class="options">
+          <button
+            *ngFor="let option of element.options"
+            [class.selected]="isSelected(option.id)"
+            (click)="selectOption(element.id, option)"
+          >
+            {{ option.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="form-error">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit" class="submit" [disabled]="loading">
+      <span *ngIf="!loading">Iniciar sesión</span>
+      <span *ngIf="loading" class="btn-spinner"></span>
+    </button>
+  </section>
+
+  <!-- COLUMNA DERECHA – TICKET -->
+  <aside class="ticket">
+    <h3>Resumen del evento</h3>
+
+    <div class="ticket-line" *ngFor="let opt of selectedOptionsArray">
+      <span>{{ opt.name }}</span>
+      <span>${{ opt.price }}</span>
+    </div>
+
+    <div class="ticket-separator"></div>
+
+    <div class="ticket-total">
+      <span>Total estimado</span>
+      <strong>${{ estimatedBudget }}</strong>
+    </div>
+  </aside>
 </section>

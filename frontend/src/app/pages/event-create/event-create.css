@@ -1,25 +1,47 @@
+/* =========================
+   LAYOUT GENERAL
+========================= */
+
+.event-create-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  color: #f1e4e9;
+}
+
 .event-create {
   max-width: 420px;
-  margin: 0 auto;
   padding: 32px;
   color: #f1e4e9;
 }
 
+/* =========================
+   TITULOS Y TEXTO
+========================= */
+
 .event-create h2 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 600;
   margin-bottom: 6px;
 }
 
 .event-create p {
   font-size: 0.9rem;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   opacity: 0.8;
 }
+
+/* =========================
+   FORMULARIO
+========================= */
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .form-row {
@@ -27,23 +49,51 @@
   gap: 12px;
 }
 
-input {
-  background: transparent;
-  border: 1px solid rgba(241, 228, 233, 0.4);
-  border-radius: 8px;
-  padding: 10px;
-  color: #f1e4e9;
+label {
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  opacity: 0.8;
 }
 
+input {
+  background: rgba(53, 25, 35, 0.4);
+  border: 1px solid rgba(241, 228, 233, 0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #f1e4e9;
+  outline: none;
+}
+
+input:focus {
+  border-color: #cda2b1;
+}
+
+.form-error {
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: rgba(255, 154, 162, 0.15);
+  border: 1px solid rgba(255, 154, 162, 0.45);
+  border-radius: 8px;
+  color: #ff9aa2;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* =========================
+   ELEMENTOS Y OPCIONES
+========================= */
+
 .elements {
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .element-card {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .element-card h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
@@ -57,33 +107,72 @@ input {
   padding: 8px 14px;
   border-radius: 8px;
   background: transparent;
-  border: 1px solid rgba(241, 228, 233, 0.4);
+  border: 1px solid rgba(241, 228, 233, 0.35);
   color: #f1e4e9;
+  font-size: 0.75rem;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border 0.2s ease;
+}
+
+.options button:hover {
+  border-color: #cda2b1;
 }
 
 .options button.selected {
   background: #cda2b1;
   color: #351923;
-  border: none;
+  border-color: #cda2b1;
 }
 
-.budget {
-  margin-top: 16px;
+/* =========================
+   TICKET / RESUMEN
+========================= */
+
+.ticket {
+  background: rgba(53, 25, 35, 0.7);
+  border: 1px dashed rgba(241, 228, 233, 0.35);
+  border-radius: 16px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
 }
 
-.submit {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  background: #cda2b1;
-  border: none;
+.ticket h3 {
+  text-align: center;
+  font-size: 0.95rem;
   font-weight: 600;
-  cursor: pointer;
+  margin-bottom: 16px;
+  opacity: 0.9;
 }
+
+.ticket-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.ticket-separator {
+  border-top: 1px dashed rgba(241, 228, 233, 0.25);
+  margin: 14px 0;
+}
+
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* =========================
+   BOTON CREAR EVENTO
+========================= */
+
 .submit {
-  margin-top: 20px;
+  margin-top: 24px;
   width: 100%;
   padding: 12px;
   border-radius: 10px;
@@ -98,6 +187,21 @@ input {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  margin-left: 10px;
+  border: 2px solid rgba(241, 228, 233, 0.4);
+  border-top: 2px solid #351923;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* =========================
+   LOADING 
+========================= */
+
 .loading {
   display: flex;
   align-items: center;
@@ -117,5 +221,26 @@ input {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .event-create-wrapper {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .event-create {
+    max-width: 100%;
+    padding: 24px 16px;
+  }
+
+  .ticket {
+    position: static;
+    margin-top: 24px;
   }
 }

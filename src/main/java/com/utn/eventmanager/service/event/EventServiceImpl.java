@@ -128,6 +128,19 @@ public class EventServiceImpl implements EventService {
             );
         }
 
+        boolean alreadyApprovedEvent =
+                eventRepository.existsByEventDateAndStatus(
+                        request.getEventDate(),
+                        EventStatus.APPROVED
+                );
+
+        if (alreadyApprovedEvent) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Ya existe un evento confirmado para esa fecha"
+            );
+        }
+
         Event event = new Event();
         event.setName(request.getName());
         event.setDescription(request.getDescription());
