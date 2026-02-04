@@ -23,50 +23,36 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    @Order(1)
-    public SecurityFilterChain publicApi(HttpSecurity http) throws Exception {
-        http
-                .securityMatcher(
-                        "/api/public/**",
-                        "/api/auth/**",
-                        "/api/users/**",
-                        "/api/bot/**"
-                )
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/api/bot/start").permitAll() // Siempre público
-                        .requestMatchers("/api/bot/action").permitAll() // Permitir a todos
-                        .anyRequest().permitAll()
-                )
-                .httpBasic(Customizer.withDefaults());
-
-        return http.build();
-    }
-    @Bean
-    @Order(2)
-    public SecurityFilterChain securedApi(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        // ELEMENTS
+                        // ===== PUBLIC =====
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/bot/**").permitAll()
+
+                        // USERS
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+
+                        // ELEMENTS & OPTIONS (INFO PUBLICA)
+                        .requestMatchers(HttpMethod.GET, "/api/elements/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/options/**").permitAll()
+
+                        // ===== PROTECTED =====
                         .requestMatchers(HttpMethod.POST, "/api/elements/**")
                         .hasAnyRole("EMPLOYEE", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/elements/**")
                         .hasAnyRole("EMPLOYEE", "ADMIN")
 
-                        // OPTIONS
                         .requestMatchers(HttpMethod.POST, "/api/options/**")
                         .hasAnyRole("EMPLOYEE", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/options/**")
@@ -74,15 +60,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/options/**")
                         .hasAnyRole("EMPLOYEE", "ADMIN")
 
-                        // USERS
-                        .requestMatchers(HttpMethod.POST, "/api/users/employees").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/users/*/deactivate").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/users/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/audit/**")
+                        .hasRole("ADMIN")
 
-                        // AUDIT
-                        .requestMatchers(HttpMethod.GET, "/api/audit/**").hasRole("ADMIN")
-
-                        // RESTO
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(userDetailsService)
@@ -93,5 +73,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 }

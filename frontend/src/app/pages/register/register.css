@@ -62,14 +62,14 @@
 .submit {
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
-  border: none;
+  border: 1px solid transparent;
   padding: 10px 20px;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
-  font-size: px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-sizing: border-box;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
@@ -77,14 +77,67 @@
     color 0.2s ease,
     border 0.2s ease;
 }
-
+.register-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .submit:hover {
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
   background: #f1e4e9;
   color: #b87a8f;
-  border: 1px solid #b87a8f;
+  border-color: #b87a8f;
 }
 
+.submit:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
 .login-link:hover {
   color: rgba(255, 174, 209, 0.5);
+}
+@media (max-width: 768px) {
+  .register {
+    min-height: calc(100dvh - 64px);
+    padding: 24px 16px;
+    align-items: flex-start;
+  }
+  .register-content {
+    padding: 0 16px;
+  }
+
+  .register-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 20px;
+    gap: 28px;
+  }
+
+  .register-card h2 {
+    font-size: 22px;
+  }
+
+  .register-card form {
+    width: 100%;
+  }
+
+  .register-card input {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .login {
+    margin-top: 4px;
+  }
+
+  .login-link {
+    font-size: 0.85rem;
+  }
 }
