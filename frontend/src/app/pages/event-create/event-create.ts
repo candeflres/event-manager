@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
+import { Login } from '../login/login';
 @Component({
   selector: 'app-event-create',
   imports: [CommonModule, FormsModule],
@@ -87,19 +88,6 @@ export class EventCreate {
       return;
     }
 
-    const selectedDate = new Date(this.form.eventDate);
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    const diffInDays = (selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
-
-    if (diffInDays < 2) {
-      this.errorMessage = 'El evento debe crearse con al menos 2 días de anticipación';
-      return;
-    }
-
     this.isSubmitting = true;
 
     const payload = {
@@ -115,19 +103,14 @@ export class EventCreate {
       },
       error: (err: any) => {
         if (err.status === 409) {
-          this.errorMessage =
-            typeof err.error === 'string'
-              ? err.error
-              : err.error?.message || 'Ya existe un evento confirmado para esa fecha';
+          this.errorMessage = err.error?.message || 'Ya existe un evento confirmado para esa fecha';
         } else {
           this.errorMessage = err.error?.message || 'Error al crear el evento';
         }
-        this.cdr.detectChanges();
 
         this.isSubmitting = false;
       },
       complete: () => {
-        this.cdr.detectChanges();
         this.isSubmitting = false;
       },
     });

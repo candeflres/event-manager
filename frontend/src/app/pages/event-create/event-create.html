@@ -41,9 +41,13 @@
       {{ errorMessage }}
     </div>
 
-    <button type="submit" class="submit" [disabled]="loading">
-      <span *ngIf="!loading">Iniciar sesión</span>
-      <span *ngIf="loading" class="btn-spinner"></span>
+    <button class="submit" [disabled]="isSubmitting" (click)="createEvent()">
+      <span *ngIf="!isSubmitting">Crear un evento</span>
+
+      <span *ngIf="isSubmitting" class="loading">
+        <span class="spinner"></span>
+        Creando evento...
+      </span>
     </button>
   </section>
 

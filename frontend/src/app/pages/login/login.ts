@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth-service';
 export class Login {
   email = '';
   password = '';
+  loading = false;
 
   constructor(
     private http: HttpClient,
@@ -23,6 +24,10 @@ export class Login {
   ) {}
 
   login() {
+    if (this.loading) return;
+
+    this.loading = true;
+
     const auth = btoa(`${this.email}:${this.password}`);
 
     const headers = new HttpHeaders({
@@ -31,13 +36,12 @@ export class Login {
 
     this.http.get('http://localhost:8080/api/events?page=0&size=1', { headers }).subscribe({
       next: () => {
-        localStorage.setItem('auth', auth);
         this.authService.login(auth);
         this.router.navigate(['/home-logged']);
       },
-      error: (err) => {
-        console.error(err.status, err.error);
+      error: () => {
         alert('Credenciales incorrectas');
+        this.loading = false;
       },
     });
   }

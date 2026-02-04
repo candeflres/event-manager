@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private authSubject = new BehaviorSubject<string | null>(localStorage.getItem('auth'));
@@ -9,31 +10,13 @@ export class AuthService {
 
   private api = 'http://localhost:8080/api/auth';
 
-  loading = false;
+  constructor(private http: HttpClient) {}
 
-  login() {
-    if (this.loading) return;
+  /* ================= SESIÓN ================= */
 
-    this.loading = true;
-
-    this.http
-      .post('http://localhost:8080/api/auth/login', {
-        email: this.email,
-        password: this.password,
-      })
-      .subscribe({
-        next: (res: any) => {
-          this.authService.login(res.auth); // guardás el auth
-          this.router.navigate(['/home-logged']);
-        },
-        error: (err) => {
-          alert(err.error?.message || 'Credenciales incorrectas');
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
+  login(authHeader: string) {
+    localStorage.setItem('auth', authHeader);
+    this.authSubject.next(authHeader);
   }
 
   logout() {
@@ -49,6 +32,8 @@ export class AuthService {
     return !!this.getAuthHeader();
   }
 
+  /* ================= PASSWORD RESET ================= */
+
   verifyCode(email: string, code: string) {
     return this.http.post(`${this.api}/verify-code`, { email, code });
   }
@@ -60,6 +45,4 @@ export class AuthService {
       newPassword,
     });
   }
-
-  constructor(private http: HttpClient) {}
 }
