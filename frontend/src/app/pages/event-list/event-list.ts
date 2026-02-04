@@ -56,6 +56,7 @@ export class EventList implements OnInit {
   onFilterChange(): void {
     this.page = 0;
     this.loadEvents();
+    this.cdr.detectChanges();
   }
 
   nextPage(): void {

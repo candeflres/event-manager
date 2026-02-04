@@ -1,131 +1,149 @@
 .event-list {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 3rem;
+  padding: 3rem 1.5rem 4rem;
   color: #f3e9ee;
 }
 
 .event-list h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
+  font-size: 2.3rem;
+  margin-bottom: 1.6rem;
+  text-align: center;
 }
 
-.filter {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.4rem;
-  border-radius: 8px;
-  font-weight: 500;
+/* FILTROS */
+.filters {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 12px 16px;
+  min-width: 180px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  background: #2a1d23;
+  color: #f3e9ee;
+
+  font-size: 0.95rem;
   cursor: pointer;
-  margin-bottom: 2rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
 }
 
-.filter:hover {
-  background: var(--accent-soft);
+.filters select:hover {
+  transform: translateY(-1px);
+  border-color: #c68aa0;
 }
+
+.filters select:focus {
+  outline: none;
+  border-color: #c68aa0;
+  box-shadow: 0 0 0 3px rgba(198, 138, 160, 0.2);
+}
+
+/* GRID */
 .event-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
-}
-t-card {
-  background: linear-gradient(180deg, #2f1f26, #23161b);
-  border-radius: 14px;
-  padding: 1.6rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 2rem;
 }
 
+/* CARD */
 .event-card {
-  background: #2a1d23;
-  border-radius: 12px;
-  padding: 1.2rem 1.3rem;
+  background: linear-gradient(180deg, #2f1f26, #23161b);
+  border-radius: 18px;
+  padding: 1.8rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition:
-    border 0.2s ease,
-    transform 0.2s ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border 0.25s ease;
 }
 
 .event-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   border-color: #c68aa0;
 }
+
 .event-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.4rem;
+  font-size: 1.35rem;
+  margin-bottom: 0.6rem;
 }
 
 .event-card p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #cbb5be;
-  margin: 0.2rem 0;
+  margin: 0.35rem 0;
+  line-height: 1.4;
 }
 
 .event-card p strong {
   color: #f3e9ee;
 }
+
+/* ACCIONES */
 .actions {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 1.2rem;
-}
-.filters {
-  display: flex;
   gap: 12px;
-  margin-bottom: 20px;
-  align-items: center;
+  margin-top: 1.6rem;
 }
 
-.filters select {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  min-width: 160px;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.filters select:focus {
-  outline: none;
-  border-color: #7a5cff;
-  box-shadow: 0 0 0 2px rgba(122, 92, 255, 0.15);
-}
 .actions button {
   flex: 1;
-  padding: 0.45rem 0;
-  border-radius: 8px;
+  padding: 0.65rem 0;
+  border-radius: 10px;
   font-size: 0.85rem;
   border: 1px solid #c68aa0;
   background: transparent;
   color: #f3e9ee;
   cursor: pointer;
-}
-
-.actions button + button {
-  margin-left: 0.8rem;
-  background: var(--accent);
-  color: #fff;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .actions button:hover {
-  opacity: 0.9;
+  transform: translateY(-1px);
+  background: rgba(198, 138, 160, 0.15);
 }
+
+.actions button + button {
+  background: #c68aa0;
+  color: #2a1d23;
+  border: none;
+}
+
+.actions button + button:hover {
+  background: #ddb2c2;
+}
+
+/* PAGINACIÓN */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.2rem;
-  margin-top: 2.2rem;
+  gap: 1.4rem;
+  margin-top: 3rem;
 }
 
 .pagination button {
-  padding: 0.4rem 1.1rem;
-  border-radius: 8px;
+  padding: 0.5rem 1.3rem;
+  border-radius: 10px;
   border: 1px solid #c68aa0;
   background: transparent;
   color: #f3e9ee;
@@ -139,6 +157,32 @@ t-card {
 }
 
 .pagination span {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #cbb5be;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 3rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+  .event-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card {
+    padding: 1.5rem;
+  }
+
+  .event-list h2 {
+    font-size: 1.9rem;
+  }
 }

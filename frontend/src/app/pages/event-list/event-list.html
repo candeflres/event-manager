@@ -11,8 +11,8 @@
     </select>
 
     <select [(ngModel)]="orderSelected" (change)="onFilterChange()">
-      <option value="asc">Fecha ↑</option>
-      <option value="desc">Fecha ↓</option>
+      <option value="asc">Fecha ascendente</option>
+      <option value="desc">Fecha descendente</option>
     </select>
   </div>
 
@@ -21,9 +21,9 @@
       <h3>{{ evento.name }}</h3>
 
       <p><strong>Descripción:</strong> {{ evento.description }}</p>
-      <p><strong>Fecha:</strong> {{ evento.eventDate }}</p>
+      <p><strong>Fecha solicitada:</strong> {{ evento.eventDate }}</p>
       <p><strong>Estado:</strong> {{ evento.status }}</p>
-      <p><strong>Budget:</strong> {{ evento.estimatedBudget }}</p>
+      <p><strong>Presupuesto elegido:</strong> {{ evento.estimatedBudget }}</p>
 
       <div class="actions">
         <button class="share" [routerLink]="['/event', evento.id]">Compartir</button>
@@ -35,9 +35,9 @@
   <p *ngIf="eventos.length === 0" class="empty">No hay eventos para mostrar</p>
 
   <div class="pagination">
-    <button (click)="prevPage()" [disabled]="isFirst">◀ Anterior</button>
+    <button (click)="prevPage()" [disabled]="isFirst">Anterior</button>
 
     <span>Página {{ page + 1 }} de {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="isLast">Siguiente ▶</button>
+    <button (click)="nextPage()" [disabled]="isLast">Siguiente</button>
   </div>
 </section>
