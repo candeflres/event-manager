@@ -10,7 +10,6 @@
   margin-bottom: 32px;
 }
 
-/* Fila de elemento */
 .element-row {
   display: flex;
   justify-content: space-between;
@@ -33,7 +32,6 @@
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
 }
 
-/* Texto */
 .element-row strong {
   font-size: 0.95rem;
 }
@@ -44,7 +42,6 @@
   color: rgba(241, 228, 233, 0.6);
 }
 
-/* Botón editar */
 .element-row button {
   background: transparent;
   border: 1px solid #cda2b1;
@@ -83,6 +80,30 @@
 }
 
 .add-element:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.35);
+}
+.element-row small {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  background: rgba(211, 107, 124, 0.15);
+  color: #d36b7c;
+}
+
+.element-row button {
+  min-width: 80px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .element-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .element-row button {
+    width: 100%;
+  }
 }

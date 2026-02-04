@@ -7,8 +7,9 @@
 
 /* ---------- ELEMENTO ---------- */
 .element-card {
-  background: #ffb6c9;
-  border-radius: 14px;
+  background: rgba(53, 25, 35, 0.65);
+  border: 1px solid rgba(205, 162, 177, 0.35);
+  border-radius: 16px;
   padding: 24px;
   margin-bottom: 40px;
 }
@@ -33,8 +34,9 @@
 }
 
 .option-row {
-  background: #ffb6c9;
-  border-radius: 12px;
+  background: rgba(53, 25, 35, 0.55);
+  border: 1px solid rgba(205, 162, 177, 0.25);
+  border-radius: 14px;
   padding: 14px;
   margin-bottom: 12px;
 
@@ -47,15 +49,15 @@
 /* ---------- INPUTS ---------- */
 input {
   background: transparent;
-  border: 2px solid white;
-  border-radius: 6px;
-  padding: 6px 10px;
-  color: white;
+  border: 1px solid rgba(205, 162, 177, 0.45);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #f1e4e9;
   outline: none;
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(241, 228, 233, 0.55);
 }
 
 /* ---------- SWITCH ---------- */
@@ -110,8 +112,13 @@ button {
 }
 
 .primary {
-  background: white;
-  color: #ff5c8a;
+  background: rgba(205, 162, 177, 0.2);
+  color: #f1e4e9;
+  border: 1px solid rgba(205, 162, 177, 0.45);
+}
+
+.primary:hover {
+  background: rgba(205, 162, 177, 0.35);
 }
 
 .danger {
@@ -139,51 +146,122 @@ button {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.back {
-  margin-top: 32px;
+.ghost {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
   background: transparent;
-  border: 2px solid white;
-  color: white;
-  padding: 8px 20px;
-  border-radius: 20px;
+  color: #cda2b1;
+  border: 1px solid rgba(205, 162, 177, 0.4);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+.ghost:hover {
+  background: rgba(205, 162, 177, 0.08);
+}
+
 /* Hint */
 .hint {
   margin: 12px 0;
   font-size: 0.85rem;
-  color: #f2b6c6;
-  opacity: 0.9;
+  color: rgba(205, 162, 177, 0.85);
 }
-
 /* Botón agregar opción */
 .add-option {
-  margin-top: 12px;
-  align-self: flex-start;
-
-  background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
-  color: #351923;
-
-  border: none;
-  padding: 10px 18px;
+  margin: 16px 0;
+  padding: 10px 16px;
   border-radius: 10px;
-
-  font-size: 0.85rem;
-  font-weight: 600;
+  border: none;
   cursor: pointer;
 
+  background: #351923;
+  color: #f1e4e9;
+  font-size: 0.9rem;
+  font-weight: 500;
+
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    opacity 0.15s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.add-option:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+.add-option:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.35);
 }
 
 .add-option:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+@media (max-width: 768px) {
+  .manage-element {
+    padding: 20px 14px;
+  }
+
+  /* ---------- ELEMENTO ---------- */
+  .element-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .element-header h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .element-row button.primary {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  /* ---------- OPCIONES ---------- */
+  .option-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .option-actions {
+    width: 100%;
+  }
+
+  .option-actions button.primary {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  /* ---------- INPUTS ---------- */
+  input,
+  .input,
+  .price {
+    width: 100%;
+  }
+
+  /* ---------- SWITCH ---------- */
+  .switch {
+    justify-content: space-between;
+  }
+
+  .switch small {
+    font-size: 0.75rem;
+  }
+
+  /* ---------- AGREGAR OPCIÓN ---------- */
+  .add-option {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* ---------- VOLVER ---------- */
+  .back-wrapper {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .back-wrapper .ghost {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
+  }
 }

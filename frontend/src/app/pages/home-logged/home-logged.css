@@ -89,4 +89,16 @@
     font-size: 1.2rem;
     margin: 28px 0 14px;
   }
+
+  .logout {
+    position: static;
+    width: 100%;
+    margin: 16px auto 0;
+
+    padding: 12px;
+    border-radius: 14px;
+
+    text-align: center;
+    font-size: 0.85rem;
+  }
 }
