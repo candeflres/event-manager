@@ -36,14 +36,16 @@
       <div class="element" *ngFor="let el of elements">
         <h4>{{ el.name }}</h4>
 
-        <label *ngFor="let opt of el.options">
+        <label *ngFor="let opt of el.options" class="option">
           <input
             type="radio"
             [name]="'element-' + el.id"
             [checked]="selectedOptionIds.includes(opt.id)"
             (change)="selectOption(el.id, opt.id)"
           />
-          {{ opt.name }} — ${{ opt.price }}
+
+          <span class="option-name">{{ opt.name }}</span>
+          <span class="option-price">${{ opt.price }}</span>
         </label>
       </div>
     </div>
@@ -53,9 +55,9 @@
       <strong>${{ estimatedBudget }}</strong>
     </div>
 
-    <button class="primary" (click)="saveChanges()" [disabled]="isSubmitting">
+    <button class="save-btn" (click)="saveChanges()" [disabled]="isSubmitting">
       <span *ngIf="!isSubmitting">Guardar cambios</span>
-      <span *ngIf="isSubmitting" class="loading"> <span class="spinner"></span> Guardando… </span>
+      <span *ngIf="isSubmitting">Guardando…</span>
     </button>
   </section>
 

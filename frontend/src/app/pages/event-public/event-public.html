@@ -1,14 +1,22 @@
-<section *ngIf="event">
-  <h1>Vení a mi evento 😎</h1>
+<section *ngIf="event" class="invite-wrapper">
+  <div class="invite-card">
+    <h1>{{ event.name }}</h1>
 
-  <div class="countdown">
-    <p>Cuenta regresiva</p>
-    <span>{{ countdown }}</span>
+    <div class="countdown">
+      <span>{{ countdown }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="value">{{ event.eventDate }}</span>
+    </div>
+
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50292.693816568244!2d-57.572853399389565!3d-38.01693978742661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584dde618d88b07%3A0x98429fd7ae71776c!2sUTN%20Mar%20del%20Plata!5e0!3m2!1ses!2sar!4v1770186051455!5m2!1ses!2sar"
+        loading="lazy"
+        allowfullscreen=""
+      ></iframe>
+    </div>
   </div>
-
-  <p>{{ event.name }}</p>
-  <p><strong>Dónde:</strong> NUESTRA DIRECCIÓN!</p>
-  <p><strong>Día:</strong> {{ event.eventDate }}</p>
-
-  <h2>No faltes!</h2>
+  <button class="ghost" (click)="goBack()">Volver</button>
 </section>

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route } from '@angular/router';
 import { EventService } from '../../services/event-service';
 import { OnInit } from '@angular/core';
 import { EventResponse } from '../../model/event-response';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-event-public',
@@ -21,6 +21,7 @@ export class EventPublic implements OnInit {
     private route: ActivatedRoute,
     private eventService: EventService,
     private cdr: ChangeDetectorRef,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +57,8 @@ export class EventPublic implements OnInit {
     } else {
       this.countdown = 'Evento finalizado';
     }
+  }
+  goBack(): void {
+    this.router.navigate(['/event-list']);
   }
 }

@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { EventStatus } from '../../model/event-status';
 import { UserService } from '../../services/user-service';
-
+import { ElementResponse } from '../../model/element-response';
+import { OptionResponse } from '../../model/option-response';
 @Component({
   selector: 'app-event-detail',
   standalone: true,
@@ -24,7 +25,7 @@ export class EventDetail implements OnInit {
   editMode = false;
   processingAction: 'APPROVE' | 'REJECT' | 'SAVE' | 'CANCEL' | null = null;
   isSubmitting = false;
-  elements: any[] = [];
+  elements: ElementResponse[] = [];
   selectedOptionIds: number[] = [];
   estimatedBudget = 0;
 
@@ -101,8 +102,15 @@ export class EventDetail implements OnInit {
 
     this.selectedOptionIds = this.event.options.map((o) => o.id);
 
-    this.eventService.getElementsWithOptions().subscribe((elements) => {
-      this.elements = elements;
+    this.eventService.getElementsWithOptions().subscribe((elements: ElementResponse[]) => {
+      this.elements = elements
+        .filter((el) => el.available)
+        .map((el) => ({
+          ...el,
+          options: el.options.filter((opt) => opt.available),
+        }))
+        .filter((el) => el.options.length > 0);
+
       this.updateEstimatedBudget();
       this.cdr.detectChanges();
     });
