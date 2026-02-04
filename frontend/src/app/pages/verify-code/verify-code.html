@@ -5,9 +5,13 @@
 
     <form (ngSubmit)="confirmCode()">
       <input type="text" placeholder="Código" [(ngModel)]="code" name="code" required />
-
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
       <div class="actions">
-        <button class="submit" type="submit">Confirmar</button>
+        <button class="submit" type="submit" [disabled]="loading">
+          {{ loading ? 'Verificando...' : 'Confirmar' }}
+        </button>
       </div>
     </form>
 

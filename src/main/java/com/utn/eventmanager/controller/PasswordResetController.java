@@ -2,7 +2,9 @@ package com.utn.eventmanager.controller;
 
 import com.utn.eventmanager.dto.passwordReset.ForgotPasswordRequest;
 import com.utn.eventmanager.dto.passwordReset.ResetPasswordRequest;
+import com.utn.eventmanager.dto.passwordReset.VerifyCodeRequest;
 import com.utn.eventmanager.service.passwordReset.PasswordResetService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,13 @@ public class PasswordResetController {
     @PostMapping("/forgot-password")
     public void forgot(@RequestBody ForgotPasswordRequest request) {
         service.sendCode(request.email());
+    }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<?> verifyCode(@RequestBody VerifyCodeRequest request) {
+        service.verifyCode(request);
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/reset-password")

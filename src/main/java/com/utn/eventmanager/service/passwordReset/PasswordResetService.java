@@ -1,6 +1,7 @@
 package com.utn.eventmanager.service.passwordReset;
 
 import com.utn.eventmanager.dto.passwordReset.ResetPasswordRequest;
+import com.utn.eventmanager.dto.passwordReset.VerifyCodeRequest;
 import com.utn.eventmanager.model.User;
 import com.utn.eventmanager.model.enums.AuditAction;
 import com.utn.eventmanager.model.enums.AuditEntity;
@@ -56,7 +57,21 @@ public class PasswordResetService {
         emailService.sendPasswordResetCode(email, code);
 
     }
+    public void verifyCode(VerifyCodeRequest request) {
+        PasswordResetToken token = tokenRepository
+                .findByEmailAndCode(request.email(), request.code())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Código inválido"
+                ));
 
+        if (token.isExpired()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "El código expiró"
+            );
+        }
+    }
     public void resetPassword(ResetPasswordRequest request) {
         PasswordResetToken token = tokenRepository
                 .findByEmailAndCodeAndUsedFalse(request.email(), request.code())

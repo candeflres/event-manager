@@ -24,6 +24,9 @@ public class PasswordResetToken {
     @Column(nullable = false)
     private Boolean used = false;
 
+    public boolean isExpired() {
+        return expiresAt.isBefore(LocalDateTime.now());
+    }
     public Long getId() {
         return id;
     }

@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,8 +23,8 @@ export class ResetPassword {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
     private router: Router,
+    private authService: AuthService,
   ) {
     this.email = this.route.snapshot.queryParamMap.get('email') || '';
     this.code = this.route.snapshot.queryParamMap.get('code') || '';
@@ -42,21 +43,15 @@ export class ResetPassword {
 
     this.loading = true;
 
-    this.http
-      .post('http://localhost:8080/api/auth/reset-password', {
-        email: this.email,
-        code: this.code,
-        newPassword: this.newPassword,
-      })
-      .subscribe({
-        next: () => {
-          alert('Contraseña actualizada con éxito');
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          alert(err.error?.message || 'Error al cambiar la contraseña');
-          this.loading = false;
-        },
-      });
+    this.authService.resetPassword(this.email, this.code, this.newPassword).subscribe({
+      next: () => {
+        alert('Contraseña actualizada con éxito');
+        this.router.navigate(['/login']);
+      },
+      error: (err: any) => {
+        alert(err.error || 'Error al cambiar la contraseña');
+        this.loading = false;
+      },
+    });
   }
 }
