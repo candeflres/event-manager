@@ -24,6 +24,8 @@ export class AdminStats implements OnInit {
   private eventsBarChart?: Chart;
   private usersBarChart?: Chart;
 
+  private isMobile = window.innerWidth <= 768;
+
   constructor(
     private adminService: AdminService,
     private cdr: ChangeDetectorRef,
@@ -49,27 +51,17 @@ export class AdminStats implements OnInit {
     this.eventsBarChart = new Chart(this.eventsChart.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['Pendientes', 'Aprobados', 'Cancelados', 'Completados'],
+        labels: ['Pendientes', 'Aprobados', 'Cancelados'],
         datasets: [
           {
             label: 'Eventos',
-            data: [
-              stats.pendingEvents,
-              stats.approvedEvents,
-              stats.cancelledEvents,
-              stats.completedEvents,
-            ],
-            backgroundColor: '#351725',
+            data: [stats.pendingEvents, stats.approvedEvents, stats.cancelledEvents],
+            backgroundColor: 'rgba(205, 162, 177, 0.85)',
+            barThickness: this.isMobile ? 24 : 36,
           },
         ],
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-        },
-      },
+      options: this.getChartOptions(),
     });
   }
 
@@ -84,17 +76,59 @@ export class AdminStats implements OnInit {
           {
             label: 'Usuarios',
             data: [stats.adminUsers, stats.employeeUsers, stats.clientUsers],
-            backgroundColor: '#351725',
+            backgroundColor: 'rgba(205, 162, 177, 0.85)',
+            barThickness: this.isMobile ? 24 : 36,
           },
         ],
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
+      options: this.getChartOptions(),
+    });
+  }
+
+  // =====================
+  // CHART OPTIONS (RESPONSIVE)
+  // =====================
+  private getChartOptions() {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#351923',
+          titleColor: '#f1e4e9',
+          bodyColor: '#f1e4e9',
+          borderColor: '#cda2b1',
+          borderWidth: 1,
         },
       },
-    });
+      scales: {
+        x: {
+          ticks: {
+            color: '#f1e4e9',
+            font: {
+              size: this.isMobile ? 10 : 12,
+              weight: 500,
+            },
+          },
+          grid: {
+            display: !this.isMobile,
+            color: 'rgba(241, 228, 233, 0.15)',
+          },
+        },
+        y: {
+          ticks: {
+            color: '#f1e4e9',
+            font: {
+              size: this.isMobile ? 10 : 12,
+            },
+          },
+          grid: {
+            display: !this.isMobile,
+            color: 'rgba(241, 228, 233, 0.1)',
+          },
+        },
+      },
+    };
   }
 }
