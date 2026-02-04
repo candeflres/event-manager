@@ -234,3 +234,146 @@
 .edit-btn:active {
   transform: scale(0.96);
 }
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.avatar-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at top left,
+    rgba(241, 228, 233, 0.35),
+    rgba(241, 228, 233, 0.12)
+  );
+  border: 2px solid rgba(241, 228, 233, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #f7dbe4;
+
+  backdrop-filter: blur(6px);
+  user-select: none;
+}
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 16px;
+  }
+
+  .profile-container h2 {
+    font-size: 1.45rem;
+    margin-bottom: 16px;
+  }
+
+  /* ===== AVATAR ===== */
+  .profile-avatar {
+    margin-bottom: 14px;
+  }
+
+  .avatar-circle {
+    width: 96px;
+    height: 96px;
+    font-size: 1.9rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== CARD ===== */
+  .profile-card {
+    padding: 18px 16px;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  /* ===== ROWS ===== */
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 0.9rem;
+  }
+
+  .row strong {
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  /* ===== WARNING ===== */
+  .inactive-warning {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  /* ===== ACTIONS ===== */
+  .profile-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .profile-actions button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    border-radius: 12px;
+  }
+
+  /* ===================== */
+  /* === EDIT MODE ====== */
+  /* ===================== */
+
+  .profile-card.edit-card {
+    padding: 20px 16px;
+  }
+
+  .profile-card.edit-card h3 {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .profile-card.edit-card input {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .edit-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .save-btn {
+    width: 100%;
+    padding: 11px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .password-title {
+    font-size: 0.9rem;
+    margin-top: 16px;
+  }
+
+  .password-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+  }
+
+  .edit-btn,
+  .back-btn,
+  .delete-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

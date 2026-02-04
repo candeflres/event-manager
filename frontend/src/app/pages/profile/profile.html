@@ -5,6 +5,10 @@
   <!-- ====== VISTA ======= -->
   <!-- ===================== -->
   <div class="profile-card" *ngIf="!editMode">
+    <!-- ===== AVATAR ===== -->
+    <div class="profile-avatar">
+      <div class="avatar-circle">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</div>
+    </div>
     <div class="row">
       <span>Nombre</span>
       <strong>{{ user.firstName }}</strong>
@@ -42,19 +46,20 @@
   <div class="profile-card edit-card" *ngIf="editMode">
     <h3>Datos personales</h3>
 
+    <!-- ===== AVATAR ===== -->
+    <div class="profile-avatar">
+      <div class="avatar-circle">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</div>
+    </div>
+
     <input type="text" placeholder="Nombre" [(ngModel)]="profileForm.firstName" />
-
     <input type="text" placeholder="Apellido" [(ngModel)]="profileForm.lastName" />
-
     <input type="email" placeholder="Email" [(ngModel)]="profileForm.email" />
-
     <input type="text" placeholder="Teléfono" [(ngModel)]="profileForm.phone" />
 
     <div class="edit-actions">
       <button class="save-btn" (click)="saveProfile()">Guardar cambios</button>
     </div>
 
-    <!-- ===== CAMBIO PASSWORD ===== -->
     <h3 class="password-title">Cambiar contraseña</h3>
 
     <input
@@ -62,7 +67,6 @@
       placeholder="Contraseña actual"
       [(ngModel)]="passwordForm.currentPassword"
     />
-
     <input type="password" placeholder="Nueva contraseña" [(ngModel)]="passwordForm.newPassword" />
 
     <button class="password-btn" (click)="changePassword()">Cambiar contraseña</button>
