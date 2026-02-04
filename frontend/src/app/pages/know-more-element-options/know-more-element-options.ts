@@ -22,7 +22,7 @@ export class KnowMoreElementOptions implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.elementService.getById(id).subscribe((res) => {
+    this.elementService.getPublicById(id).subscribe((res) => {
       console.log('RESPUESTA', res);
       this.element = res;
       this.cdr.markForCheck();

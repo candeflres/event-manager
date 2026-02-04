@@ -12,35 +12,15 @@ export class ElementService {
   constructor(private http: HttpClient) {}
 
   // =====================
-  // CLIENT
+  // PUBLIC / LANDING
   // =====================
 
   getAvailable(): Observable<ElementResponse[]> {
     return this.http.get<ElementResponse[]>(`${this.baseUrl}/available`);
   }
 
-  deactivate(id: number): Observable<void> {
-    const auth = localStorage.getItem('auth');
-
-    return this.http.put<void>(
-      `${this.baseUrl}/${id}/deactivate`,
-      {},
-      {
-        headers: {
-          Authorization: 'Basic ' + auth,
-        },
-      },
-    );
-  }
-
-  getById(id: number): Observable<ElementResponse> {
-    const auth = localStorage.getItem('auth');
-
-    return this.http.get<ElementResponse>(`${this.baseUrl}/${id}`, {
-      headers: new HttpHeaders({
-        Authorization: 'Basic ' + auth,
-      }),
-    });
+  getPublicById(id: number): Observable<ElementResponse> {
+    return this.http.get<ElementResponse>(`${this.baseUrl}/${id}`);
   }
 
   // =====================
@@ -48,21 +28,14 @@ export class ElementService {
   // =====================
 
   getAll(): Observable<ElementResponse[]> {
-    const auth = localStorage.getItem('auth');
-
     return this.http.get<ElementResponse[]>(this.baseUrl, {
-      headers: new HttpHeaders({
-        Authorization: 'Basic ' + auth,
-      }),
+      headers: this.authHeaders(),
     });
   }
-  create(payload: { name: string; description: string }): Observable<ElementResponse> {
-    const auth = localStorage.getItem('auth');
 
+  create(payload: { name: string; description: string }): Observable<ElementResponse> {
     return this.http.post<ElementResponse>(this.baseUrl, payload, {
-      headers: {
-        Authorization: 'Basic ' + auth,
-      },
+      headers: this.authHeaders(),
     });
   }
 
@@ -74,21 +47,35 @@ export class ElementService {
       available: boolean;
     },
   ): Observable<ElementResponse> {
-    const auth = localStorage.getItem('auth');
-
     return this.http.put<ElementResponse>(`${this.baseUrl}/${id}`, payload, {
-      headers: {
-        Authorization: 'Basic ' + auth,
-      },
+      headers: this.authHeaders(),
     });
   }
-  getByIdForManagement(id: number): Observable<ElementResponse> {
-    const auth = localStorage.getItem('auth');
 
-    return this.http.get<ElementResponse>(`${this.baseUrl}/${id}/manage`, {
-      headers: {
-        Authorization: 'Basic ' + auth,
+  deactivate(id: number): Observable<void> {
+    return this.http.put<void>(
+      `${this.baseUrl}/${id}/deactivate`,
+      {},
+      {
+        headers: this.authHeaders(),
       },
+    );
+  }
+
+  getByIdForManagement(id: number): Observable<ElementResponse> {
+    return this.http.get<ElementResponse>(`${this.baseUrl}/${id}/manage`, {
+      headers: this.authHeaders(),
+    });
+  }
+
+  // =====================
+  // HELPERS
+  // =====================
+
+  private authHeaders(): HttpHeaders {
+    const auth = localStorage.getItem('auth') ?? '';
+    return new HttpHeaders({
+      Authorization: 'Basic ' + auth,
     });
   }
 }

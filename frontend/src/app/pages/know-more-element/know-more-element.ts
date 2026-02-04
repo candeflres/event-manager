@@ -20,7 +20,7 @@ export class KnowMoreElement implements OnInit {
 
   ngOnInit(): void {
     this.elementService.getAvailable().subscribe((res) => {
-      this.elements = res;
+      this.elements = res.filter((element) => element.options && element.options.length > 0);
       this.cdr.detectChanges();
     });
   }

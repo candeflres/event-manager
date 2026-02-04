@@ -1,51 +1,123 @@
 .know-more-wrapper {
-  max-width: 880px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 60px 24px;
-  text-align: center;
+  padding: 80px 24px;
   color: #f1e4e9;
 }
 
-.know-more-wrapper h2 {
-  font-size: 1.9rem;
-  font-weight: 600;
-  margin-bottom: 8px;
+.know-more-header {
+  text-align: center;
+  margin-bottom: 56px;
 }
 
-.subtitle {
+.know-more-header h2 {
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.know-more-header .slogan {
+  max-width: 520px;
+  margin: 0 auto;
   font-size: 0.95rem;
+  line-height: 1.6;
   opacity: 0.85;
-  margin-bottom: 36px;
 }
 
 .elements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 26px;
 }
 
 .element-card {
-  background: rgba(241, 228, 233, 0.12);
-  border: 1px solid rgba(241, 228, 233, 0.25);
-  border-radius: 18px;
-  padding: 22px 18px;
+  background: rgba(241, 228, 233, 0.08);
+  border: 1px solid rgba(241, 228, 233, 0.22);
+  border-radius: 20px;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  backdrop-filter: blur(6px);
+  transition: all 0.28s ease;
+  backdrop-filter: blur(8px);
 }
 
 .element-card:hover {
-  background: rgba(241, 228, 233, 0.18);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  background: rgba(241, 228, 233, 0.14);
+  border-color: rgba(241, 228, 233, 0.35);
 }
 
 .element-card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
+  font-size: 1.2rem;
+  font-weight: 500;
   color: #f7dbe4;
 }
 
 .element-card p {
   font-size: 0.85rem;
+  line-height: 1.5;
   opacity: 0.85;
+  flex-grow: 1;
+}
+
+.element-card .cta {
+  margin-top: 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f7dbe4;
+  opacity: 0.7;
+  align-self: flex-start;
+}
+@media (max-width: 768px) {
+  .know-more-wrapper {
+    padding: 56px 16px;
+  }
+
+  .know-more-header {
+    margin-bottom: 40px;
+  }
+
+  .know-more-header h2 {
+    font-size: 1.6rem;
+    line-height: 1.25;
+  }
+
+  .know-more-header .slogan {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .elements-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .element-card {
+    padding: 20px 18px;
+    border-radius: 16px;
+    transform: none;
+  }
+
+  .element-card:hover {
+    transform: none;
+    background: rgba(241, 228, 233, 0.08);
+  }
+
+  .element-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .element-card p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .element-card .cta {
+    margin-top: 10px;
+    font-size: 0.7rem;
+    opacity: 0.75;
+  }
 }
