@@ -2,7 +2,9 @@
   <div class="header-content">
     <div class="logo" (click)="goHome()">Youre</div>
 
-    <nav class="nav">
+    <nav class="nav" [class.open]="menuOpen">
+      <button class="close" (click)="closeMenu()">✕</button>
+
       <a (click)="goOrLogin('/event-create')">Crear evento</a>
       <a (click)="goOrLogin('/event-list')">Mis eventos</a>
       <a (click)="goOrLogin('/contact')">Contacto</a>
@@ -14,5 +16,7 @@
         (click)="goOrLogin('/profile')"
       />
     </nav>
+
+    <img src="/images/menu.png" class="burger" (click)="toggleMenu()" />
   </div>
 </header>

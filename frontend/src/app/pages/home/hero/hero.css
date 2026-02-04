@@ -16,7 +16,7 @@
    HERO – Typography
 ========================= */
 .hero-title {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
@@ -26,12 +26,14 @@
 }
 
 .hero-sub {
-  font-size: 1.5rem;
+  font-size: 3rem;
   margin: 0;
+  font-weight: 700;
 }
 
 .hero-min {
   color: #cda2b1;
+  font-size: 1.2rem;
 }
 
 /* =========================
@@ -47,18 +49,18 @@
 .hero-btn {
   padding: 10px 20px;
   border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-/* Primary */
 .hero-btn--primary {
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
-  border: none;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
 .hero-btn--primary:hover {
@@ -66,7 +68,7 @@
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
   background: #f1e4e9;
   color: #b87a8f;
-  border: 1px solid #b87a8f;
+  border-color: #b87a8f;
 }
 
 .hero-btn--primary:active {
@@ -74,11 +76,12 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Secondary */
 .hero-btn--secondary {
   background-color: transparent;
   color: #f1e4e9;
   border: 1px solid #f1e4e9;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
 .hero-btn--secondary:hover {
@@ -86,14 +89,13 @@
   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
   background: #f1e4e9;
   color: #b87a8f;
-  border: 1px solid #b87a8f;
+  border-color: #b87a8f;
 }
 
 .hero-btn--secondary:active {
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
 /* =========================
    HERO – Image
 ========================= */
@@ -105,7 +107,62 @@
 }
 
 .hero-img {
-  height: 280px;
+  height: 330px;
   width: auto;
   display: block;
+}
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-top: 3rem;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-sub {
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+
+  .hero-min {
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .hero-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .hero-image {
+    order: -1;
+  }
+
+  .hero-img {
+    height: 220px;
+  }
 }

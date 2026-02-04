@@ -1,50 +1,52 @@
 section {
-  height: 400px;
-  margin-top: 100px;
+  height: 650px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 20px;
 }
 
 section div {
+  max-width: 640px;
   text-align: center;
 }
 
 h3 {
   color: #f1e4e9;
-  font-size: 30px;
-  margin-bottom: 5px;
+  font-size: 38px;
+  font-weight: 700;
+  margin: 0;
 }
 
 p {
   color: #cda2b1;
-  margin-top: 10px;
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .know {
+  margin-top: 16px;
   background: linear-gradient(90deg, #cda2b1 0%, #bf7d94 100%);
   color: #f1e4e9;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 28px;
+  border-radius: 10px;
   font-family: 'Poppins', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     background 0.2s ease,
-    color 0.2s ease,
-    border 0.2s ease;
+    color 0.2s ease;
 }
 
 .know:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
   background: #f1e4e9;
   color: #b87a8f;
-  border: 1px solid #b87a8f;
 }
