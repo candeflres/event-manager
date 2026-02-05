@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, signal, effect} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -11,121 +11,91 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-bot',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  providers: [BotService],
   templateUrl: './bot.html',
   styleUrls: ['./bot.css'],
 })
-export class BotComponent implements OnInit, OnDestroy {
-  messages: string[] = [];
-  options: BotOption[] = [];
+export class BotComponent {
 
-  isOpen = false;
-  isLoggedIn = false;
-
-  pendingAction?: string;
-  inputValue = '';
-
-  private authSub?: Subscription;
-  private loadId = 0;
+  messages = signal<string[]>([]);
+  options = signal<BotOption[]>([]);
+  isOpen = signal(false);
+  pendingAction = signal<string | null>(null);
+  inputValue = signal('');
 
   constructor(
     private botService: BotService,
-    private authService: AuthService,
-    private cdr: ChangeDetectorRef,
-  ) {}
+    private authService: AuthService
+  ) {
 
-  ngOnInit(): void {
-    this.authSub = this.authService.auth$.subscribe((auth) => {
-      const newStatus = !!auth;
-      if (this.isLoggedIn !== newStatus) {
-        this.isLoggedIn = newStatus;
-
-        // si el bot está abierto, recargar
-        if (this.isOpen) {
-          this.loadBot();
-        }
-      }
-    });
-
-    this.isLoggedIn = this.authService.isLoggedIn();
-  }
-
-  ngOnDestroy(): void {
-    this.authSub?.unsubscribe();
-  }
-
-  // =========================
-  // OPEN / CLOSE
-  // =========================
-  openBot(): void {
-    this.isOpen = true;
-
-    if (this.messages.length === 0) {
-      this.loadBot();
-    }
-  }
-
-  closeBot(): void {
-    this.isOpen = false;
-    this.pendingAction = undefined;
-    this.inputValue = '';
-  }
-
-  // =========================
-  // BOT FLOW
-  // =========================
-  private loadBot(): void {
-    const currentLoad = ++this.loadId;
-
-    this.messages = [];
-    this.options = [];
-    this.pendingAction = undefined;
-    this.inputValue = '';
-
-    const bot$ = this.isLoggedIn ? this.botService.startLoggedBot() : this.botService.startBot();
-
-    bot$.subscribe((resp) => {
-      if (currentLoad === this.loadId) {
-        this.handleBotResponse(resp);
+    // 🔥 reacciona AUTOMÁTICAMENTE a login / logout
+    effect(() => {
+      this.authService.auth(); // dependencia
+      if (this.isOpen()) {
+        this.loadBot();
       }
     });
   }
 
-  handleOption(option: BotOption): void {
+  openBot() {
+    this.isOpen.set(true);
+  }
+
+  closeBot() {
+    this.isOpen.set(false);
+    this.resetBot();
+  }
+
+  private loadBot() {
+    this.resetBot();
+
+    const bot$ = this.authService.isLoggedIn()
+      ? this.botService.startLoggedBot()
+      : this.botService.startBot();
+
+    bot$.subscribe(resp => this.handleBotResponse(resp));
+  }
+
+  handleOption(option: BotOption) {
     this.addMessage(`> ${option.text}`);
-    this.options = [];
-    this.pendingAction = undefined;
+    this.options.set([]);
+    this.pendingAction.set(null);
 
     if (option.action === 'BACK') {
       this.loadBot();
       return;
     }
 
-    this.botService.sendAction(option.action).subscribe((resp) => {
-      this.handleBotResponse(resp);
-    });
+    this.botService.sendAction(option.action)
+      .subscribe(resp => this.handleBotResponse(resp));
   }
 
-  sendInput(): void {
-    if (!this.pendingAction || !this.inputValue) return;
+  sendInput() {
+    if (!this.pendingAction() || !this.inputValue()) return;
 
-    this.addMessage(`> ${this.inputValue}`);
+    this.addMessage(`> ${this.inputValue()}`);
 
     this.botService
-      .sendAction(this.pendingAction, this.inputValue)
+      .sendAction(this.pendingAction()!, this.inputValue())
       .subscribe((resp: BotResponse) => {
         this.handleBotResponse(resp);
-        this.inputValue = '';
+        this.inputValue.set('');
       });
   }
-  private handleBotResponse(resp: BotResponse): void {
+
+  private handleBotResponse(resp: BotResponse) {
     this.addMessage(resp.message);
-    this.options = resp.options ?? [];
-    this.pendingAction = resp.nextAction;
-    this.cdr.detectChanges();
+    this.options.set(resp.options ?? []);
+    this.pendingAction.set(resp.nextAction ?? null);
   }
 
-  private addMessage(message: string): void {
-    this.messages.push(message);
+  private addMessage(message: string) {
+    this.messages.update(m => [...m, message]);
+  }
+
+  private resetBot() {
+    this.messages.set([]);
+    this.options.set([]);
+    this.pendingAction.set(null);
+    this.inputValue.set('');
   }
 }

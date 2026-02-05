@@ -1,8 +1,9 @@
 <!-- CLOSED: floating circle -->
 <button type="button" class="bot-fab" (click)="openBot()">🤖</button>
 
+
 <!-- OPEN: chat panel -->
-<section *ngIf="isOpen" class="bot-panel">
+<section *ngIf="isOpen()" class="bot-panel">
   <header class="bot-header">
     <div class="bot-avatar">B</div>
 
@@ -17,7 +18,7 @@
   <!-- Messages -->
   <div class="messages">
     <div
-      *ngFor="let msg of messages"
+      *ngFor="let msg of messages()"
       class="msg"
       [ngClass]="{ user: msg.startsWith('> '), bot: !msg.startsWith('> ') }"
     >
@@ -30,14 +31,22 @@
   <!-- Footer -->
   <footer class="bot-footer">
     <!-- input dinámico -->
-    <div *ngIf="pendingAction === 'WAITING_DATE'" class="input-area">
-      <input type="date" [(ngModel)]="inputValue" />
+    <div *ngIf="pendingAction() === 'WAITING_DATE'" class="input-area">
+      <input
+        type="date"
+        [ngModel]="inputValue()"
+        (ngModelChange)="inputValue.set($event)"
+      />
       <button type="button" (click)="sendInput()">Enviar</button>
     </div>
 
     <!-- opciones -->
-    <div class="options" *ngIf="options.length > 0">
-      <button type="button" *ngFor="let option of options" (click)="handleOption(option)">
+    <div class="options" *ngIf="options().length > 0">
+      <button
+        type="button"
+        *ngFor="let option of options()"
+        (click)="handleOption(option)"
+      >
         {{ option.text }}
       </button>
     </div>
