@@ -48,6 +48,15 @@
   color: rgba(241, 228, 233, 0.5);
 }
 
+.register-card input.ng-invalid.ng-touched {
+  border-color: #ff6b8a;
+  box-shadow: 0 0 0 1px rgba(255, 107, 138, 0.6);
+}
+
+.register-card input.ng-invalid.ng-touched::placeholder {
+  color: rgba(255, 107, 138, 0.8);
+}
+
 .login {
   margin-top: 10px;
   text-align: center;
@@ -57,6 +66,20 @@
   font-size: 0.9rem;
   text-decoration: none;
   color: rgba(241, 228, 233, 0.5);
+}
+.submit:disabled {
+  background: rgba(205, 162, 177, 0.3);
+  color: rgba(241, 228, 233, 0.5);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  border: 1px solid rgba(241, 228, 233, 0.2);
+}
+
+.submit:disabled:hover {
+  background: rgba(205, 162, 177, 0.3);
+  color: rgba(241, 228, 233, 0.5);
+  box-shadow: none;
 }
 
 .submit {

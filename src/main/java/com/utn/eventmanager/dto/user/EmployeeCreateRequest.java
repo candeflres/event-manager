@@ -1,10 +1,8 @@
 package com.utn.eventmanager.dto.user;
 
 import com.utn.eventmanager.model.enums.UserRole;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 
 public class EmployeeCreateRequest {
 
@@ -19,10 +17,17 @@ public class EmployeeCreateRequest {
     private String email;
 
     @NotBlank
+    @Pattern(
+            regexp = "^[0-9]{10,15}$",
+            message = "El teléfono debe tener entre 10 y 15 dígitos"
+    )
     private String phone;
 
     @NotBlank
-    @Size(min = 8)
+    @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*\\d).{8,}$",
+            message = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número"
+    )
     private String password;
 
 

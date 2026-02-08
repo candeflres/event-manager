@@ -20,9 +20,9 @@ export class Register {
   form = this.fb.nonNullable.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    phone: ['', Validators.required],
+    phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d).{8,}$/)]],
   });
 
   register() {
@@ -36,7 +36,7 @@ export class Register {
     this.service.register(newUser).subscribe({
       next: () => {
         alert('Usuario registrado con éxito');
-        this.router.navigate(['/login']); // 👈 REDIRECCIÓN
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error(err);

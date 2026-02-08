@@ -2,10 +2,7 @@ package com.utn.eventmanager.model;
 
 import com.utn.eventmanager.model.enums.UserRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
@@ -31,13 +28,19 @@ public class User {
     private String email;
 
     @NotBlank
-    @Size(max = 20)
-    @Column(length = 20)
+    @Pattern(
+            regexp = "^[0-9]{10,15}$",
+            message = "El teléfono debe tener entre 10 y 15 dígitos"
+    )
+    @Column(length = 15)
     private String phone;
 
     @NotBlank
+    @Pattern(
+            regexp = "^(?=.*[A-Z])(?=.*\\d).{8,}$",
+            message = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número"
+    )
     private String password;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
