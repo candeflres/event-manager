@@ -40,4 +40,8 @@
     <span>Página {{ page + 1 }} de {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="isLast">Siguiente</button>
   </div>
+
+  <div class="back-wrapper">
+    <button class="back-btn" (click)="goBack()">Volver</button>
+  </div>
 </section>

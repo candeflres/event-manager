@@ -97,4 +97,8 @@ export class AdminAudit implements OnInit {
     this.page = 0;
     this.load();
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

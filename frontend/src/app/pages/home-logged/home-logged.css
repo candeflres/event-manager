@@ -57,27 +57,33 @@
   top: 92px;
   right: 32px;
 
-  background: transparent;
-  border: 1px solid rgba(241, 228, 233, 0.45);
+  background: rgba(241, 228, 233, 0.06);
+  border: 1px solid rgba(241, 228, 233, 0.35);
   color: rgba(241, 228, 233, 0.85);
 
-  padding: 8px 18px;
-  border-radius: 20px;
+  padding: 6px 16px;
+  border-radius: 999px;
 
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
   cursor: pointer;
 
   transition:
     background 0.2s ease,
     color 0.2s ease,
-    border 0.2s ease;
+    border 0.2s ease,
+    transform 0.15s ease;
 }
 
 .logout:hover {
   background: rgba(241, 228, 233, 0.95);
   color: #351923;
   border-color: #f1e4e9;
+  transform: translateY(-1px);
 }
+
 .action-card:hover,
 .home-logged a.card:hover {
   transform: translateY(-2px);
@@ -103,14 +109,17 @@
   }
 
   .logout {
-    position: static;
-    width: 100%;
-    margin: 16px auto 0;
+    position: static !important;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
 
-    padding: 12px;
-    border-radius: 14px;
+    display: inline-block;
+    margin: 32px auto 0;
 
-    text-align: center;
-    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.8rem;
   }
 }

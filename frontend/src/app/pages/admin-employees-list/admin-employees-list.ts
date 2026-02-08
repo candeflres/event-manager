@@ -23,4 +23,8 @@ export class AdminEmployeesList implements OnInit {
       this.cdr.detectChanges();
     });
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

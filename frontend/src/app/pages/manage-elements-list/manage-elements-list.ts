@@ -35,4 +35,8 @@ export class ManageElementsList implements OnInit {
       },
     });
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

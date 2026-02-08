@@ -116,4 +116,8 @@ export class EventCreate {
       },
     });
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

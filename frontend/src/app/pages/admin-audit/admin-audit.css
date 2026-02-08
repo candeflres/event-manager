@@ -229,6 +229,29 @@
     white-space: normal;
   }
 
+  .back-btn {
+    align-self: center;
+    background: transparent;
+    border: 1px solid rgba(241, 228, 233, 0.4);
+    color: #f1e4e9;
+    padding: 8px 22px;
+    border-radius: 22px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .back-wrapper {
+    margin-top: 56px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .back-btn:hover {
+    background: rgba(241, 228, 233, 0.9);
+    color: #351923;
+  }
+
   /* ===== PAGINATION ===== */
   .pagination {
     flex-direction: column;
@@ -245,5 +268,17 @@
 
   .page-info {
     font-size: 0.85rem;
+  }
+  @media (max-width: 640px) {
+    .back-wrapper {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .back-wrapper .back-btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 14px;
+    }
   }
 }

@@ -79,6 +79,12 @@
   transition: all 0.2s ease;
 }
 
+.back-wrapper {
+  margin-top: 56px;
+  display: flex;
+  justify-content: center;
+}
+
 .back-btn:hover {
   background: rgba(241, 228, 233, 0.9);
   color: #351923;
@@ -127,9 +133,14 @@
     margin-top: 14px;
   }
 
-  .back-btn {
-    width: 100%;
-    max-width: 260px;
+  .back-wrapper {
+    margin-top: 24px;
     text-align: center;
+  }
+
+  .back-wrapper .back-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
   }
 }

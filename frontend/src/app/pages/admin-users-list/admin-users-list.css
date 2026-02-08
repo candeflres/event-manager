@@ -116,6 +116,28 @@
   background: #cda2b1;
   transform: translateY(-1px);
 }
+.back-btn {
+  align-self: center;
+  background: transparent;
+  border: 1px solid rgba(241, 228, 233, 0.4);
+  color: #f1e4e9;
+  padding: 8px 22px;
+  border-radius: 22px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-wrapper {
+  margin-top: 56px;
+  display: flex;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  background: rgba(241, 228, 233, 0.9);
+  color: #351923;
+}
 @media (max-width: 768px) {
   .filters {
     flex-direction: column;
@@ -130,5 +152,16 @@
 
   .user-row a {
     align-self: flex-end;
+  }
+
+  .back-wrapper {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .back-wrapper .ghost {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
   }
 }

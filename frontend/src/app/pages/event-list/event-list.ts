@@ -76,4 +76,8 @@ export class EventList implements OnInit {
   trackById(index: number, evento: EventResponse) {
     return evento.id;
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

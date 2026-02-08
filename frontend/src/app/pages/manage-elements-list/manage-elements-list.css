@@ -96,6 +96,21 @@
   text-align: center;
 }
 
+.ghost {
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: #cda2b1;
+  border: 1px solid rgba(205, 162, 177, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghost:hover {
+  background: rgba(205, 162, 177, 0.08);
+}
+
 @media (max-width: 600px) {
   .element-row {
     flex-direction: column;
@@ -105,5 +120,16 @@
 
   .element-row button {
     width: 100%;
+  }
+
+  .back-wrapper {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .back-wrapper .ghost {
+    width: 100%;
+    padding: 10px;
+    border-radius: 14px;
   }
 }

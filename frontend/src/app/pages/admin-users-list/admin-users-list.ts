@@ -43,4 +43,8 @@ export class AdminUsersList implements OnInit {
       return roleOk && statusOk;
     });
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/home-logged';
+  }
 }

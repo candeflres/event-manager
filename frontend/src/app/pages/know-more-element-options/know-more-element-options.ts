@@ -28,4 +28,8 @@ export class KnowMoreElementOptions implements OnInit {
       this.cdr.markForCheck();
     });
   }
+
+  goBack() {
+    window.location.href = 'http://localhost:4200/know-more';
+  }
 }
