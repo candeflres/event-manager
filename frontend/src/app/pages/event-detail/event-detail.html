@@ -85,6 +85,19 @@
         Editar
       </button>
 
+      <!-- ACCIONES EMPLOYEE / ADMIN -->
+      <div class="actions-right" *ngIf="(isEmployee || isAdmin) && event.status === 'PENDING'">
+        <button class="primary" (click)="approve()" [disabled]="processingAction === 'APPROVE'">
+          <span *ngIf="processingAction !== 'APPROVE'">Aprobar</span>
+          <span *ngIf="processingAction === 'APPROVE'">Aprobando…</span>
+        </button>
+
+        <button class="danger" (click)="reject()" [disabled]="processingAction === 'REJECT'">
+          <span *ngIf="processingAction !== 'REJECT'">Rechazar</span>
+          <span *ngIf="processingAction === 'REJECT'">Rechazando…</span>
+        </button>
+      </div>
+
       <button class="share" [routerLink]="['/event', event.id]">Compartir evento</button>
     </div>
   </footer>

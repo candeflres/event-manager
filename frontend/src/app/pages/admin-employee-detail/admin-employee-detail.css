@@ -119,3 +119,62 @@ button {
   cursor: not-allowed;
   box-shadow: none;
 }
+@media (max-width: 768px) {
+  .employee-detail {
+    padding: 20px 14px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .header h2 {
+    font-size: 1.25rem;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: 0.8rem;
+  }
+
+  .value {
+    font-size: 0.9rem;
+  }
+
+  input,
+  select {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .danger {
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .error {
+    font-size: 0.85rem;
+    margin: 8px 0 12px;
+  }
+}

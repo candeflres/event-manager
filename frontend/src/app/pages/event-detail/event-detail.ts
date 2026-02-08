@@ -21,6 +21,7 @@ export class EventDetail implements OnInit {
   event!: EventResponse;
   loading = true;
   isEmployee = false;
+  isAdmin = false;
   isClient = false;
   editMode = false;
   processingAction: 'APPROVE' | 'REJECT' | 'SAVE' | 'CANCEL' | null = null;
@@ -71,8 +72,10 @@ export class EventDetail implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.userService.getMyProfile().subscribe((user) => {
-      this.isEmployee = user.role === 'EMPLOYEE';
       this.isClient = user.role === 'CLIENT';
+      this.isEmployee = user.role === 'EMPLOYEE';
+      this.isAdmin = user.role === 'ADMIN';
+      this.cdr.detectChanges();
     });
 
     this.eventService.getEventDetail(id).subscribe((res) => {

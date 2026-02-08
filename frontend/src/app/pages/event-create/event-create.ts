@@ -86,7 +86,10 @@ export class EventCreate {
     }
 
     const selectedDate = new Date(this.form.eventDate);
+    selectedDate.setHours(0, 0, 0, 0);
+
     const minDate = new Date();
+    minDate.setHours(0, 0, 0, 0);
     minDate.setDate(minDate.getDate() + 2);
 
     if (selectedDate < minDate) {

@@ -69,7 +69,13 @@
     />
     <input type="password" placeholder="Nueva contraseña" [(ngModel)]="passwordForm.newPassword" />
 
-    <button class="password-btn" (click)="changePassword()">Cambiar contraseña</button>
+    <button
+      class="password-btn"
+      (click)="changePassword()"
+      [disabled]="!passwordForm.currentPassword || !passwordForm.newPassword"
+    >
+      Cambiar contraseña
+    </button>
   </div>
 
   <!-- ===================== -->

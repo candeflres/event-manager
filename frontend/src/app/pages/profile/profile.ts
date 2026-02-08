@@ -98,8 +98,11 @@ export class ProfilePage implements OnInit {
   changePassword(): void {
     this.userService.changeMyPassword(this.passwordForm).subscribe({
       next: () => {
-        alert('Contraseña actualizada');
-        this.passwordForm = { currentPassword: '', newPassword: '' };
+        alert('Contraseña actualizada. Tenés que volver a iniciar sesión.');
+
+        this.authService.logout();
+
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         alert(err.error?.message || 'Error al cambiar la contraseña');

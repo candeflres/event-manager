@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
-
+import { finalize } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-verify-code',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './verify-code.html',
   styleUrl: './verify-code.css',
 })
@@ -23,6 +24,7 @@ export class VerifyCode {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.email = this.route.snapshot.queryParamMap.get('email') || '';
   }
@@ -36,19 +38,24 @@ export class VerifyCode {
     this.loading = true;
     this.errorMessage = null;
 
-    this.authService.verifyCode(this.email, this.code).subscribe({
-      next: () => {
-        this.router.navigate(['/reset-password'], {
-          queryParams: {
-            email: this.email,
-            code: this.code,
-          },
-        });
-      },
-      error: (err: any) => {
-        this.errorMessage = err.error || 'Código inválido o expirado';
-        this.loading = false;
-      },
-    });
+    this.authService
+      .verifyCode(this.email, this.code)
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/reset-password'], {
+            queryParams: { email: this.email, code: this.code },
+          });
+        },
+        error: (err) => {
+          this.errorMessage =
+            err.status === 401 ? 'El código ingresado es incorrecto' : 'Código inválido o expirado';
+        },
+      });
   }
 }
