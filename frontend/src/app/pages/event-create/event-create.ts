@@ -15,6 +15,7 @@ import { Login } from '../login/login';
 export class EventCreate {
   elements: any[] = [];
   selectedOptions: Map<number, any> = new Map();
+
   isSubmitting = false;
   estimatedBudget = 0;
   errorMessage: string | null = null;
@@ -29,7 +30,6 @@ export class EventCreate {
     private eventService: EventService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class EventCreate {
 
   loadElements() {
     this.eventService.getElementsWithOptions().subscribe((res) => {
-      this.elements = res.filter((e) => e.options && e.options.length > 0);
+      this.elements = res.filter((e) => e.options?.length);
       this.cdr.detectChanges();
     });
   }
@@ -57,10 +57,7 @@ export class EventCreate {
   }
 
   calculateBudget() {
-    this.estimatedBudget = Array.from(this.selectedOptions.values()).reduce(
-      (acc, opt) => acc + opt.price,
-      0,
-    );
+    this.estimatedBudget = this.selectedOptionsArray.reduce((acc, opt) => acc + opt.price, 0);
   }
 
   createEvent() {
@@ -103,24 +100,19 @@ export class EventCreate {
       name: this.form.name,
       description: this.form.description,
       eventDate: this.form.eventDate,
-      optionIds: Array.from(this.selectedOptions.values()).map((o) => o.id),
+      optionIds: this.selectedOptionsArray.map((o) => o.id),
     };
 
     this.eventService.createEvent(payload).subscribe({
       next: () => {
-        this.router.navigate(['/event-list']);
-      },
-      error: (err: any) => {
-        if (err.status === 409) {
-          this.errorMessage = err.error?.message || 'Ya existe un evento confirmado para esa fecha';
-        } else {
-          this.errorMessage = err.error?.message || 'Error al crear el evento';
-        }
-
         this.isSubmitting = false;
+        this.router.navigate(['/event-list'], {
+          state: { created: true },
+        });
       },
-      complete: () => {
+      error: (err) => {
         this.isSubmitting = false;
+        this.errorMessage = typeof err.error === 'string' ? err.error : 'Error al crear el evento';
       },
     });
   }

@@ -103,56 +103,82 @@ public class EventServiceImpl implements EventService {
     // CLIENT
     // ======================
 
-    @Override
     @Transactional
-    public EventResponse createEvent(
-            Authentication authentication,
-            EventCreateRequest request
-    ) {
+    public EventResponse createEvent(Authentication auth, EventCreateRequest req) {
 
-        User user = userService.getUserFromAuth(authentication);
+        User user = userService.getUserFromAuth(auth);
 
+        validateClientRole(user);
+        validateEventDate(req.getEventDate());
+        validateDateAvailability(req.getEventDate());
+
+        Event event = buildBaseEvent(req, user);
+
+        attachOptions(event, req.getOptionIds());
+        calculateEstimatedBudget(event);
+
+        Event savedEvent = eventRepository.save(event);
+
+        notifyAndAudit(savedEvent, user);
+
+        return mapToResponse(savedEvent);
+    }
+
+    // validaciones del create event
+
+    private void validateClientRole(User user) {
         if (user.getRole() == UserRole.ADMIN || user.getRole() == UserRole.EMPLOYEE) {
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "Los empleados y administradores no pueden crear eventos"
             );
         }
+    }
 
+    private void validateEventDate(LocalDate eventDate) {
         LocalDate minDate = LocalDate.now().plusDays(2);
 
-        if (request.getEventDate().isBefore(minDate)) {
+        if (eventDate.isBefore(minDate)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "El evento debe crearse con al menos 2 días de anticipación"
             );
         }
+    }
 
-        boolean alreadyApprovedEvent =
-                eventRepository.existsByEventDateAndStatus(
-                        request.getEventDate(),
-                        EventStatus.APPROVED
-                );
+    private void validateDateAvailability(LocalDate eventDate) {
+        boolean exists = eventRepository.existsByEventDateAndStatus(
+                eventDate,
+                EventStatus.APPROVED
+        );
 
-        if (alreadyApprovedEvent) {
+        if (exists) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
                     "Ya existe un evento confirmado para esa fecha"
             );
         }
+    }
 
+    private Event buildBaseEvent(EventCreateRequest req, User user) {
         Event event = new Event();
-        event.setName(request.getName());
-        event.setDescription(request.getDescription());
-        event.setEventDate(request.getEventDate());
+        event.setName(req.getName());
+        event.setDescription(req.getDescription());
+        event.setEventDate(req.getEventDate());
         event.setStatus(EventStatus.PENDING);
         event.setEstimatedBudget(BigDecimal.ZERO);
         event.setUser(user);
+        return event;
+    }
 
-        List<Option> options = optionRepository.findAllById(request.getOptionIds());
+    private void attachOptions(Event event, List<Long> optionIds) {
+        List<Option> options = optionRepository.findAllById(optionIds);
 
-        if (options.size() != request.getOptionIds().size()) {
-            throw new IllegalArgumentException("Una o más opciones no existen");
+        if (options.size() != optionIds.size()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Una o más opciones no existen"
+            );
         }
 
         for (Option option : options) {
@@ -161,15 +187,20 @@ public class EventServiceImpl implements EventService {
             eo.setOption(option);
             event.getOptions().add(eo);
         }
+    }
 
-        event.setEstimatedBudget(
-                calculateEstimatedBudget(event.getOptions())
-        );
+    private void calculateEstimatedBudget(Event event) {
+        BigDecimal total = event.getOptions().stream()
+                .map(eo -> eo.getOption().getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        Event savedEvent = eventRepository.save(event);
+        event.setEstimatedBudget(total);
+    }
+
+    private void notifyAndAudit(Event event, User user) {
 
         notificationService.notifyEventStatusChange(
-                savedEvent,
+                event,
                 null,
                 EventStatus.PENDING
         );
@@ -179,10 +210,8 @@ public class EventServiceImpl implements EventService {
                 AuditEntity.EVENT,
                 "El usuario creó el evento: " + event.getName(),
                 user,
-                savedEvent.getId()
+                event.getId()
         );
-
-        return mapToResponse(savedEvent);
     }
 
     @Override
