@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { Login } from '../login/login';
+import { finalize } from 'rxjs';
 @Component({
   selector: 'app-event-create',
   imports: [CommonModule, FormsModule],
@@ -106,18 +107,28 @@ export class EventCreate {
       optionIds: this.selectedOptionsArray.map((o) => o.id),
     };
 
-    this.eventService.createEvent(payload).subscribe({
-      next: () => {
-        this.isSubmitting = false;
-        this.router.navigate(['/event-list'], {
-          state: { created: true },
-        });
-      },
-      error: (err) => {
-        this.isSubmitting = false;
-        this.errorMessage = typeof err.error === 'string' ? err.error : 'Error al crear el evento';
-      },
-    });
+    this.eventService
+      .createEvent(payload)
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.cdr.detectChanges();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/event-list'], {
+            state: { created: true },
+          });
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            this.errorMessage = err.error?.message || 'La fecha ya está ocupada';
+          } else {
+            this.errorMessage = 'Error al crear el evento';
+          }
+        },
+      });
   }
 
   goBack() {
