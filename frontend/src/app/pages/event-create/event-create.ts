@@ -88,6 +88,15 @@ export class EventCreate {
       return;
     }
 
+    const selectedDate = new Date(this.form.eventDate);
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + 2);
+
+    if (selectedDate < minDate) {
+      this.errorMessage = 'El evento debe crearse con al menos 2 días de anticipación';
+      return;
+    }
+
     this.isSubmitting = true;
 
     const payload = {
