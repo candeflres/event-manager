@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, ChangeDetectorRef, signal, effect} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./bot.css'],
 })
 export class BotComponent {
-
   messages = signal<string[]>([]);
   options = signal<BotOption[]>([]);
   isOpen = signal(false);
@@ -24,12 +23,10 @@ export class BotComponent {
 
   constructor(
     private botService: BotService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
-
-    // 🔥 reacciona AUTOMÁTICAMENTE a login / logout
     effect(() => {
-      this.authService.auth(); // dependencia
+      this.authService.auth();
       if (this.isOpen()) {
         this.loadBot();
       }
@@ -52,7 +49,7 @@ export class BotComponent {
       ? this.botService.startLoggedBot()
       : this.botService.startBot();
 
-    bot$.subscribe(resp => this.handleBotResponse(resp));
+    bot$.subscribe((resp) => this.handleBotResponse(resp));
   }
 
   handleOption(option: BotOption) {
@@ -65,8 +62,7 @@ export class BotComponent {
       return;
     }
 
-    this.botService.sendAction(option.action)
-      .subscribe(resp => this.handleBotResponse(resp));
+    this.botService.sendAction(option.action).subscribe((resp) => this.handleBotResponse(resp));
   }
 
   sendInput() {
@@ -89,7 +85,7 @@ export class BotComponent {
   }
 
   private addMessage(message: string) {
-    this.messages.update(m => [...m, message]);
+    this.messages.update((m) => [...m, message]);
   }
 
   private resetBot() {

@@ -54,6 +54,7 @@ public class BotController {
             case "LOGIN" -> botService.loginInfo();
             case "RECOVER_PASSWORD" -> botService.recoverPasswordInfo();
             case "WHATSAPP" -> botService.whatsapp();
+            case "RECOVER_ACCOUNT" -> botService.recoverAccount();
 
             // ===== LOGGED =====
             case "CREATE_EVENT" -> isLogged

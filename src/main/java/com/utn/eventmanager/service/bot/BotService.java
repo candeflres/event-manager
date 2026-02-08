@@ -29,39 +29,47 @@ public class BotService {
         return new BotResponseDTO(
                 "¡Hola! 👋 Soy el asistente de EventManager. ¿En qué puedo ayudarte?",
                 List.of(
-                        new BotOptionDTO(1, "¿Conocer sobre nosotros?", "ABOUT"),
-                        new BotOptionDTO(2, "¿Cómo registrarme?", "REGISTER"),
-                        new BotOptionDTO(3, "'Cómo iniciar sesión?", "LOGIN"),
+                        new BotOptionDTO(1, "Quiero saber más", "ABOUT"),
+                        new BotOptionDTO(2, "¿Cómo me registro?", "REGISTER"),
+                        new BotOptionDTO(3, "¿Cómo inicio sesión?", "LOGIN"),
                         new BotOptionDTO(4, "Recuperar contraseña", "RECOVER_PASSWORD"),
-                        new BotOptionDTO(5,"¡Contactate con nosotros!","WHATSAPP")
+                        new BotOptionDTO(5,"¡Contactate con nosotros!","WHATSAPP"),
+                        new BotOptionDTO(6, "Borré mi cuenta, ¿como la recupero?", "RECOVER_ACCOUNT")
                 )
         );
     }
 
     public BotResponseDTO about() {
         return new BotResponseDTO(
-                "EventManager es una plataforma para crear y gestionar eventos fácilmente 🎉",
+                "Somos una plataforma que permite que crees el evento de tus sueños. Te ofrecemos opciones que se adaptan a tus gustos y presupuesto, con precios claros desde el inicio.",
+                backOption()
+        );
+    }
+
+    public BotResponseDTO recoverAccount() {
+        return new BotResponseDTO(
+                "Si borraste tu cuenta y necesitás reactivarla, escribinos por WhatsApp para que podamos ayudarte.",
                 backOption()
         );
     }
 
     public BotResponseDTO registerInfo() {
         return new BotResponseDTO(
-                "Podés registrarte desde la opción 'Registrarse' completando tus datos.",
+                "Podés registrarte desde la opción 'Registrarse' completando tus datos. No te preocupes, siempre priorizamos la seguridad de nuestros clientes.",
                 backOption()
         );
     }
 
     public BotResponseDTO loginInfo() {
         return new BotResponseDTO(
-                "Ingresá tu email y contraseña para iniciar sesión.",
+                "Podés iniciar sesión desde la opción 'Iniciar sesión' completando tu correo y tu contraseña. ",
                 backOption()
         );
     }
 
     public BotResponseDTO recoverPasswordInfo() {
         return new BotResponseDTO(
-                "Usá la opción 'Olvidé mi contraseña' para recuperarla.",
+                "¡No te preocupes! Podés recuperarla desde recuperar contraseña, te enviaremos un código para que puedas reingresar.",
                 backOption()
         );
     }
